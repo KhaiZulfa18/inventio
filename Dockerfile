@@ -24,6 +24,12 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
 # Instal Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Install Supervisor
+RUN apt-get install -y supervisor
+
+# Copy the Supervisor configuration file
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 # Salin file proyek ke dalam container
 COPY . .
 
@@ -32,6 +38,9 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 # Jalankan Composer untuk menginstal dependensi
 RUN composer install
+
+# Install npm dependencies
+RUN npm install
 
 # Salin konfigurasi virtual host
 COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
@@ -43,4 +52,5 @@ RUN a2enmod rewrite
 EXPOSE 80
 
 # Jalankan Apache dalam foreground
-CMD ["apache2-foreground"]
+# CMD ["apache2-foreground"]
+CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
