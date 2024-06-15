@@ -88,7 +88,7 @@ function Login({ status, canResetPassword }) {
             children: "Forgot your password?"
           }
         ),
-        /* @__PURE__ */ jsx(PrimaryButton, { className: "ms-4", disabled: processing, children: "Log in" })
+        /* @__PURE__ */ jsx(PrimaryButton, { className: "ms-4", disabled: processing, children: "Log in 3" })
       ] })
     ] })
   ] });
