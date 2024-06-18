@@ -15,7 +15,7 @@ use Inertia\Response;
 class HomeController extends Controller
 {
     public function index(){
-        return Inertia::render('Home/Home', [
+        return Inertia::render('Dashboard', [
         ]);
     }
 }
