@@ -14,6 +14,9 @@ export default defineConfig({
         watch: {
             usePolling: true,
         },
+        fs: {
+            cachedChecks: false
+        },
     },
     plugins: [
         laravel({

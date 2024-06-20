@@ -1,5 +1,6 @@
 import DangerButton2 from '@/Components/Button';
 import DangerButton from '@/Components/DangerButton';
+import Button2 from '@/Components/Button2';
 import TableHead from '@/Components/TableHead';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import DashbordLayout from '@/Layouts/Dashboard';
@@ -13,12 +14,6 @@ export default function Dashboard({ auth }) {
         >
 
         <Head title="Dashoard"></Head>
-
-        <TableHead />
-
-        <DangerButton2>
-            Button
-        </DangerButton2>
             
         </AuthenticatedLayout>
     );
