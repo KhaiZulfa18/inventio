@@ -17,11 +17,21 @@ class CategoryController extends Controller
     {
         //
         $query = Category::query();
+
+        $sortFields = request('sort_field', 'created_at');
+        $sortDirection = request('sort_direction', 'desc');
+
+        if(request('name')) {
+            $query->where('name','like','%'.request('name').'%');
+        }
         
-        $categories = $query->paginate(2)->onEachSide(1);
+        $categories = $query->orderBy($sortFields, $sortDirection)
+                        ->paginate(2)
+                        ->onEachSide(1);
 
         return Inertia::render('Category/Index',[
             'categories' => CategoryResource::collection($categories),
+            'queryParams' => request()->query() ?: null,
         ]);
     }
 

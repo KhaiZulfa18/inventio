@@ -1,9 +1,4 @@
-import DangerButton2 from '@/Components/Button';
-import DangerButton from '@/Components/DangerButton';
-import Button2 from '@/Components/Button2';
-import TableHead from '@/Components/TableHead';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import DashbordLayout from '@/Layouts/Dashboard';
 import { Head } from '@inertiajs/react';
 
 export default function Dashboard({ auth }) {

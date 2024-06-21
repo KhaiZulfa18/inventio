@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Category::factory()
-                ->count(3)
-                ->hasProducts(5)
+                ->count(6)
+                ->hasProducts(7)
                 ->create();
     }
 }
