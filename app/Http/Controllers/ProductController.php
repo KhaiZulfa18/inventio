@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
+use App\Models\Category;
 use App\Models\Product;
 use Inertia\Inertia;
 
@@ -16,6 +18,8 @@ class ProductController extends Controller
     public function index()
     {
         //
+        $categories = Category::all();
+        
         $query = Product::query()
             ->join('categories', 'products.category_id', '=', 'categories.id')
             ->select('products.*','categories.name as category_name');
@@ -26,6 +30,9 @@ class ProductController extends Controller
         if(request('name')) {
             $query->where('name','like','%'.request('name').'%');
         }
+        if(request('category')) {
+            $query->where('category_id','=',request('category'));
+        }
         
         $products = $query->orderBy($sortFields, $sortDirection)
                         ->paginate(10)
@@ -34,6 +41,7 @@ class ProductController extends Controller
         return Inertia::render('Product/Index',[
             'products' => ProductResource::collection($products),
             'queryParams' => request()->query() ?: null,
+            'categories' => CategoryResource::collection($categories),
         ]);
     }
 

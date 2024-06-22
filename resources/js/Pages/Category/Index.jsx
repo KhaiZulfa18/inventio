@@ -44,7 +44,7 @@ export default function Index({auth, categories, queryParams = null}) {
 
         <Head title="Category"></Head>
 
-        <div className="py-12">
+        <div className="py-3">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div className="p-6 sm:p-8 bg-white shadow sm:rounded-lg overflow-auto">
                     <div className="py-2 w-1/3">

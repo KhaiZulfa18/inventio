@@ -4,8 +4,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/solid'
 import TableHead from "@/Components/TableHead";
+import SelectInput from "@/Components/SelectInput";
 
-export default function Index({auth, products, queryParams = null}) {
+export default function Index({auth, categories, products, queryParams = null,}) {
 
     queryParams = queryParams || {}
 
@@ -44,15 +45,23 @@ export default function Index({auth, products, queryParams = null}) {
 
         <Head title="Product"></Head>
 
-        <div className="py-12">
+        <div className="py-3">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div className="p-6 sm:p-8 bg-white shadow sm:rounded-lg overflow-auto">
-                    <div className="py-2 w-1/3">
-                        <TextInput className="w-full" placeholder="Cari..."
+                    <div className="py-2 w-full flex items-center justify-start gap-1 ">
+                        <TextInput className="w-1/2" placeholder="Cari..."
                         defaultValue={queryParams.name}
                         onBlur={e => searchFieldChanged('name', e.target.value)}
                         onKeyPress={e => onKeyPress('name', e)}
                         />
+                        <SelectInput className="w-1/2" 
+                        defaultValue={queryParams.category}
+                        onChange={e => searchFieldChanged('category', e.target.value)}>
+                            <option value="">- Pilih Kategori -</option>
+                            {categories.data.map((category) => (
+                                <option key={category.id} value={category.id}>{category.name}</option>
+                            ))}
+                        </SelectInput>
                     </div>
                     <table className="min-w-full bg-white">
                         <thead className="bg-gray">
