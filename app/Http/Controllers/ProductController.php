@@ -9,6 +9,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -17,7 +18,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
         $categories = Category::all();
         
         $query = Product::query()
@@ -50,7 +50,12 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+
+        return Inertia::render('Product/Create',[
+            'categories' => CategoryResource::collection($categories),
+            'success' => session('success'),
+        ]);
     }
 
     /**
@@ -59,6 +64,17 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         //
+        $data = $request->validated();
+
+        $product = Product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'category_id' => $request->category,
+            'created_by' => Auth::id(),
+        ]);
+
+        return to_route('product.create')
+                    ->with(['success'=> 'Produk telah disimpan!']);
     }
 
     /**

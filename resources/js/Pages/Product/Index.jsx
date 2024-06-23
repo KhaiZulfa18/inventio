@@ -2,9 +2,11 @@ import Pagination from "@/Components/Pagination";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
-import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/solid'
+import { ChevronUpIcon, ChevronDownIcon, PlusIcon } from '@heroicons/react/24/solid'
 import TableHead from "@/Components/TableHead";
 import SelectInput from "@/Components/SelectInput";
+import SecondaryButton from "@/Components/SecondaryButton";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Index({auth, categories, products, queryParams = null,}) {
 
@@ -40,7 +42,14 @@ export default function Index({auth, categories, products, queryParams = null,})
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Product</h2>}
+            header={
+                <div className="flex items-center justify-between">
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">Product</h2>
+                    <Link href={route('product.create')} className="inline-flex items-center gap-1 uppercase bg-gray-800 px-4 py-2 border border-transparent rounded-md font-semibold text-xs text-white hover:bg-gray-700">
+                        <PlusIcon className="w-4"></PlusIcon> New
+                    </Link>
+                </div>
+            }
         >
 
         <Head title="Product"></Head>
@@ -72,7 +81,7 @@ export default function Index({auth, categories, products, queryParams = null,})
                                 </TableHead>
                                 <TableHead name='name' sort_field={queryParams.sort_field} sort_direction={queryParams.sort_direction}
                                 sortChanged={sortChanged}>
-                                    Kategori
+                                    Produk
                                 </TableHead>
                                 <TableHead name='description' sort_field={queryParams.sort_field} sort_direction={queryParams.sort_direction}
                                 sortChanged={sortChanged}>
