@@ -1,0 +1,37 @@
+import { ArrowLongLeftIcon, ChevronDoubleLeftIcon, MoonIcon, SunIcon } from '@heroicons/react/24/solid';
+import { usePage } from '@inertiajs/react';
+
+
+export default function Navbar({toggleSidebar, themeSwitcher, darkMode}) {
+
+    const { auth } = usePage().props;
+
+    return (
+        <div className='py-8 px-4 md:px-6 flex justify-between items-center min-w-full sticky top-0 z-20 h-16 border-b bg-white dark:border-gray-900 dark:bg-gray-950'>
+            <div className='flex items-center gap-4'>
+                <button className='text-gray-700 dark:text-gray-400 hidden md:block' onClick={toggleSidebar}>
+                    <ChevronDoubleLeftIcon className='w-5'/>
+                </button>
+                <div className='flex flex-row items-center gap-1 md:border-l-2 md:border-double md:px-4 dark:border-gray-900'>
+                    {/* {links.map((link, i) => (
+                        link.hasOwnProperty('subdetails') ?
+                        sublinks.map((sublink, x) => sublink.active === true && <span className='font-semibold text-sm md:text-base text-gray-700 dark:text-gray-400' key={x}>{sublink.title}</span>)
+                        :
+                        link.active === true && <span className='font-semibold text-sm md:text-base text-gray-700 dark:text-gray-400 ' key={i}>{link.title}</span>
+                    ))} */}
+                </div>
+            </div>
+            <div className='flex items-center gap-4'>
+                <div className='flex flex-row items-center gap-1 border-r-2 border-double px-4 dark:border-gray-900'>
+                    <div className='flex flex-row gap-2'>
+                        <button className='p-2 rounded-md text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-900 ' onClick={themeSwitcher}>
+                           {darkMode ? <SunIcon className='w-5'/> : <MoonIcon className='w-5'/> }
+                        </button>
+                        {/* <Notification/> */}
+                    </div>
+                </div>
+                {/* <AuthDropdown auth={auth} /> */}
+            </div>
+        </div>
+    );
+}
