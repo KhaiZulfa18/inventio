@@ -1,9 +1,9 @@
-// import Menu from "@/Utils/Menu"
+import Menu from "@/Utils/Menu"
 import React from "react";
 import LinkItem from "@/Components/LinkItem";
 import LinkItemDropdown from "@/Components/LinkItemDropdown";
 import { usePage } from "@inertiajs/react";
-import { UserGroupIcon } from "@heroicons/react/24/solid";
+import { RocketLaunchIcon, UserCircleIcon, UserGroupIcon } from "@heroicons/react/24/solid";
 // import { IconBrandReact } from "@tabler/icons-react";
 
 export default function Sidebar({ sidebarOpen = true }) {
@@ -12,7 +12,7 @@ export default function Sidebar({ sidebarOpen = true }) {
     const { auth } = usePage().props;
 
     // get menu from utils
-    // const menuNavigation = Menu();
+    const menuNavigation = Menu();
 
     return (
         <div
@@ -39,33 +39,69 @@ export default function Sidebar({ sidebarOpen = true }) {
                         </div>
                     </div>
                     <div className="w-full flex flex-col overflow-y-aut">
-                        <div >
-                            <div className="text-gray-500 text-xs py-3 px-4 font-bold uppercase">
-                                User
+                        {menuNavigation.map((item, index) => (
+                            <div key={index}>
+                                {item.permissions &&
+                                    <div className="text-gray-500 text-xs py-3 px-4 font-bold uppercase">
+                                        {item.title}
+                                    </div>
+                                }
+                                {item.details.map((detail, indexDetail) => (
+                                    detail.hasOwnProperty('subdetails') ?
+                                        <LinkItemDropdown
+                                            key={indexDetail}
+                                            title={detail.title}
+                                            icon={detail.icon}
+                                            data={detail.subdetails}
+                                            access={detail.permissions}
+                                            sidebarOpen={sidebarOpen}
+                                        />
+                                    :
+                                        <LinkItem
+                                            key={indexDetail}
+                                            title={detail.title}
+                                            icon={detail.icon}
+                                            href={detail.href}
+                                            access={detail.permissions}
+                                            sidebarOpen={sidebarOpen}
+                                        />
+                                ))}
                             </div>
-                            <LinkItem
-                                // key={indexDetail}
-                                title="User"
-                                icon={<UserGroupIcon className="w-5 mr-4"/>}
-                                href=""
-                                // access={detail.permissions}
-                                sidebarOpen={sidebarOpen}
-                            />
-                        </div>
+                        ))}
                     </div>
                 </>
             :
                 <>
-                    <div className="flex justify-center items-center px-6 py-2 h-16 border-b dark:border-gray-900">
-                        ##
+                    <div className="flex justify-center items-center px-6 py-2 h-16 border-b  text-gray-900 dark:text-gray-500 dark:border-gray-900">
+                        <RocketLaunchIcon className="w-5" />
                     </div>
-                    <div className='w-full px-6 py-3 flex justify-center items-center gap-4 border-b bg-white dark:bg-gray-950/50 dark:border-gray-900'>
-                        {auth.user.name}
+                    <div className='w-full px-6 py-3 flex justify-center items-center gap-4 border-b bg-white text-gray-900 dark:text-gray-500 dark:bg-gray-950/50 dark:border-gray-900'>
+                        <UserCircleIcon className="w-5" />
                     </div>
                     <div className='w-full flex flex-col overflow-y-auto items-center justify-center'>
-                            <div className='flex flex-col min-w-full items-center' >
-                                
+                        {menuNavigation.map((link, i) => (
+                            <div className='flex flex-col min-w-full items-center' key={i}>
+                                {link.details.map((detail, x) =>
+                                    detail.hasOwnProperty('subdetails') ?
+                                        <LinkItemDropdown
+                                            sidebarOpen={sidebarOpen}
+                                            key={x}
+                                            data={detail.subdetails}
+                                            icon={detail.icon}
+                                            href={detail.href}
+                                            access={detail.permissions}
+                                        />
+                                    :
+                                        <LinkItem
+                                            sidebarOpen={sidebarOpen}
+                                            key={x}
+                                            access={detail.permissions}
+                                            icon={detail.icon}
+                                            href={detail.href}
+                                        />
+                                )}
                             </div>
+                        ))}
                     </div>
                 </>
             }

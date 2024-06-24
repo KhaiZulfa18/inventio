@@ -21,7 +21,7 @@ export default function LinkItem({href, icon, link, access, title, sidebarOpen, 
     return (
         <>
             {
-                // hasPermission ?
+                hasPermission ?
                     sidebarOpen ?
                         <Link
                             href={href}
@@ -37,8 +37,8 @@ export default function LinkItem({href, icon, link, access, title, sidebarOpen, 
                         >
                             {icon}
                         </Link>
-                // :
-                // null
+                :
+                null
             }
         </>
     )

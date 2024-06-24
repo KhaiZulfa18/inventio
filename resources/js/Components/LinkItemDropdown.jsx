@@ -24,18 +24,21 @@ export default function LinkItemDropdown({icon, title, data, access, sidebarOpen
     return (
         <>
             {
-                // hasPermission ?
+                hasPermission ?
                     sidebarOpen ?
                         <>
                             <button
-                                className={clsx(sideOpen, 'justify-between')}
+                                className={sideOpen + ' justify-between'}
                                 onClick={() => setIsOpen(!isOpen)}
                             >
-                                <div className='flex items-center gap-x-3.5'>{icon}{title}</div>
-                                {isOpen ? <ChevronUpIcon size={18} strokeWidth={1.5}/> : <ChevronDownIcon size={18} strokeWidth={1.5}/>}
+                                <div className='flex items-center gap-5'>{icon}{title}</div>
+                                {isOpen ? <ChevronUpIcon className='w-5'/> : <ChevronDownIcon className='w-5'/>}
                             </button>
                             {isOpen && data.map((item, i) => (
-                                <Link key={i} href={item.href} className={clsx(sideOpen, url === item.href && sideActive)}>
+                                <Link key={i} href={item.href} 
+                                    // className={clsx(sideOpen, url === item.href && sideActive)}
+                                    className={sideOpen + ' ml-4 border-l-2'}
+                                    >
                                     {item.icon} {item.title}
                                 </Link>
                             ))}
@@ -44,19 +47,21 @@ export default function LinkItemDropdown({icon, title, data, access, sidebarOpen
                     :
                     <>
                         <button
-                            className={clsx(sideClose)}
+                            className={sideClose}
                             onClick={() => setIsOpen(!isOpen)}
                         >
                             {icon}
                         </button>
                         {isOpen && data.map((item, i) => (
-                            <Link key={i} href={item.href} className={clsx(sideClose, url === item.href && sideActive)}>
+                            <Link key={i} href={item.href} 
+                                className={sideClose}
+                                >
                                 {item.icon}
                             </Link>
                         ))}
                     </>
-                // :
-                // null
+                :
+                null
             }
         </>
     )
