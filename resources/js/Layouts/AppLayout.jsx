@@ -6,7 +6,7 @@ import { useTheme } from '@/Context/ThemeSwitcherContext';
 export default function AppLayout({children}) {
 
     // destruct darkMode and themeSwitcher from context
-    const {darkMode, themeSwitcher } = useTheme;
+    const {darkMode, themeSwitcher } = useTheme();
 
     // define state sidebarOpen
     const [sidebarOpen, setSidebarOpen] = useState(
