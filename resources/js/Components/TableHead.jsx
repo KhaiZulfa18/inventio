@@ -1,4 +1,4 @@
-import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/solid'
+import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline'
 
 export default function TableHead({name, sortable = true, sort_field = null, sort_direction = null, children, sortChanged = () => {}}) {
     return (

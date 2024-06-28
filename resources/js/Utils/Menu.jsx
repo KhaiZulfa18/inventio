@@ -1,5 +1,5 @@
 import { usePage } from '@inertiajs/react';
-import { PlusCircleIcon, TableCellsIcon, UserPlusIcon, ShieldExclamationIcon, UsersIcon } from '@heroicons/react/24/solid';
+import { PlusCircleIcon, TableCellsIcon, UserPlusIcon, ShieldExclamationIcon, UsersIcon } from '@heroicons/react/24/outline';
 import hasAnyPermission from './Permissions';
 import React from 'react'
 

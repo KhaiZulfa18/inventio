@@ -6,7 +6,7 @@ import SelectInput from "@/Components/SelectInput";
 import TextArea from "@/Components/TextArea";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { Head, useForm } from "@inertiajs/react";
 
 export default function Create({auth, categories, success}) {

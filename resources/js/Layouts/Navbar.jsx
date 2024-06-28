@@ -1,7 +1,9 @@
-import { ChevronDoubleLeftIcon, MoonIcon, SunIcon } from '@heroicons/react/24/solid';
+import { ChevronDoubleLeftIcon, MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 import Menu from '@/Utils/Menu';
 import React, { useEffect, useState } from 'react';
 import { usePage } from '@inertiajs/react';
+import Notification from '@/Components/Notification';
+import AuthDropdown from '@/Components/AuthDropdown';
 
 
 export default function Navbar({toggleSidebar, themeSwitcher, darkMode}) {
@@ -59,10 +61,10 @@ export default function Navbar({toggleSidebar, themeSwitcher, darkMode}) {
                         <button className='p-2 rounded-md text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-900 ' onClick={themeSwitcher}>
                            {darkMode ? <SunIcon className='w-5'/> : <MoonIcon className='w-5'/> }
                         </button>
-                        {/* <Notification/> */}
+                        <Notification/>
                     </div>
                 </div>
-                {/* <AuthDropdown auth={auth} /> */}
+                <AuthDropdown auth={auth} isMobile={isMobile}/>
             </div>
         </div>
     );

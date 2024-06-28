@@ -2,7 +2,7 @@ import Pagination from "@/Components/Pagination";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
-import { ChevronUpIcon, ChevronDownIcon, PlusIcon } from '@heroicons/react/24/solid'
+import { ChevronUpIcon, ChevronDownIcon, PlusIcon } from '@heroicons/react/24/outline'
 import TableHead from "@/Components/TableHead";
 import SelectInput from "@/Components/SelectInput";
 import SecondaryButton from "@/Components/SecondaryButton";

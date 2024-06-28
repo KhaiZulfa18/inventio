@@ -2,7 +2,7 @@ import Pagination from "@/Components/Pagination";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
-import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/solid'
+import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/outline'
 import TableHead from "@/Components/TableHead";
 
 export default function Index({auth, categories, queryParams = null}) {

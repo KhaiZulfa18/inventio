@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, usePage } from '@inertiajs/react'
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid'
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 // import { clsx } from 'clsx';
 export default function LinkItemDropdown({icon, title, data, access, sidebarOpen, ...props}) {
 
@@ -37,7 +37,7 @@ export default function LinkItemDropdown({icon, title, data, access, sidebarOpen
                             {isOpen && data.map((item, i) => (
                                 <Link key={i} href={item.href} 
                                     // className={clsx(sideOpen, url === item.href && sideActive)}
-                                    className={sideOpen + ' ml-4 border-l-2'}
+                                    className={sideOpen + ' m-4 border-l-2'}
                                     >
                                     {item.icon} {item.title}
                                 </Link>
