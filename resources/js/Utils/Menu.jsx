@@ -12,14 +12,14 @@ export default function Menu() {
     const menuNavigation = [
         {
             title: 'Overview',
-            permissions: hasAnyPermission(['dashboard-view']),
+            permissions: hasAnyPermission(['dashboard']),
             details: [
                 {
                     title : 'Dashboard',
-                    href : '/apps/dashboard',
-                    active: url.startsWith('/apps/dashboard') ? true : false,
+                    href : '/dashboard',
+                    active: url.startsWith('/dashboard') ? true : false,
                     icon : <TableCellsIcon className="w-5"/>,
-                    permissions:  hasAnyPermission(['dashboard-view']),
+                    permissions:  hasAnyPermission(['dashboard']),
                 },
             ]
         },
@@ -29,15 +29,15 @@ export default function Menu() {
             details : [
                 {
                     title : 'Hak Akses',
-                    href : '/apps/permissions',
-                    active: url.startsWith('/apps/permissions') ? true : false,
+                    href : '/permissions',
+                    active: url.startsWith('/permissions') ? true : false,
                     icon : <UserPlusIcon className="w-5"/>,
                     permissions: hasAnyPermission(['permission-view']),
                 },
                 {
                     title : 'Akses Group',
-                    href : '/apps/roles',
-                    active: url.startsWith('/apps/roles') ? true : false,
+                    href : '/roles',
+                    active: url.startsWith('/roles') ? true : false,
                     icon : <UserPlusIcon className="w-5"/>,
                     permissions:  hasAnyPermission(['role-view']),
                 },
@@ -48,10 +48,10 @@ export default function Menu() {
                     subdetails: [
                         {
                             title: 'Data Pengguna',
-                            href: '/apps/users',
+                            href: '/user',
                             icon: <TableCellsIcon className="w-5"/>,
-                            active: url === '/apps/users' ? true : false,
-                            permissions: hasAnyPermission(['users-view']),
+                            active: url === '/user' ? true : false,
+                            permissions: hasAnyPermission(['user-view']),
                         }, 
                         // {
                         //     title: 'Tambah Data Pengguna',

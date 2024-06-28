@@ -20,6 +20,8 @@ Route::middleware(['auth','verified'])->group(function (){
     Route::resource('category',CategoryController::class);
     Route::resource('product',ProductController::class);
     Route::resource('user',UserController::class);
+    Route::resource('roles',RoleController::class);
+    Route::resource('permissions',RoleController::class);
 });
 
 Route::middleware('auth')->group(function () {
