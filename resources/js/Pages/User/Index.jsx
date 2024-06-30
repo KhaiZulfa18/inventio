@@ -8,8 +8,13 @@ export default function Index({auth}) {
         <AppLayout>
             <Head title="Pengguna"></Head>
 
-            <Card >
-                
+            <Card>
+                <Card.Header title="Pengguna">
+                    <UserGroupIcon className="w-5"/>
+                </Card.Header>
+                <Card.Body>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo at labore mollitia laboriosam accusamus sint, debitis expedita accusantium, distinctio quod deserunt quam iusto eligendi quisquam, ipsam earum culpa doloribus error.
+                </Card.Body>
             </Card>
         </AppLayout>
     );
