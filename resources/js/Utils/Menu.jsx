@@ -50,7 +50,7 @@ export default function Menu() {
                             title: 'Data Pengguna',
                             href: '/user',
                             icon: <TableCellsIcon className="w-5"/>,
-                            active: url === '/user' ? true : false,
+                            active: url.startsWith('/user') ? true : false,
                             permissions: hasAnyPermission(['user-view']),
                         }, 
                         // {
