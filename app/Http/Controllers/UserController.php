@@ -18,12 +18,18 @@ class UserController extends Controller
         //
         $query = User::query();
 
+        if(request('name')) {
+            $query->where('name','like','%'.request('name').'%')
+                    ->orWhere('email','like','%'.request('name').'%');
+        }
+
         $users = $query->orderBy('id', 'ASC')
             ->paginate(2)
             ->onEachSide(1);
 
         return Inertia::render('User/Index', [
             'users' => UserResource::collection($users),
+            'queryParams' => request()->query() ?: null,
         ]);
     }
 

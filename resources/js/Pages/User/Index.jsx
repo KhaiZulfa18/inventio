@@ -1,14 +1,44 @@
 import Card from "@/Components/Card";
 import Pagination from "@/Components/Pagination";
 import PrimaryButton from "@/Components/PrimaryButton";
+import Search from "@/Components/SearchInput";
 import Table from "@/Components/Table";
+import TextInput from "@/Components/TextInput";
 import AppLayout from "@/Layouts/AppLayout";
 import { UserGroupIcon } from "@heroicons/react/24/outline";
 import { Head, Link, router } from "@inertiajs/react";
 
-export default function Index({auth, users}) {
+export default function Index({auth, users, queryParams = null}) {
 
-    console.log(users);
+    queryParams = queryParams || {}
+
+    const searchFieldChanged = (name, value) => {
+        if(value) {
+            queryParams[name] = value;
+        }else {
+            delete queryParams[name];
+        }
+
+        router.get(route('user.index'),queryParams);
+    }
+
+    const onKeyPress = (name, e) => {
+        if(e.key !== 'Enter') return;
+
+        searchFieldChanged(name, e.target.value);
+    }
+
+    const sortChanged = (name) => {
+        if(name === queryParams.sort_field) {
+            queryParams.sort_direction = queryParams.sort_direction === 'asc' ? 'desc' : 'asc';
+        } else {
+            queryParams.sort_field = name;
+            queryParams.sort_direction = 'asc';
+        }
+    
+        router.get(route('user.index'),queryParams);
+    }
+
     return (
         <AppLayout>
             <Head title="Pengguna"></Head>
@@ -18,7 +48,12 @@ export default function Index({auth, users}) {
                     <UserGroupIcon className="w-6"/>
                 </Card.Header>
                 <Card.Body>
-
+                    <div className="py-2 w-full flex items-center justify-start gap-1">
+                        <Search.Input queryParams={queryParams} 
+                            name={'name'}
+                            url={route('user.index')}
+                            placeholder="Cari Nama atau Email"/>
+                    </div>
                     <Table className="bg-dark">
                         <Table.Thead>
                             <tr>

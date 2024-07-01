@@ -28,7 +28,7 @@ class ProductController extends Controller
         $sortDirection = request('sort_direction', 'desc');
 
         if(request('name')) {
-            $query->where('name','like','%'.request('name').'%');
+            $query->where('products.name','like','%'.request('name').'%');
         }
         if(request('category')) {
             $query->where('category_id','=',request('category'));
