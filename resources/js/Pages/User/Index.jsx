@@ -13,33 +13,6 @@ export default function Index({auth, users, queryParams = null}) {
 
     queryParams = queryParams || {}
 
-    const searchFieldChanged = (name, value) => {
-        if(value) {
-            queryParams[name] = value;
-        }else {
-            delete queryParams[name];
-        }
-
-        router.get(route('user.index'),queryParams);
-    }
-
-    const onKeyPress = (name, e) => {
-        if(e.key !== 'Enter') return;
-
-        searchFieldChanged(name, e.target.value);
-    }
-
-    const sortChanged = (name) => {
-        if(name === queryParams.sort_field) {
-            queryParams.sort_direction = queryParams.sort_direction === 'asc' ? 'desc' : 'asc';
-        } else {
-            queryParams.sort_field = name;
-            queryParams.sort_direction = 'asc';
-        }
-    
-        router.get(route('user.index'),queryParams);
-    }
-
     return (
         <AppLayout>
             <Head title="Pengguna"></Head>

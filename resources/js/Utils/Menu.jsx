@@ -1,5 +1,5 @@
 import { usePage } from '@inertiajs/react';
-import { PlusCircleIcon, TableCellsIcon, UserPlusIcon, ShieldExclamationIcon, UsersIcon } from '@heroicons/react/24/outline';
+import { PlusCircleIcon, TableCellsIcon, UserPlusIcon, ShieldExclamationIcon, UsersIcon, TagIcon, CubeIcon } from '@heroicons/react/24/outline';
 import hasAnyPermission from './Permissions';
 import React from 'react'
 
@@ -52,18 +52,31 @@ export default function Menu() {
                             icon: <TableCellsIcon className="w-5"/>,
                             active: url.startsWith('/user') ? true : false,
                             permissions: hasAnyPermission(['user-view']),
-                        }, 
-                        // {
-                        //     title: 'Tambah Data Pengguna',
-                        //     href: '/apps/users/create',
-                        //     icon: <PlusCircleIcon className="w-5"/>,
-                        //     active: url === '/apps/users/create' ? true : false,
-                        //     permissions: hasAnyPermission(['users-create']),
-                        // },
+                        },
                     ]
                 }
             ]
-        }
+        },
+        {
+            title: 'Master Management',
+            permissions: hasAnyPermission(['category-view']) || hasAnyPermission(['product-view']),
+            details : [
+                {
+                    title : 'Kategori',
+                    href : '/category',
+                    active: url.startsWith('/category') ? true : false,
+                    icon : <TagIcon className="w-5"/>,
+                    permissions: hasAnyPermission(['category-view']),
+                },
+                {
+                    title : 'Produk',
+                    href : '/product',
+                    active: url.startsWith('/product') ? true : false,
+                    icon : <CubeIcon className="w-5"/>,
+                    permissions:  hasAnyPermission(['product-view']),
+                },
+            ]
+        },
     ]
 
     return menuNavigation;

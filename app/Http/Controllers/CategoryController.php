@@ -22,7 +22,8 @@ class CategoryController extends Controller
         $sortDirection = request('sort_direction', 'desc');
 
         if(request('name')) {
-            $query->where('name','like','%'.request('name').'%');
+            $query->where('name','like','%'.request('name').'%')
+                    ->orWhere('description','like','%'.request('name').'%');
         }
         
         $categories = $query->orderBy($sortFields, $sortDirection)
