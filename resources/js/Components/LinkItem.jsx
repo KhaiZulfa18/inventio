@@ -25,15 +25,13 @@ export default function LinkItem({href, icon, link, access, title, sidebarOpen, 
                     sidebarOpen ?
                         <Link
                             href={href}
-                            // className={clsx(sideOpen, url.startsWith(href) && sideActive)} {...props}
-                            className={sideOpen} {...props}
+                            className={sideOpen + (url.startsWith(href) && sideActive)} {...props}
                         >
                             {icon} {title}
                         </Link>
                     :
                         <Link href={href} 
-                            // className={clsx(sideClose, url.startsWith(href) && sideActive)} {...props}
-                            className={sideClose} {...props}
+                            className={sideOpen + (url.startsWith(href) && sideActive)} {...props}
                         >
                             {icon}
                         </Link>

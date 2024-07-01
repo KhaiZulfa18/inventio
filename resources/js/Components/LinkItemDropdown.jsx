@@ -17,7 +17,7 @@ export default function LinkItemDropdown({icon, title, data, access, sidebarOpen
     const hasPermission = auth.super === true || access === true;
 
     // styles links
-    const sideOpen = 'min-w-full flex items-center font-medium gap-x-3.5 px-4 py-3 hover:border-r-2 capitalize hover:cursor-pointer text-sm text-gray-500 hover:border-r-gray-700 hover:text-gray-900 dark:text-gray-500 dark:hover:border-r-gray-50 dark:hover:text-gray-100';
+    const sideOpen = 'min-w-full flex items-center font-medium gap-x-3.5 px-4 py-3 hover:border-r-2 capitalize hover:cursor-pointer text-sm text-gray-500 hover:border-r-gray-700 hover:text-gray-900 dark:text-gray-500 dark:hover:border-r-gray-50 dark:hover:text-gray-100 ';
     const sideClose = 'min-w-full flex justify-center py-3 hover:border-r-2 hover:cursor-pointer  text-gray-500 hover:border-r-gray-700 hover:text-gray-900 dark:text-gray-500 dark:hover:border-r-gray-50 dark:hover:text-gray-100';
     const sideActive = 'border-r-2 border-r-gray-400 bg-gray-100 text-gray-700 dark:border-r-gray-500 dark:bg-gray-900 dark:text-white';
 
@@ -36,8 +36,7 @@ export default function LinkItemDropdown({icon, title, data, access, sidebarOpen
                             </button>
                             {isOpen && data.map((item, i) => (
                                 <Link key={i} href={item.href} 
-                                    // className={clsx(sideOpen, url === item.href && sideActive)}
-                                    className={sideOpen + ' m-4 border-l-2'}
+                                    className={sideOpen + (url === item.href && sideActive) + ' m-4 border-l-2'}
                                     >
                                     {item.icon} {item.title}
                                 </Link>
@@ -54,7 +53,7 @@ export default function LinkItemDropdown({icon, title, data, access, sidebarOpen
                         </button>
                         {isOpen && data.map((item, i) => (
                             <Link key={i} href={item.href} 
-                                className={sideClose}
+                                className={sideClose + (url === item.href && sideActive)}
                                 >
                                 {item.icon}
                             </Link>
