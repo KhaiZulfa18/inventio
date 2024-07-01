@@ -58,10 +58,10 @@ export default function Index({auth, users, queryParams = null}) {
                         <Table.Thead>
                             <tr>
                                 <Table.Th className={'w-10'}>No</Table.Th>
-                                <Table.Th>Nama Pengguna</Table.Th>
-                                <Table.Th>Email</Table.Th>
+                                <Table.Th name={'name'} sortable={true} url={route('user.index')} queryParams={queryParams}>Nama Pengguna</Table.Th>
+                                <Table.Th name={'email'} sortable={true} url={route('user.index')} queryParams={queryParams}>Email</Table.Th>
                                 <Table.Th>Group Akses</Table.Th>
-                                <Table.Th></Table.Th>
+                                <Table.Th>Aksi</Table.Th>
                             </tr>
                         </Table.Thead>
                         <Table.Tbody>
@@ -70,7 +70,15 @@ export default function Index({auth, users, queryParams = null}) {
                                     <Table.Td>{++i + (users.meta.current_page-1) * users.meta.per_page}</Table.Td>
                                     <Table.Td>{user.name}</Table.Td>
                                     <Table.Td>{user.email}</Table.Td>
-                                    <Table.Td>{user.email}</Table.Td>
+                                    <Table.Td>
+                                        <div className='flex flex-wrap gap-2'>
+                                            {user.roles && user.roles.map((role, index) => (
+                                                <span className="rounded-full px-2.5 py-0.5 text-xs tracking-tight font-medium transition-colors focus:outline-none flex items-center gap-1 capitalize border border-teal-500/40 bg-teal-500/10 text-teal-500 hover:bg-teal-500/20" key={index}>
+                                                    {role.name}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </Table.Td>
                                     <Table.Td><PrimaryButton>Hapus</PrimaryButton></Table.Td>
                                 </tr>
                             ))}

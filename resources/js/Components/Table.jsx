@@ -1,4 +1,6 @@
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 import React, { Children } from 'react'
+import { Link, router } from "@inertiajs/react";
 
 const Table = ({ children }) => {
     return (
@@ -34,13 +36,33 @@ const Td = ({ className, children}) => {
     );
 };
 
-const Th = ({ className, children }) => {
+const Th = ({ className, url, name, sortable = false, queryParams = {}, children }) => {
+
+    const sortChanged = (name) => {
+        if(name === queryParams.sort_field) {
+            queryParams.sort_direction = queryParams.sort_direction === 'asc' ? 'desc' : 'asc';
+        } else {
+            queryParams.sort_field = name;
+            queryParams.sort_direction = 'asc';
+        }
+    
+        router.get(url,queryParams);
+    }
+
     return (
         <th
             scope="col"
-            className={`${className} h-12 px-4 text-left align-middle font-medium text-gray-700 dark:text-gray-400`}
-        >
-            {children}
+            className={`${className} h-12 px-4 align-middle font-medium text-gray-700 dark:text-gray-400`}
+            onClick={(e) => sortChanged(name)}>
+            <div className="px-3 py-3 flex items-center justify-between gap-1 cursor-pointer">
+                {children}
+                {sortable && (
+                    <div>
+                        <ChevronUpIcon className={"w-3 " + (queryParams.sort_field == name && queryParams.sort_direction == 'asc' ? "text-gray-900 dark:text-gray-100 stroke-2 font-bold" : "text-gray-600 dark:text-gray-400")}/>
+                        <ChevronDownIcon className={"w-3 -mt-1 " + (queryParams.sort_field == name && queryParams.sort_direction == 'desc' ? "text-gray-900 dark:text-gray-100 stroke-2 font-bold" : "text-gray-600 dark:text-gray-400")}/>
+                    </div>
+                )}
+            </div>
         </th>
     );
 };
