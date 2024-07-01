@@ -9,11 +9,10 @@ const Card = ({className, children}) => {
     );
 }
 
-const CardHeader = ({title, className = '', children}) => {
+const CardHeader = ({className = '', children}) => {
     return (
         <div className={`px-4 py-2 border-b border-gray-300 dark:border-gray-700 flex items-center gap-2 font-semibold text-gray-700 dark:text-gray-200 `+ className}>
             {children}
-            {title}
         </div>
     );
 }

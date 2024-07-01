@@ -1,3 +1,4 @@
+import Button from "@/Components/Button";
 import Card from "@/Components/Card";
 import Pagination from "@/Components/Pagination";
 import PrimaryButton from "@/Components/PrimaryButton";
@@ -5,7 +6,7 @@ import Search from "@/Components/SearchInput";
 import Table from "@/Components/Table";
 import TextInput from "@/Components/TextInput";
 import AppLayout from "@/Layouts/AppLayout";
-import { UserGroupIcon } from "@heroicons/react/24/outline";
+import { PlusCircleIcon, UserGroupIcon, UserPlusIcon } from "@heroicons/react/24/outline";
 import { Head, Link, router } from "@inertiajs/react";
 
 export default function Index({auth, users, queryParams = null}) {
@@ -44,8 +45,11 @@ export default function Index({auth, users, queryParams = null}) {
             <Head title="Pengguna"></Head>
 
             <Card>
-                <Card.Header title="Pengguna">
-                    <UserGroupIcon className="w-6"/>
+                <Card.Header title="Pengguna" className="flex items-center justify-between gap-1">
+                    <div className="flex justify-normal gap-2">
+                        <UserGroupIcon className="w-6"/> Pengguna
+                    </div>
+                    <PrimaryButton><UserPlusIcon className="w-5" />&nbsp;Tambah</PrimaryButton>
                 </Card.Header>
                 <Card.Body>
                     <div className="py-2 w-full flex items-center justify-start gap-1">
