@@ -18,14 +18,18 @@ class UserController extends Controller
         //
         $query = User::query();
 
+        $sortFields = request('sort_field', 'created_at');
+        $sortDirection = request('sort_direction', 'desc');
+
         if(request('name')) {
             $query->where('name','like','%'.request('name').'%')
                     ->orWhere('email','like','%'.request('name').'%');
         }
 
-        $users = $query->orderBy('id', 'ASC')
-            ->paginate(2)
-            ->onEachSide(1);
+        $users = $query->with('roles')
+                    ->orderBy($sortFields, $sortDirection)
+                    ->paginate(10)
+                    ->onEachSide(1);
 
         return Inertia::render('User/Index', [
             'users' => UserResource::collection($users),
