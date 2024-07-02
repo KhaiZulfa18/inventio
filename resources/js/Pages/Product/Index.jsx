@@ -9,7 +9,7 @@ import AppLayout from "@/Layouts/AppLayout";
 import { PlusCircleIcon, UserGroupIcon, UserPlusIcon } from "@heroicons/react/24/outline";
 import { Head, Link, router } from "@inertiajs/react";
 
-export default function Index({auth, products, queryParams = null}) {
+export default function Index({auth, products, categories, queryParams = null}) {
 
     queryParams = queryParams || {}
 
@@ -26,10 +26,18 @@ export default function Index({auth, products, queryParams = null}) {
                 </Card.Header>
                 <Card.Body>
                     <div className="py-2 w-full flex items-center justify-start gap-1">
-                        <Search.Input queryParams={queryParams} 
+                        <Search.Input queryParams={queryParams} className={"w-1/2"}
                             name={'name'}
                             url={route('product.index')}
                             placeholder="Cari Produk"/>
+                        <Search.Select queryParams={queryParams}
+                            name={'category'}
+                            url={route('product.index')}>
+                            <option value="">- Pilih Kategori -</option>
+                            {categories.data.map((category) => (
+                                <option key={category.id} value={category.id}>{category.name}</option>
+                            ))}
+                        </Search.Select>
                     </div>
                     <Table className="bg-dark">
                         <Table.Thead>
