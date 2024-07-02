@@ -18,7 +18,7 @@ export default function Index({auth, users, queryParams = null}) {
             <Head title="Pengguna"></Head>
 
             <Card>
-                <Card.Header title="Pengguna" className="flex items-center justify-between gap-1">
+                <Card.Header className="flex items-center justify-between gap-1">
                     <div className="flex justify-normal gap-2">
                         <UserGroupIcon className="w-6"/> Pengguna
                     </div>

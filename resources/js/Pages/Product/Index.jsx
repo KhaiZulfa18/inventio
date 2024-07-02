@@ -15,12 +15,12 @@ export default function Index({auth, products, categories, queryParams = null}) 
 
     return (
         <AppLayout>
-            <Head title="Pengguna"></Head>
+            <Head title="Produk"></Head>
 
             <Card>
-                <Card.Header title="Pengguna" className="flex items-center justify-between gap-1">
+                <Card.Header className="flex items-center justify-between gap-1">
                     <div className="flex justify-normal gap-2">
-                        <UserGroupIcon className="w-6"/> Kategori
+                        <UserGroupIcon className="w-6"/> Produk
                     </div>
                     <PrimaryButton><UserPlusIcon className="w-5" />&nbsp;Tambah</PrimaryButton>
                 </Card.Header>
