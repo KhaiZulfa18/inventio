@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -43,6 +44,12 @@ class UserController extends Controller
     public function create()
     {
         //
+        $roles = Role::all();
+
+        return Inertia::render('User/Create',[
+            'roles' => $roles,
+            'success' => session('success'),
+        ]);
     }
 
     /**
@@ -51,6 +58,18 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         //
+        $data = $request->validated();
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        $user->assignRole($request->selectedRoles);
+
+        return to_route('user.create')
+                    ->with(['success'=> "User {$request->name} telah disimpan!"]);
     }
 
     /**

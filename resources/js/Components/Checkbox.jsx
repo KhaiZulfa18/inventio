@@ -1,12 +1,14 @@
-export default function Checkbox({ className = '', ...props }) {
+export default function Checkbox({ label, className = '', ...props }) {
     return (
-        <input
-            {...props}
-            type="checkbox"
-            className={
-                'rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 ' +
-                className
-            }
-        />
+        <div>
+            <div className="flex flex-row items-center gap-2">
+                <input
+                    {...props}
+                    type="checkbox"
+                    className={'rounded-md bg-white border-gray-200 dark:bg-gray-950 dark:border-gray-800 checked:bg-teal-500 ' + className}
+                />
+                <label className="text-sm text-gray-700 dark:text-gray-400">{label}</label>
+            </div>
+        </div>
     );
 }
