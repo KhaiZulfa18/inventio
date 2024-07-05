@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
@@ -11,7 +13,22 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        $query = Permission::query();
+
+        $sortFields = request('sort_field', 'created_at');
+        $sortDirection = request('sort_direction', 'desc');
+
+        if(request('name')) {
+            $query->where('name','like','%'.request('name').'%');
+        }
+
+        $permissions = $query->orderBy($sortFields, $sortDirection)
+                    ->paginate(10)
+                    ->onEachSide(1);
+
+        return Inertia::render('Permission/Index', [
+            'permissions' => $permissions,
+        ]);
     }
 
     /**
