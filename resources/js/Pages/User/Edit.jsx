@@ -48,7 +48,7 @@ export default function Create({auth, user, roles, success}) {
 
     return (
         <AppLayout>
-            <Head title="Tambah Pengguna"></Head>
+            <Head title="Ubah Pengguna"></Head>
 
             <Card className={"w-full xl:w-2/3"}>
                 <Card.Header className="flex items-center justify-between gap-1">

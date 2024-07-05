@@ -1,5 +1,5 @@
 import { usePage } from '@inertiajs/react';
-import { PlusCircleIcon, TableCellsIcon, UserPlusIcon, ShieldExclamationIcon, UsersIcon, TagIcon, CubeIcon } from '@heroicons/react/24/outline';
+import { PlusCircleIcon, TableCellsIcon, UserPlusIcon, ShieldExclamationIcon, UsersIcon, TagIcon, CubeIcon, FingerPrintIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 import hasAnyPermission from './Permissions';
 import React from 'react'
 
@@ -29,21 +29,21 @@ export default function Menu() {
             details : [
                 {
                     title : 'Hak Akses',
-                    href : '/permissions',
-                    active: url.startsWith('/permissions') ? true : false,
-                    icon : <UserPlusIcon className="w-5"/>,
+                    href : '/permission',
+                    active: url.startsWith('/permission') ? true : false,
+                    icon : <FingerPrintIcon className="w-5"/>,
                     permissions: hasAnyPermission(['permission-view']),
                 },
                 {
                     title : 'Akses Group',
-                    href : '/roles',
-                    active: url.startsWith('/roles') ? true : false,
-                    icon : <UserPlusIcon className="w-5"/>,
+                    href : '/role',
+                    active: url.startsWith('/role') ? true : false,
+                    icon : <UsersIcon className="w-5"/>,
                     permissions:  hasAnyPermission(['role-view']),
                 },
                 {
                     title : 'Pengguna',
-                    icon : <UsersIcon className="w-5"/>,
+                    icon : <UserGroupIcon className="w-5"/>,
                     permissions: hasAnyPermission(['user-view']),
                     subdetails: [
                         {
