@@ -6,7 +6,7 @@ import Search from "@/Components/SearchInput";
 import Table from "@/Components/Table";
 import TextInput from "@/Components/TextInput";
 import AppLayout from "@/Layouts/AppLayout";
-import { PlusCircleIcon, TrashIcon, UserGroupIcon, UserPlusIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, TrashIcon, UserGroupIcon, UserPlusIcon } from "@heroicons/react/24/outline";
 import { Head, Link, router } from "@inertiajs/react";
 
 export default function Index({auth, users, queryParams = null}) {
@@ -58,7 +58,10 @@ export default function Index({auth, users, queryParams = null}) {
                                             ))}
                                         </div>
                                     </Table.Td>
-                                    <Table.Td>
+                                    <Table.Td className={'flex gap-1'}>
+                                        <Button type={'link'} style={'info'} href={route('user.edit', user.id)}>
+                                            <PencilIcon className="w-4"/>
+                                        </Button>
                                         <Button type={'delete'} style={'danger'} url={route('user.destroy', user.id)}>
                                             <TrashIcon className="w-4"/>
                                         </Button>

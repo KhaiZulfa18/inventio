@@ -86,6 +86,15 @@ class UserController extends Controller
     public function edit(User $user)
     {
         //
+        $user_id = $user->id; 
+        $user = User::findOrFail($user_id);
+
+        $roles = Role::all();
+
+        return Inertia::render('User/Edit', [
+            'user' => $user,
+            'roles' => $roles,
+        ]);
     }
 
     /**
@@ -102,5 +111,10 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+        $user_id = $user->id;
+
+        User::findOrFail($user_id)->delete();
+        
+        return back();
     }
 }
