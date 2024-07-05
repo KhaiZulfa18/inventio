@@ -5,21 +5,26 @@ import TextInput from "@/Components/TextInput";
 import AppLayout from "@/Layouts/AppLayout";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { Head, useForm } from '@inertiajs/react'
+import toast from 'react-hot-toast'
 
-export default function Create({auth, user, roles}) {
+export default function Create({auth, user, roles, success}) {
 
     const {data, setData, post, errors} = useForm({
-        name: '',
-        email: '',
+        name: user.data.name,
+        email: user.data.email,
         password: '',
         password_confirmation: '',
-        selectedRoles: [],
+        selectedRoles: user.data.roles.map(role => role.name),
+        _method: 'PUT',
     });
 
     const setSelectedRoles = (e) => {
         let items = data.selectedRoles
 
-        items.push(e.target.value)
+        if(items.some((name) => name === e.target.value))
+            items = items.filter((name) => name !== e.target.value);
+        else
+            items.push(e.target.value);
 
         setData('selectedRoles', items);
     }
@@ -27,7 +32,18 @@ export default function Create({auth, user, roles}) {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        post(route('user.store'));
+        post(route('user.update', user.data.id), {
+            onSuccess: () => {
+                toast('Data berhasil diubah', {
+                    icon: '👏',
+                    style: {
+                        borderRadius: '10px',
+                        background: '#1C1F29',
+                        color: '#fff',
+                    },
+                })
+            }
+        });
     }
 
     return (
@@ -47,25 +63,29 @@ export default function Create({auth, user, roles}) {
                                 <label>Name</label>
                                 <TextInput className="w-full" placeholder={"Name"} autoComplete="off" 
                                     onChange={e => setData('name', e.target.value)}
+                                    defaultValue={data.name}
                                     errors={errors.name}/>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Email</label>
                                 <TextInput type="email" className="w-full" placeholder={"Email"} autoComplete="off"
                                     onChange={e => setData('email', e.target.value)}
-                                    readonly
+                                    disabled
+                                    defaultValue={data.email}
                                     errors={errors.email}/>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Password</label>
                                 <TextInput type="password" className="w-full" placeholder={"Password"} autoComplete="off"
                                     onChange={e => setData('password', e.target.value)}
+                                    defaultValue={data.password}
                                     errors={errors.password}/>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Confirm Password</label>
                                 <TextInput type="password" className="w-full" placeholder={"Confirm Password"} autoComplete="off"
                                     onChange={e => setData('password_confirmation', e.target.value)}
+                                    defaultValue={data.password_confirmation}
                                     errors={errors.password_confirmation}/>
                             </div>
                             
@@ -78,7 +98,9 @@ export default function Create({auth, user, roles}) {
                                 <div className='p-4 rounded-b-lg border border-t-0 bg-gray-100 dark:bg-gray-900 dark:border-gray-900'>
                                     <div className='flex flex-row flex-wrap gap-4'>
                                         {roles.map((role, i) => (
-                                            <Checkbox label={role.name} value={role.name} onChange={setSelectedRoles} key={i}/>
+                                            <Checkbox key={i} label={role.name} value={role.name} 
+                                                onChange={setSelectedRoles}
+                                                defaultChecked={data.selectedRoles.some((name) => name === role.name ?? true)}/>
                                         ))}
                                     </div>
                                     {errors.selectedRoles && <div className='text-xs text-red-500 mt-4'>{errors.selectedRoles}</div>}

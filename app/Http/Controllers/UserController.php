@@ -87,12 +87,12 @@ class UserController extends Controller
     {
         //
         $user_id = $user->id; 
-        $user = User::findOrFail($user_id);
+        $user = User::with('roles')->findOrFail($user_id);
 
         $roles = Role::all();
 
         return Inertia::render('User/Edit', [
-            'user' => $user,
+            'user' => (new UserResource($user)),
             'roles' => $roles,
         ]);
     }
@@ -103,6 +103,19 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         //
+        if($request->password)
+
+            $user->update([
+                'password' => bcrypt($request->password),
+            ]);
+
+        $user->update([
+            'name' => $request->name,
+        ]);
+
+        $user->syncRoles($request->selectedRoles);
+
+        return to_route('user.index');
     }
 
     /**
