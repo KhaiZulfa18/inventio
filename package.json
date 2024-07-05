@@ -20,6 +20,8 @@
         "vite": "^5.0"
     },
     "dependencies": {
-        "@heroicons/react": "^2.1.4"
+        "@heroicons/react": "^2.1.4",
+        "react-hot-toast": "^2.4.1",
+        "sweetalert2": "^11.12.1"
     }
 }
