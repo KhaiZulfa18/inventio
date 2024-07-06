@@ -6,7 +6,7 @@ import Search from "@/Components/SearchInput";
 import Table from "@/Components/Table";
 import TextInput from "@/Components/TextInput";
 import AppLayout from "@/Layouts/AppLayout";
-import { PencilIcon, TrashIcon, UserPlusIcon, UsersIcon } from "@heroicons/react/24/outline";
+import { FingerPrintIcon, PencilIcon, TrashIcon, UserPlusIcon, UsersIcon } from "@heroicons/react/24/outline";
 import { Head, useForm } from "@inertiajs/react";
 import ListBox from "@/Components/ListBox";
 
@@ -61,7 +61,7 @@ export default function Index({auth, roles, permissions, queryParams = null}) {
             <Card>
                 <Card.Header className="flex items-center justify-between gap-1">
                     <div className="flex justify-normal gap-2">
-                        <UsersIcon className="w-6"/> Hak Akses
+                        <FingerPrintIcon className="w-6"/> Hak Akses
                     </div>
                     <Button type={'modal'} style={'success'} onClick={(e) => setData('isOpen', true)}>
                         <UserPlusIcon className="w-5"/><span className="hidden lg:block">Tambah</span>

@@ -6,7 +6,7 @@ import Search from "@/Components/SearchInput";
 import Table from "@/Components/Table";
 import TextInput from "@/Components/TextInput";
 import AppLayout from "@/Layouts/AppLayout";
-import { PencilIcon, TrashIcon, UserGroupIcon, UserPlusIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, TagIcon, TrashIcon, UserGroupIcon, UserPlusIcon } from "@heroicons/react/24/outline";
 import { Head, Link, router } from "@inertiajs/react";
 
 export default function Index({auth, categories, queryParams = null}) {
@@ -20,7 +20,7 @@ export default function Index({auth, categories, queryParams = null}) {
             <Card>
                 <Card.Header className="flex items-center justify-between gap-1">
                     <div className="flex justify-normal gap-2">
-                        <UserGroupIcon className="w-6"/> Kategori
+                        <TagIcon className="w-6"/> Kategori
                     </div>
                     <Button type={'link'} href={route('category.create')} style={'success'}>
                         <UserPlusIcon className="w-5"/><span className="hidden lg:block">Tambah</span>

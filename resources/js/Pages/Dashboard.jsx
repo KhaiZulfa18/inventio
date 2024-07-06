@@ -11,10 +11,10 @@ export default function Dashboard({ auth }) {
         <AppLayout>
             <Head title='Dashboard'></Head>
 
-            <Card className={"w-1/2"}>
+            <Card className={"w-full xl:w-1/2"}>
                 <Card.Body>
                     <h3 className='text-xl font-bold'>Welcome, { auth.user.name }</h3>
-                    <div className='flex gap-2 mt-2'>
+                    <div className='flex flex-wrap gap-2 mt-2'>
                         <Button type={'button'} style={'primary'}>Primary</Button>
                         <Button type={'button'} style={'info'}>Info</Button>
                         <Button type={'button'} style={'danger'}>Danger</Button>

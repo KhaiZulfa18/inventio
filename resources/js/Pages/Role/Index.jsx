@@ -9,10 +9,17 @@ import AppLayout from "@/Layouts/AppLayout";
 import { PencilIcon, TrashIcon, UserPlusIcon, UsersIcon } from "@heroicons/react/24/outline";
 import { Head, useForm } from "@inertiajs/react";
 import ListBox from "@/Components/ListBox";
+import { useState } from "react";
 
 export default function Index({auth, roles, permissions, queryParams = null}) {
 
     queryParams = queryParams || {}
+
+    const [showPermissions, setShowPermissions] = useState(false);
+
+    const handleButtonClick = () => {
+        setShowPermissions(!showPermissions);
+    };
 
     const { data, setData, transform, post, errors} = useForm({
         id: '',
@@ -98,8 +105,12 @@ export default function Index({auth, roles, permissions, queryParams = null}) {
                                     <Table.Td>{role.name}</Table.Td>
                                     <Table.Td>
                                         <div className='flex flex-wrap gap-2'>
-                                            {role.permissions && role.permissions.map((permission, index) => (
-                                                <span className="rounded-full px-2.5 py-0.5 text-xs tracking-tight font-medium transition-colors focus:outline-none flex items-center gap-1 capitalize border border-teal-500/40 bg-teal-500/10 text-teal-500 hover:bg-teal-500/20" key={index}>
+                                            {role.permissions && ( role.permissions.length > 5 && !showPermissions) ? (
+                                                <Button type={'modal'} onClick={(e) => setShowPermissions(!showPermissions)} className={'rounded-full px-2.5 py-0.5 text-xs tracking-tight font-medium border-teal-500/40 bg-teal-500/10 text-teal-500 hover:bg-teal-500/20'}>{`${role.permissions.length} Hak Akses`}</Button>
+                                            ) : null}
+
+                                            {role.permissions && ( role.permissions.length < 5 || showPermissions ) && role.permissions.map((permission, index) => (
+                                                <span onClick={(e) => setShowPermissions(!showPermissions)} className="rounded-full px-2.5 py-0.5 text-xs tracking-tight font-medium transition-colors focus:outline-none flex items-center gap-1 capitalize border border-teal-500/40 bg-teal-500/10 text-teal-500 hover:bg-teal-500/20" key={index}>
                                                     {permission.name}
                                                 </span>
                                             ))}
