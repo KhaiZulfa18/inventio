@@ -6,7 +6,7 @@ import Search from "@/Components/SearchInput";
 import Table from "@/Components/Table";
 import TextInput from "@/Components/TextInput";
 import AppLayout from "@/Layouts/AppLayout";
-import { PlusCircleIcon, UserGroupIcon, UserPlusIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, TrashIcon, UserGroupIcon, UserPlusIcon } from "@heroicons/react/24/outline";
 import { Head, Link, router } from "@inertiajs/react";
 
 export default function Index({auth, products, categories, queryParams = null}) {
@@ -22,7 +22,9 @@ export default function Index({auth, products, categories, queryParams = null}) 
                     <div className="flex justify-normal gap-2">
                         <UserGroupIcon className="w-6"/> Produk
                     </div>
-                    <PrimaryButton><UserPlusIcon className="w-5" />&nbsp;Tambah</PrimaryButton>
+                    <Button type={'link'} href={route('product.create')} style={'success'}>
+                        <UserPlusIcon className="w-5"/><span className="hidden lg:block">Tambah</span>
+                    </Button>
                 </Card.Header>
                 <Card.Body>
                     <div className="py-2 w-full flex items-center justify-start gap-1">
@@ -56,7 +58,14 @@ export default function Index({auth, products, categories, queryParams = null}) 
                                     <Table.Td>{product.name}</Table.Td>
                                     <Table.Td>{product.description}</Table.Td>
                                     <Table.Td>{product.category.name}</Table.Td>
-                                    <Table.Td><PrimaryButton>Hapus</PrimaryButton></Table.Td>
+                                    <Table.Td className={'flex gap-1'}>
+                                        <Button type={'link'} style={'info'} href={route('product.edit', product.id)}>
+                                            <PencilIcon className="w-4"/>
+                                        </Button>
+                                        <Button type={'delete'} style={'danger'} url={route('product.destroy', product.id)}>
+                                            <TrashIcon className="w-4"/>
+                                        </Button>
+                                    </Table.Td>
                                 </tr>
                             ))}
                         </Table.Tbody>

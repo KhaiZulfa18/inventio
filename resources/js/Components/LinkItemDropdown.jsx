@@ -36,9 +36,10 @@ export default function LinkItemDropdown({icon, title, data, access, sidebarOpen
                             </button>
                             {isOpen && data.map((item, i) => (
                                 <Link key={i} href={item.href} 
-                                    className={sideOpen + (url === item.href && sideActive) + ' m-4 border-l-2'}
-                                    >
+                                    className={sideOpen + (url === item.href && sideActive) + ' border-l-2'}>
+                                    <div className="flex gap-x-3.5 ml-4">
                                     {item.icon} {item.title}
+                                    </div>
                                 </Link>
                             ))}
                         </>

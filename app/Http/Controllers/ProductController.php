@@ -73,8 +73,7 @@ class ProductController extends Controller
             'created_by' => Auth::id(),
         ]);
 
-        return to_route('product.create')
-                    ->with(['success'=> 'Produk telah disimpan!']);
+        return to_route('product.index');
     }
 
     /**

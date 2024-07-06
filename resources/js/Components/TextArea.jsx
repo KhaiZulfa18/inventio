@@ -13,7 +13,7 @@ export default forwardRef(function TextArea({ children, className = '', isFocuse
         <textarea
             {...props}
             className={
-                'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm ' +
+                'text-gray-900 dark:text-gray-50 bg-gray-50 dark:bg-gray-900 border-gray-100 dark:border-gray-900 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm ' +
                 className
             }
             ref={input}

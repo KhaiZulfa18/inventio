@@ -27,7 +27,7 @@ class CategoryController extends Controller
         }
         
         $categories = $query->orderBy($sortFields, $sortDirection)
-                        ->paginate(2)
+                        ->paginate(5)
                         ->onEachSide(1);
 
         return Inertia::render('Category/Index',[

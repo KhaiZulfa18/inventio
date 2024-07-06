@@ -1,79 +1,78 @@
+import Button from "@/Components/Button";
+import Card from "@/Components/Card";
 import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import SecondaryButton from "@/Components/SecondaryButton";
 import SelectInput from "@/Components/SelectInput";
 import TextArea from "@/Components/TextArea";
 import TextInput from "@/Components/TextInput";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AppLayout from "@/Layouts/AppLayout";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, useForm } from '@inertiajs/react'
 
 export default function Create({auth, categories, success}) {
 
     const {data, setData, post, errors} = useForm({
-        'name': '',
-        'description': '',
-        'category': '',
+        name: '',
+        description: '',
+        category: '',
     });
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
         post(route('product.store'));
     }
 
     return (
-        <AuthenticatedLayout
-        user={auth.user}
-        header={
-            <div className="flex items-center justify-between">
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">New Product</h2>
-            </div>
-        }>
+        <AppLayout>
+            <Head title="Tambah Pengguna"></Head>
 
-        <Head title="New Product"></Head>
+            <Card className={"w-full"}>
+                <Card.Header className="flex items-center justify-between gap-1">
+                    <div className="flex justify-normal gap-2">
+                        Tambah Pengguna
+                    </div>
+                </Card.Header>
+                <Card.Body>
+                    <form onSubmit={onSubmit} >
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div className="py-3 px-4 flex flex-col gap-2">
+                                <label>Nama Produk</label>
+                                <TextInput className="w-full" placeholder={"Nama Produk"} autoComplete="off" 
+                                    onChange={e => setData('name', e.target.value)}
+                                    />
+                                <InputError message={errors.name} className="mt-2"></InputError>
+                            </div>
+                            <div className="py-3 px-4 flex flex-col gap-2">
+                                <label>Deskripsi</label>
+                                <TextArea className="w-full" id="description" name="description" 
+                                    onChange={(e) => setData('description', e.target.value)}>
+                                </TextArea>
+                                <InputError message={errors.description} className="mt-2"></InputError>
+                            </div>
+                            <div className="py-3 px-4 flex flex-col gap-2">
+                                <label>Kategori</label>
+                                <SelectInput className="w-full" name="category" id="category" onChange={(e) => setData('category', e.target.value)}>
+                                    <option value="">- Pilih Kategori -</option>
+                                    {categories.data.map((category) => (
+                                        <option key={category.id} value={category.id}>{category.name}</option>
+                                    ))}
+                                </SelectInput>
+                                <InputError message={errors.category} className="mt-2"></InputError>
+                            </div>
+                        </div>
+                        <div className="px-4 pt-5 flex gap-2 justify-end">
+                            <Button type={'submit'} style={'success'}>Simpan</Button>
+                            <Button type={'link'} href={route('user.index')} style={'danger'}>Kembali</Button>
+                        </div>
 
-        <div className="py-3">
-            <div className="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div className="p-6 sm:p-8 bg-white shadow sm:rounded-lg overflow-auto">
-                    <form onSubmit={onSubmit} className="p-4 rounded-sm">
-                        <div className="m-2">
-                            <InputLabel htmlFor="name" value="Nama Produk"></InputLabel>
-                            <TextInput className="w-full" id="name" name="name" placeholder="Nama Produk" autoComplete="off" onChange={(e) => setData('name', e.target.value)}/>
-                            <InputError message={errors.name} className="mt-2"></InputError>
-                        </div>
-                        <div className="m-2">
-                            <InputLabel value="Deskripisi"></InputLabel>
-                            <TextArea className="w-full" id="description" name="description" onChange={(e) => setData('description', e.target.value)}></TextArea>
-                            <InputError message={errors.description} className="mt-2"></InputError>
-                        </div>
-                        <div className="m-2">
-                            <InputLabel value="Kategori"></InputLabel>
-                            <SelectInput className="w-full" name="category" id="category" onChange={(e) => setData('category', e.target.value)}>
-                                <option value="">- Pilih Kategori -</option>
-                                {categories.data.map((category) => (
-                                    <option key={category.id} value={category.id}>{category.name}</option>
-                                ))}
-                            </SelectInput>
-                            <InputError message={errors.category} className="mt-2"></InputError>
-                        </div>
-                        <div className="mt-4 text-right">
-                            <PrimaryButton type="submit" >
-                                Simpan
-                            </PrimaryButton>
-                        </div>
-                        
                         {success && (
-                            <div className="mt-4 bg-emerald-400 py-2 px-4 text-white rounded flex items-center gap-2">
+                            <div className="mt-4 bg-teal-700 py-2 px-5 text-white rounded-lg flex items-center gap-2">
                                 <CheckCircleIcon className="w-5"></CheckCircleIcon> {success}
                             </div>
                         )}
                     </form>
-                </div>
-            </div>
-        </div>
-
-        </AuthenticatedLayout>
-    );
+                </Card.Body>
+            </Card>
+        </AppLayout>
+    )
 }

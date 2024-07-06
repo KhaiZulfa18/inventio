@@ -8,12 +8,12 @@ export default function Button({className, style, icon, label, type, href, added
     const { delete: destroy } = useForm();
 
     const typeStyles = {
-        primary: 'bg-gray-800 hover:bg-gray-700 text-white',
-        info: 'bg-blue-800 hover:bg-blue-700 text-white',
-        success: 'bg-teal-800 hover:bg-teal-700 text-white',
-        warning: 'bg-yellow-600 hover:bg-yellow-500 text-white',
-        danger: 'bg-rose-800 hover:bg-rose-700 text-white',
-        secondary: 'bg-indigo-800 hover:bg-indigo-700 text-white',
+        primary: 'bg-indigo-600 hover:bg-indigo-500 text-white',
+        info: 'bg-lime-600 hover:bg-lime-500 text-white',
+        success: 'bg-teal-600 hover:bg-teal-500 text-white',
+        warning: 'bg-orange-600 hover:bg-orange-500 text-white',
+        danger: 'bg-rose-600 hover:bg-rose-500 text-white',
+        secondary: 'bg-gray-800 hover:bg-gray-700 text-white',
       };
     
     const buttonStyle = typeStyles[style] || '';

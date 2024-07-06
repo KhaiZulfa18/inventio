@@ -3,7 +3,7 @@ import React from "react";
 import LinkItem from "@/Components/LinkItem";
 import LinkItemDropdown from "@/Components/LinkItemDropdown";
 import { usePage } from "@inertiajs/react";
-import { RocketLaunchIcon, UserCircleIcon, UserGroupIcon } from "@heroicons/react/24/outline";
+import { GlobeAltIcon, RocketLaunchIcon, UserCircleIcon, UserGroupIcon } from "@heroicons/react/24/outline";
 // import { IconBrandReact } from "@tabler/icons-react";
 
 export default function Sidebar({ sidebarOpen = true }) {
@@ -20,8 +20,8 @@ export default function Sidebar({ sidebarOpen = true }) {
             {sidebarOpen ?
                 <>
                     <div className="flex justify-center items-center px-6 py-2 h-16">
-                        <div className="text-2xl font-bold text-center leading-loose tracking-wider text-gray-900 dark:text-gray-200">
-                            STARTER KIT
+                        <div className="flex text-2xl font-bold text-center leading-loose tracking-widest text-gray-900 dark:text-gray-500">
+                            INVENTI <GlobeAltIcon className="w-6" />
                         </div>
                     </div>
                     <div className="w-full p-3 flex items-center gap-4 border-b border-t dark:bg-gray-950/50 dark:border-gray-900">
@@ -74,7 +74,7 @@ export default function Sidebar({ sidebarOpen = true }) {
             :
                 <>
                     <div className="flex justify-center items-center px-6 py-2 h-16 border-b  text-gray-900 dark:text-gray-500 dark:border-gray-900">
-                        <RocketLaunchIcon className="w-5" />
+                        <GlobeAltIcon className="w-6" />
                     </div>
                     <div className='w-full px-6 py-3 flex justify-center items-center gap-4 border-b bg-white text-gray-900 dark:text-gray-500 dark:bg-gray-950/50 dark:border-gray-900'>
                         <UserCircleIcon className="w-6" />
