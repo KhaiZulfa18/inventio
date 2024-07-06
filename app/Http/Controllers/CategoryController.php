@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -41,7 +42,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Category/Create',[
+            'success' => session('success'),
+        ]);
     }
 
     /**
@@ -49,7 +52,15 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $category = Category::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'created_by' => Auth::id(),
+        ]);
+
+        return to_route('category.index');
     }
 
     /**
@@ -65,7 +76,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return Inertia::render('Category/Edit',  [
+            'category' => (new CategoryResource($category)),
+        ]);
     }
 
     /**
@@ -73,7 +86,9 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $category->update(['name' => $request->name, 'description' => $request->description]);
+
+        return to_route('category.index');
     }
 
     /**
@@ -81,6 +96,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category_id = $category->id;
+
+        Category::findOrFail($category_id)->delete();
+        
+        return back();
     }
 }

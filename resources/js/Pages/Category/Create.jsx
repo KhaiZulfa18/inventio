@@ -8,36 +8,35 @@ import AppLayout from "@/Layouts/AppLayout";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { Head, useForm } from '@inertiajs/react'
 
-export default function Create({auth, categories, success}) {
+export default function Create({auth, success}) {
 
     const {data, setData, post, errors} = useForm({
         name: '',
         description: '',
-        category: '',
     });
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        post(route('product.store'));
+        post(route('category.store'));
     }
 
     return (
         <AppLayout>
-            <Head title="Tambah Produk"></Head>
+            <Head title="Tambah Kategori"></Head>
 
             <Card className={"w-full"}>
                 <Card.Header className="flex items-center justify-between gap-1">
                     <div className="flex justify-normal gap-2">
-                        Tambah Produk
+                        Tambah Kategori
                     </div>
                 </Card.Header>
                 <Card.Body>
                     <form onSubmit={onSubmit} >
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                             <div className="py-3 px-4 flex flex-col gap-2">
-                                <label>Nama Produk</label>
-                                <TextInput className="w-full" placeholder={"Nama Produk"} autoComplete="off" 
+                                <label>Nama Kategori</label>
+                                <TextInput className="w-full" placeholder={"Nama Kategori"} autoComplete="off" 
                                     onChange={e => setData('name', e.target.value)}
                                     />
                                 <InputError message={errors.name} className="mt-2"></InputError>
@@ -49,20 +48,10 @@ export default function Create({auth, categories, success}) {
                                 </TextArea>
                                 <InputError message={errors.description} className="mt-2"></InputError>
                             </div>
-                            <div className="py-3 px-4 flex flex-col gap-2">
-                                <label>Kategori</label>
-                                <SelectInput className="w-full" name="category" id="category" onChange={(e) => setData('category', e.target.value)}>
-                                    <option value="">- Pilih Kategori -</option>
-                                    {categories.data.map((category) => (
-                                        <option key={category.id} value={category.id}>{category.name}</option>
-                                    ))}
-                                </SelectInput>
-                                <InputError message={errors.category} className="mt-2"></InputError>
-                            </div>
                         </div>
                         <div className="px-4 pt-5 flex gap-2 justify-end">
                             <Button type={'submit'} style={'success'}>Simpan</Button>
-                            <Button type={'link'} href={route('product.index')} style={'danger'}>Kembali</Button>
+                            <Button type={'link'} href={route('category.index')} style={'danger'}>Kembali</Button>
                         </div>
 
                         {success && (

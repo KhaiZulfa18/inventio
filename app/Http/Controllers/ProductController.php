@@ -89,7 +89,12 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories = Category::all();
+
+        return Inertia::render('Product/Edit',  [
+            'product' => (new ProductResource($product)),
+            'categories' => CategoryResource::collection($categories),
+        ]);
     }
 
     /**
@@ -97,7 +102,10 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        
+        $product->update(['name' => $request->name, 'description' => $request->description, 'category_id' => $request->category]);
+
+        return to_route('product.index');
     }
 
     /**
@@ -105,6 +113,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product_id = $product->id;
+
+        Product::findOrFail($product_id)->delete();
+        
+        return back();
     }
 }

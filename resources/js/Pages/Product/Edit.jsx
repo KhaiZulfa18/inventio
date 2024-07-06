@@ -1,5 +1,6 @@
 import Button from "@/Components/Button";
 import Card from "@/Components/Card";
+import Checkbox from "@/Components/Checkbox";
 import InputError from "@/Components/InputError";
 import SelectInput from "@/Components/SelectInput";
 import TextArea from "@/Components/TextArea";
@@ -7,51 +8,67 @@ import TextInput from "@/Components/TextInput";
 import AppLayout from "@/Layouts/AppLayout";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { Head, useForm } from '@inertiajs/react'
+import toast from 'react-hot-toast'
 
-export default function Create({auth, categories, success}) {
+export default function Edit({auth, product, categories, success}) {
 
     const {data, setData, post, errors} = useForm({
-        name: '',
-        description: '',
-        category: '',
+        name: product.data.name,
+        description: product.data.description,
+        category: product.data.category_id,
+        _method: 'PUT',
     });
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        post(route('product.store'));
+        post(route('product.update', product.data.id), {
+            onSuccess: () => {
+                toast('Data berhasil diubah', {
+                    icon: '👏',
+                    style: {
+                        borderRadius: '10px',
+                        background: '#1C1F29',
+                        color: '#fff',
+                    },
+                })
+            }
+        });
     }
 
     return (
         <AppLayout>
-            <Head title="Tambah Produk"></Head>
+            <Head title="Ubah Produk"></Head>
 
             <Card className={"w-full"}>
                 <Card.Header className="flex items-center justify-between gap-1">
                     <div className="flex justify-normal gap-2">
-                        Tambah Produk
+                        Ubah Produk
                     </div>
                 </Card.Header>
                 <Card.Body>
                     <form onSubmit={onSubmit} >
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                            <div className="py-3 px-4 flex flex-col gap-2">
+                        <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Nama Produk</label>
                                 <TextInput className="w-full" placeholder={"Nama Produk"} autoComplete="off" 
                                     onChange={e => setData('name', e.target.value)}
+                                    value={data.name}
                                     />
                                 <InputError message={errors.name} className="mt-2"></InputError>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Deskripsi</label>
                                 <TextArea className="w-full" id="description" name="description" 
-                                    onChange={(e) => setData('description', e.target.value)}>
+                                    onChange={(e) => setData('description', e.target.value)}
+                                    value={data.description}
+                                    >
                                 </TextArea>
                                 <InputError message={errors.description} className="mt-2"></InputError>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Kategori</label>
-                                <SelectInput className="w-full" name="category" id="category" onChange={(e) => setData('category', e.target.value)}>
+                                <SelectInput className="w-full" name="category" id="category" onChange={(e) => setData('category', e.target.value)} value={data.category}>
                                     <option value="">- Pilih Kategori -</option>
                                     {categories.data.map((category) => (
                                         <option key={category.id} value={category.id}>{category.name}</option>

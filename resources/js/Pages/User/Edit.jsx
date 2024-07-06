@@ -7,7 +7,7 @@ import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { Head, useForm } from '@inertiajs/react'
 import toast from 'react-hot-toast'
 
-export default function Create({auth, user, roles, success}) {
+export default function Edit({auth, user, roles, success}) {
 
     const {data, setData, post, errors} = useForm({
         name: user.data.name,
