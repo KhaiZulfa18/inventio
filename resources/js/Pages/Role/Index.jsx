@@ -6,8 +6,8 @@ import Search from "@/Components/SearchInput";
 import Table from "@/Components/Table";
 import TextInput from "@/Components/TextInput";
 import AppLayout from "@/Layouts/AppLayout";
-import { PencilIcon, TrashIcon, UserGroupIcon, UserPlusIcon, UsersIcon } from "@heroicons/react/24/outline";
-import { Head, useForm, router } from "@inertiajs/react";
+import { PencilIcon, TrashIcon, UserPlusIcon, UsersIcon } from "@heroicons/react/24/outline";
+import { Head, useForm } from "@inertiajs/react";
 import ListBox from "@/Components/ListBox";
 
 export default function Index({auth, roles, permissions, queryParams = null}) {
