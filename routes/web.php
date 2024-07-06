@@ -19,17 +19,17 @@ Route::middleware(['auth','verified'])->group(function (){
 
     Route::get('/dashboard', fn() => Inertia::render('Dashboard') )->name('dashboard');
    
-    Route::resource('category',CategoryController::class);
-    Route::resource('product',ProductController::class);
+    Route::controller(ProfileController::class)->group(function () {
+        Route::get('/profile', 'edit')->name('profile.edit');
+        Route::patch('/profile', 'update')->name('profile.update');
+    });
+    
     Route::resource('user',UserController::class);
     Route::resource('role',RoleController::class);
     Route::resource('permission',PermissionController::class);
-});
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+   
+    Route::resource('category',CategoryController::class);
+    Route::resource('product',ProductController::class);
 });
 
 require __DIR__.'/auth.php';
