@@ -29,8 +29,11 @@ class RoleController extends Controller
                     ->paginate(10)
                     ->onEachSide(1);
 
+        $permissions = Permission::all();
+
         return Inertia::render('Role/Index', [
             'roles' => $roles,
+            'permissions' => $permissions,
         ]);
     }
 

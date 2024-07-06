@@ -1,17 +1,66 @@
 import Button from "@/Components/Button";
 import Card from "@/Components/Card";
 import Pagination from "@/Components/Pagination";
-import PrimaryButton from "@/Components/PrimaryButton";
+import Modal from "@/Components/Modal";
 import Search from "@/Components/SearchInput";
 import Table from "@/Components/Table";
 import TextInput from "@/Components/TextInput";
 import AppLayout from "@/Layouts/AppLayout";
 import { PencilIcon, TrashIcon, UserGroupIcon, UserPlusIcon, UsersIcon } from "@heroicons/react/24/outline";
-import { Head, Link, router } from "@inertiajs/react";
+import { Head, useForm, router } from "@inertiajs/react";
+import ListBox from "@/Components/ListBox";
 
-export default function Index({auth, roles, queryParams = null}) {
+export default function Index({auth, roles, permissions, queryParams = null}) {
 
     queryParams = queryParams || {}
+
+    const { data, setData, transform, post, errors} = useForm({
+        id: '',
+        name: '',
+        selectedPermission : [],
+        isUpdate: false,
+        isOpen: false,
+    });
+
+    const setSelectedPermission = (value) => {
+        setData('selectedPermission', value)
+    }
+
+    transform((data) => ({
+        ...data,
+        selectedPermission: data.selectedPermission.map(permission => permission.id),
+        _method : data.isUpdate === true ? 'put' : 'post'
+    }))
+
+    const saveRole = async (e) => {
+        e.preventDefault();
+
+        post(route('role.store'), {
+            onSuccess: () => {
+                setData({
+                    selectedPermission : [],
+                    name: '',
+                    isOpen: false,
+                })
+            }
+        });
+    }
+
+    const updateRole = async (e) => {
+        e.preventDefault();
+
+        post(route('role.update', data.id), {
+            onSuccess : () => {
+                setData({
+                    id : '',
+                    name : '',
+                    selectedPermission : [],
+                    isUpdate : false,
+                    isOpen: false,
+                });
+            }
+        })
+    }
 
     return (
         <AppLayout>
@@ -22,7 +71,7 @@ export default function Index({auth, roles, queryParams = null}) {
                     <div className="flex justify-normal gap-2">
                         <UsersIcon className="w-6"/> Group Akses
                     </div>
-                    <Button type={'link'} href={route('role.create')} style={'success'}>
+                    <Button type={'modal'} style={'success'} onClick={(e) => setData('isOpen', true)}>
                         <UserPlusIcon className="w-5"/><span className="hidden lg:block">Tambah</span>
                     </Button>
                 </Card.Header>
@@ -57,7 +106,16 @@ export default function Index({auth, roles, queryParams = null}) {
                                         </div>
                                     </Table.Td>
                                     <Table.Td className={'flex gap-1'}>
-                                        <Button type={'link'} style={'info'} href={route('role.edit', role.id)}>
+                                        <Button type={'modal'} style={'info'} 
+                                            onClick={() =>
+                                                setData({
+                                                    id: role.id,
+                                                    selectedPermission: role.permissions,
+                                                    name: role.name,
+                                                    isUpdate: true,
+                                                    isOpen : !data.isOpen,
+                                                })
+                                            }>
                                             <PencilIcon className="w-4"/>
                                         </Button>
                                         <Button type={'delete'} style={'danger'} url={route('role.destroy', role.id)}>
@@ -71,6 +129,37 @@ export default function Index({auth, roles, queryParams = null}) {
                     <Pagination links={roles.links}  align="c"/>
                 </Card.Body>
             </Card>
+            <Modal show={data.isOpen}
+                onClose={() =>
+                    setData({
+                        isOpen : false,
+                        id: '',
+                        name: '',
+                        selectedPermission : [],
+                        isUpdate : false,
+                    })
+                }
+                title={`${data.isUpdate === true ? 'Ubah Data Group Akses' : 'Tambah Data Group Akses'}`}>
+                <form onSubmit={data.isUpdate === true ? updateRole : saveRole}>
+                    <div className='mb-4'>
+                        <TextInput placeholder='Nama Group Akses' className="w-full" value={data.name} onChange={e => setData('name', e.target.value)} errors={errors.name}  />
+                    </div>
+                    <div className='mb-4'>
+                        <ListBox
+                            label={'Pilih hak akses'}
+                            data={permissions}
+                            selected={data.selectedPermission}
+                            setSelected={setSelectedPermission}
+                            errors={errors.selectedPermission}
+                        />
+                    </div>
+                    <Button
+                        type={'submit'}
+                        className={'border bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-950 dark:border-gray-800 dark:text-gray-200'}>
+                            Simpan
+                    </Button>
+                </form>
+            </Modal>
         </AppLayout>
     );
 }
