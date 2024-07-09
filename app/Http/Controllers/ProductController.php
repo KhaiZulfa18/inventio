@@ -106,7 +106,14 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         
-        $product->update(['name' => $request->name, 'description' => $request->description, 'category_id' => $request->category]);
+        $product->update([
+                'name' => $request->name, 
+                'description' => $request->description, 
+                'category_id' => $request->category,
+                'unit' => $request->unit,
+                'weight' => $request->weight,
+                'code' => $request->code,
+            ]);
 
         return to_route('product.index');
     }

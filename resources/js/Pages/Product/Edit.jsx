@@ -16,6 +16,9 @@ export default function Edit({auth, product, categories, success}) {
         name: product.data.name,
         description: product.data.description,
         category: product.data.category_id,
+        unit: product.data.unit,
+        weight: product.data.weight,
+        code: product.data.code,
         _method: 'PUT',
     });
 
@@ -58,15 +61,6 @@ export default function Edit({auth, product, categories, success}) {
                                 <InputError message={errors.name} className="mt-2"></InputError>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
-                                <label>Deskripsi</label>
-                                <TextArea className="w-full" id="description" name="description" 
-                                    onChange={(e) => setData('description', e.target.value)}
-                                    value={data.description}
-                                    >
-                                </TextArea>
-                                <InputError message={errors.description} className="mt-2"></InputError>
-                            </div>
-                            <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Kategori</label>
                                 <SelectInput className="w-full" name="category" id="category" onChange={(e) => setData('category', e.target.value)} value={data.category}>
                                     <option value="">- Pilih Kategori -</option>
@@ -75,6 +69,41 @@ export default function Edit({auth, product, categories, success}) {
                                     ))}
                                 </SelectInput>
                                 <InputError message={errors.category} className="mt-2"></InputError>
+                            </div>
+                            <div className="py-3 px-4 flex flex-col gap-2">
+                                <label>Satuan Produk</label>
+                                <SelectInput className="w-full" name="unit" id="unit" onChange={(e) => setData('unit', e.target.value)} value={data.unit}>
+                                    <option value="">- Pilih Satuan -</option>
+                                    <option value="dus">Dus</option>
+                                    <option value="karung">Karung</option>
+                                    <option value="pcs">Pcs</option>
+                                    <option value="sak">Sak</option>
+                                </SelectInput>
+                                <InputError message={errors.unit} className="mt-2"></InputError>
+                            </div>
+                            <div className="py-3 px-4 flex flex-col gap-2">
+                                <label>Berat Produk (Kg)</label>
+                                <TextInput type={'number'} className="w-full" placeholder={"Berat Produk"} autoComplete="off" 
+                                    onChange={e => setData('weight', e.target.value)} step="0.01" value={data.weight}
+                                    />
+                                <InputError message={errors.weight} className="mt-2"></InputError>
+                            </div>
+                            <div className="py-3 px-4 flex flex-col gap-2">
+                                <label>Code Produk</label>
+                                <TextInput className="w-full" placeholder={"Code Produk"} autoComplete="off" 
+                                    onChange={e => setData('code', e.target.value)} value={data.code}
+                                    />
+                                <span className="text-gray-500 text-sm">* Code adalah barcode pada kemasan produk</span>
+                                <InputError message={errors.code} className="mt-2"></InputError>
+                            </div>
+                            <div className="py-3 px-4 flex flex-col gap-2">
+                                <label>Deskripsi</label>
+                                <TextArea className="w-full" id="description" name="description" 
+                                    onChange={(e) => setData('description', e.target.value)}
+                                    value={data.description}
+                                    >
+                                </TextArea>
+                                <InputError message={errors.description} className="mt-2"></InputError>
                             </div>
                         </div>
                         <div className="px-4 pt-5 flex gap-2 justify-end">
