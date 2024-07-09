@@ -48,6 +48,9 @@ export default function Index({auth, products, categories, queryParams = null}) 
                                 <Table.Th name={'name'} sortable={true} url={route('product.index')} queryParams={queryParams}>Produk</Table.Th>
                                 <Table.Th name={'description'} sortable={true} url={route('product.index')} queryParams={queryParams}>Deskripsi</Table.Th>
                                 <Table.Th name={'category_id'} sortable={true} url={route('product.index')} queryParams={queryParams}>Kategori</Table.Th>
+                                <Table.Th name={'unit'} sortable={true} url={route('product.index')} queryParams={queryParams}>Satuan</Table.Th>
+                                <Table.Th name={'weight'} sortable={true} url={route('product.index')} queryParams={queryParams}>Berat (Kg)</Table.Th>
+                                <Table.Th name={'code'} sortable={true} url={route('product.index')} queryParams={queryParams}>Code</Table.Th>
                                 <Table.Th>Aksi</Table.Th>
                             </tr>
                         </Table.Thead>
@@ -57,7 +60,14 @@ export default function Index({auth, products, categories, queryParams = null}) 
                                     <Table.Td>{++i + (products.meta.current_page-1) * products.meta.per_page}</Table.Td>
                                     <Table.Td>{product.name}</Table.Td>
                                     <Table.Td>{product.description}</Table.Td>
-                                    <Table.Td>{product.category.name}</Table.Td>
+                                    <Table.Td>
+                                        <span className="rounded-full px-1.5 py-0.5 text-xs tracking-tight font-medium transition-colors focus:outline-none flex items-center justify-center gap-1 capitalize border border-teal-500/40 bg-teal-500/10 text-teal-500 hover:bg-teal-500/20">
+                                            {product.category.name}
+                                        </span>
+                                    </Table.Td>
+                                    <Table.Td className={'text-center'}>{product.unit}</Table.Td>
+                                    <Table.Td className={'text-right'}>{product.weight}</Table.Td>
+                                    <Table.Td>{product.code}</Table.Td>
                                     <Table.Td className={'flex gap-1'}>
                                         <Button type={'link'} style={'info'} href={route('product.edit', product.id)}>
                                             <PencilIcon className="w-4"/>

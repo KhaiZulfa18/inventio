@@ -70,6 +70,9 @@ class ProductController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'category_id' => $request->category,
+            'unit' => $request->unit,
+            'code' => $request->code,
+            'weight' => $request->weight ?? 0,
             'created_by' => Auth::id(),
         ]);
 

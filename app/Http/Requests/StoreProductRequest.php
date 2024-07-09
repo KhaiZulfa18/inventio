@@ -25,6 +25,7 @@ class StoreProductRequest extends FormRequest
             "name" => ['required','max:225'],
             "description" => ['nullable','string'],
             "category" => ['required'],
+            "weight" => ['nullable','numeric'],
         ];
     }
 }

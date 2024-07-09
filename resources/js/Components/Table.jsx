@@ -36,7 +36,7 @@ const Td = ({ className, children}) => {
     );
 };
 
-const Th = ({ className, url, name, sortable = false, queryParams = {}, children }) => {
+const Th = ({ className = '', url, name, sortable = false, queryParams = {}, children }) => {
 
     const sortChanged = (name) => {
         if(name === queryParams.sort_field) {
