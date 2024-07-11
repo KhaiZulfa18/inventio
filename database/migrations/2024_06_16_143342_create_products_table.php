@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('unit')->nullable();
             $table->decimal('weight',8,2)->nullable();
             $table->string('code')->nullable();
-            $table->enum('status', ['0','1','2'])->nullable()->default('1')->comment('0: non-active, 1: active, 2: discontinued');
+            $table->enum('status', [0,1,2])->nullable()->default('1')->comment('0: non-active, 1: active, 2: discontinued');
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');

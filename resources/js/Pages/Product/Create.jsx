@@ -17,6 +17,7 @@ export default function Create({auth, categories, success}) {
         unit: '',
         weight: '',
         code: '',
+        price: '',
     });
 
     const onSubmit = async (e) => {
@@ -72,6 +73,13 @@ export default function Create({auth, categories, success}) {
                                     onChange={e => setData('weight', e.target.value)} step="0.01"
                                     />
                                 <InputError message={errors.weight} className="mt-2"></InputError>
+                            </div>
+                            <div className="py-3 px-4 flex flex-col gap-2">
+                                <label>Harga Produk (Rp)</label>
+                                <TextInput type={'number'} className="w-full" placeholder={"Harga Produk"} autoComplete="off" 
+                                    onChange={e => setData('price', e.target.value)} step="0.01"
+                                    />
+                                <InputError message={errors.price} className="mt-2"></InputError>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Code Produk</label>

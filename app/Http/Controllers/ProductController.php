@@ -7,7 +7,9 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
+use App\Models\Price;
 use App\Models\Product;
+use Carbon\Carbon;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 
@@ -75,6 +77,17 @@ class ProductController extends Controller
             'weight' => $request->weight ?? 0,
             'created_by' => Auth::id(),
         ]);
+
+        if($request->price>0){
+            
+            $price = Price::create([
+                'product_id' => $product->id,
+                'price' => $request->price,
+                'start_date' => Carbon::now()->format('Y-m-d'),
+                'status' => 1,
+                'created_by' => Auth::id(),
+            ]);
+        }
 
         return to_route('product.index');
     }

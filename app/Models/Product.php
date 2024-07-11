@@ -20,4 +20,15 @@ class Product extends Model
     {
         return $this->belongsTo(User::class,'created_by');
     }
+
+    public function prices()
+    {
+        return $this->hasMany(Price::class,'product_id');
+    }
+
+    public function activePrices()
+    {
+        return $this->hasOne(Price::class,'product_id')
+                ->where('status',1);
+    }
 }
