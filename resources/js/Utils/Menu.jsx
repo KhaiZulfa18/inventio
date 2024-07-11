@@ -83,8 +83,8 @@ export default function Menu() {
             details : [
                 {
                     title : 'Pembelian',
-                    href : '/purchase',
-                    active: url.startsWith('/purchase') ? true : false,
+                    href : '/purchase/create',
+                    active: url.startsWith('/purchase/create') ? true : false,
                     icon : <InboxArrowDownIcon className="w-5"/>,
                     permissions: hasAnyPermission(['category-view']),
                 },
@@ -103,15 +103,15 @@ export default function Menu() {
             details : [
                 {
                     title : 'Penjualan',
-                    href : '/purchase',
-                    active: url.startsWith('/purchase') ? true : false,
+                    href : '/sale/create',
+                    active: url.startsWith('/sale/create') ? true : false,
                     icon : <InboxArrowDownIcon className="w-5"/>,
                     permissions: hasAnyPermission(['category-view']),
                 },
                 {
                     title : 'Riwayat Penjualan',
-                    href : '/report/purchase',
-                    active: url.startsWith('/report/purchase') ? true : false,
+                    href : '/report/sale',
+                    active: url.startsWith('/report/sale') ? true : false,
                     icon : <DocumentChartBarIcon className="w-5"/>,
                     permissions:  hasAnyPermission(['product-view']),
                 },
@@ -123,22 +123,22 @@ export default function Menu() {
             details : [
                 {
                     title : 'Sisa Stok',
-                    href : '/purchase',
-                    active: url.startsWith('/purchase') ? true : false,
+                    href : '/stock',
+                    active: url.startsWith('/stock') ? true : false,
                     icon : <InboxArrowDownIcon className="w-5"/>,
                     permissions: hasAnyPermission(['category-view']),
                 },
                 {
                     title : 'Mutasi Stok',
-                    href : '/report/purchase',
-                    active: url.startsWith('/report/purchase') ? true : false,
+                    href : '/stock/mutation',
+                    active: url.startsWith('/stock/mutation') ? true : false,
                     icon : <DocumentChartBarIcon className="w-5"/>,
                     permissions:  hasAnyPermission(['product-view']),
                 },
                 {
                     title : 'Kartu Stok',
-                    href : '/report/purchase',
-                    active: url.startsWith('/report/purchase') ? true : false,
+                    href : '/stock/card',
+                    active: url.startsWith('/stock/card') ? true : false,
                     icon : <DocumentChartBarIcon className="w-5"/>,
                     permissions:  hasAnyPermission(['product-view']),
                 },
@@ -150,8 +150,8 @@ export default function Menu() {
             details : [
                 {
                     title : 'Laporan Keuangan',
-                    href : '/purchase',
-                    active: url.startsWith('/purchase') ? true : false,
+                    href : '/finance',
+                    active: url.startsWith('/finance') ? true : false,
                     icon : <InboxArrowDownIcon className="w-5"/>,
                     permissions: hasAnyPermission(['category-view']),
                 },

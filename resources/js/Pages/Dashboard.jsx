@@ -6,7 +6,6 @@ import { CubeIcon } from '@heroicons/react/24/outline';
 import Button from '@/Components/Button';
 
 export default function Dashboard({ auth }) {
-    console.log(auth);
     return (
         <AppLayout>
             <Head title='Dashboard'></Head>
