@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('price',10,2);
             $table->dateTime('start_date');
             $table->dateTime('end_data')->nullable();
-            $table->enum('status', [0,1])->default(1)->comment('0: nonactive, 1: active');
+            $table->tinyInteger('status')->nullable()->comment('0: nonactive, 1: active');
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');

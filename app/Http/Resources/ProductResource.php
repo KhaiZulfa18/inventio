@@ -23,7 +23,7 @@ class ProductResource extends JsonResource
             'unit' => $this->unit,
             'weight' => (!empty($this->weight)) ? number_format($this->weight,2) : null,
             'code' => $this->code,
-            'price' => $this->activePrice,
+            'price' => ($this->activePrice) ? number_format($this->activePrice->price,2) : 0,
             'category' => new CategoryResource($this->category),
             'created_at' => (new Carbon($this->created_at))->format('Y-m-d'), 
             'created_by' => new UserResource($this->createdBy),

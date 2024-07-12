@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('total_price',10,2)->nullable();
             $table->string('payment_method')->nullable();
             $table->text('note')->nullable();
-            $table->enum('status', [0,1,2])->nullable()->default(1)->comment('0: canceled, 1: proccess, 2: done');
+            $table->tinyInteger('status')->nullable()->comment('0: canceled, 1: proccess, 2: done');
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->foreignId('deleted_by')->nullable()->constrained('users');
