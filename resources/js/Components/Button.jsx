@@ -51,7 +51,7 @@ export default function Button({className, style, icon, label, type, href, added
                 </Link>
             }
             {type === 'button' &&
-                <button className={`${className} ${buttonStyle} px-3 py-2 flex items-center gap-1 rounded-lg text-sm font-semibold text-gray-200`} {...props}>
+                <button type='button' className={`${className} ${buttonStyle} px-3 py-2 flex items-center gap-1 rounded-lg text-sm font-semibold text-gray-200`} {...props}>
                     {children}
                 </button>
             }

@@ -11,7 +11,7 @@ class PurchaseController extends Controller
 
     public function create() {
     
-        return Inertia::render('Dashboard',[
+        return Inertia::render('Purchase/Create',[
 
         ]);
     }

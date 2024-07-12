@@ -52,7 +52,7 @@ export default function Index({auth, products, categories, queryParams = null}) 
                                 <Table.Th name={'unit'} sortable={true} url={route('product.index')} queryParams={queryParams}>Satuan</Table.Th>
                                 <Table.Th name={'weight'} sortable={true} url={route('product.index')} queryParams={queryParams}>Berat (Kg)</Table.Th>
                                 <Table.Th name={'code'} sortable={true} url={route('product.index')} queryParams={queryParams}>Code</Table.Th>
-                                <Table.Th name={'price'} sortable={false} url={route('product.index')} queryParams={queryParams}>Price</Table.Th>
+                                <Table.Th name={'price'} sortable={false} url={route('product.index')} queryParams={queryParams}>Harga</Table.Th>
                                 <Table.Th>Aksi</Table.Th>
                             </tr>
                         </Table.Thead>
