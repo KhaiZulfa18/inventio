@@ -52,6 +52,7 @@ export default function Index({auth, products, categories, queryParams = null}) 
                                 <Table.Th name={'unit'} sortable={true} url={route('product.index')} queryParams={queryParams}>Satuan</Table.Th>
                                 <Table.Th name={'weight'} sortable={true} url={route('product.index')} queryParams={queryParams}>Berat (Kg)</Table.Th>
                                 <Table.Th name={'code'} sortable={true} url={route('product.index')} queryParams={queryParams}>Code</Table.Th>
+                                <Table.Th name={'price'} sortable={false} url={route('product.index')} queryParams={queryParams}>Price</Table.Th>
                                 <Table.Th>Aksi</Table.Th>
                             </tr>
                         </Table.Thead>
@@ -69,6 +70,7 @@ export default function Index({auth, products, categories, queryParams = null}) 
                                     <Table.Td className={'text-center'}>{product.unit}</Table.Td>
                                     <Table.Td className={'text-right'}>{product.weight}</Table.Td>
                                     <Table.Td>{product.code}</Table.Td>
+                                    <Table.Td>Rp.{product.price}</Table.Td>
                                     <Table.Td className={'flex gap-1'}>
                                         <Button type={'link'} style={'info'} href={route('product.edit', product.id)}>
                                             <PencilIcon className="w-4"/>

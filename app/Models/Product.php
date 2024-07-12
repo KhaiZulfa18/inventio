@@ -26,9 +26,9 @@ class Product extends Model
         return $this->hasMany(Price::class,'product_id');
     }
 
-    public function activePrices()
+    public function activePrice()
     {
         return $this->hasOne(Price::class,'product_id')
-                ->where('status',1);
+                ->where('status','1');
     }
 }
