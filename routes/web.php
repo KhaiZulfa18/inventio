@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -30,6 +31,13 @@ Route::middleware(['auth','verified'])->group(function (){
    
     Route::resource('category',CategoryController::class);
     Route::resource('product',ProductController::class);
+
+    Route::controller(PurchaseController::class)->group(function () {
+        Route::prefix('/purchase')->group(function () {
+            Route::get('/create', 'create')->name('purchase.create');
+            Route::post('/store', 'store')->name('purchase.store');
+        });
+    });
 });
 
 require __DIR__.'/auth.php';

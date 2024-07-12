@@ -13,6 +13,7 @@ export default function Index({auth, products, categories, queryParams = null}) 
 
     queryParams = queryParams || {}
 
+    console.log(products);
     return (
         <AppLayout>
             <Head title="Produk"></Head>

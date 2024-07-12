@@ -3,7 +3,7 @@ import React from 'react'
 
 const Card = ({className, children}) => {
     return (
-        <div className={`p-4 rounded-lg border bg-white dark:bg-gray-950 dark:border-gray-900 ` + className}>
+        <div className={`p-4 h-auto rounded-lg border bg-white dark:bg-gray-950 dark:border-gray-900 ` + className}>
             {children}
         </div>
     );

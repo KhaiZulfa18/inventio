@@ -16,7 +16,7 @@ export default function Sidebar({ sidebarOpen = true }) {
 
     return (
         <div
-            className={`${sidebarOpen ? 'w-[260px]' : 'w-[100px]'} hidden md:block min-h-screen overflow-y-auto border-r transition-all duration-300 bg-white dark:bg-gray-950 dark:border-gray-900`}>
+            className={`${sidebarOpen ? 'w-[260px]' : 'w-[100px]'} hidden md:block min-h-screen overflow-y-auto border-r transition-all duration-300 bg-white dark:bg-gray-950 dark:border-gray-900 pb-10`}>
             {sidebarOpen ?
                 <>
                     <div className="flex justify-center items-center px-6 py-2 h-16">
