@@ -25,11 +25,11 @@ export default function Create({auth, products}) {
     });
 
     const [rows, setRows] = useState([
-        {id: 1, product_id: '', product_name: '', qty: '', price: '', weight: '', unit: ''}
+        {id: 1, product_id: '', product_name: '', qty: 0, price: '', weight: '', unit: ''}
     ]);
 
     const addRows = () => {
-        const newRow = {id: 1, product_id: '', product_name: '', qty: '', price: '', weight: '', unit: ''}
+        const newRow = {id: 1, product_id: '', product_name: 0, qty: '', price: '', weight: '', unit: ''}
         
         setRows([...rows,newRow]);
     }
