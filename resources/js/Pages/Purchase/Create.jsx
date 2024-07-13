@@ -25,11 +25,11 @@ export default function Create({auth, products}) {
     });
 
     const [rows, setRows] = useState([
-        {id: 1, product_id: '', product_name: '', qty: 0, price: '', weight: '', unit: ''}
+        {product_id: '', product_name: '', qty: 0, price: 0, weight: 0, unit: ''}
     ]);
 
     const addRows = () => {
-        const newRow = {id: 1, product_id: '', product_name: 0, qty: '', price: '', weight: '', unit: ''}
+        const newRow = {product_id: '', product_name: '', qty: 0, price: 0, weight: 0, unit: ''}
         
         setRows([...rows,newRow]);
     }
@@ -49,14 +49,27 @@ export default function Create({auth, products}) {
             i === index ? { 
                 ...row, 
                 product_id, 
-                qty: 0, 
+                qty: row.qty ? row.qty : 1,
                 product_name: product ? product.name : '', 
-                price: product ? product.price : '', 
-                weight: product ? product.weight : '' 
+                price: product ? product.price : 0, 
+                weight: product ? product.weight : 0 
             } : row
         );
         setRows(updatedRows);
     }
+
+    const setQuantity = (e, index) => {
+        const qty = parseInt(e.target.value) || 0;
+    
+        const updatedRows = rows.map((row, i) => 
+            i === index ? {
+                ...row,
+                qty,
+            } : row
+        );
+    
+        setRows(updatedRows);
+    };
 
     return (
         <AppLayout>
@@ -125,12 +138,12 @@ export default function Create({auth, products}) {
                                             </SelectInput>
                                         </Table.Td>
                                         <Table.Td>
-                                            <StepperInput defaultValue={row.qty}/>
+                                            <StepperInput value={row.qty} onChange={(e) => setQuantity(e,index)}/>
                                         </Table.Td>
                                         <Table.Td>{row.price}</Table.Td>
-                                        <Table.Td>{row.total_price}</Table.Td>
+                                        <Table.Td>{(row.price * row.qty).toFixed(2)}</Table.Td>
                                         <Table.Td>{row.weight}</Table.Td>
-                                        <Table.Td>{row.total_weight}</Table.Td>
+                                        <Table.Td>{(row.weight * row.qty).toFixed(2)}</Table.Td>
                                         <Table.Td className={'text-center'}>
                                             <Button type={'button'} style={'danger'} onClick={() => deleteRow(index)}>
                                                 <TrashIcon className="w-4"/>

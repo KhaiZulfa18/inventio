@@ -3,10 +3,10 @@ import Button from './Button';
 import TextInput from './TextInput';
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 
-export default forwardRef(function StepperInput({ className = '', isFocused = false, ...props }, ref) {
+export default forwardRef(function StepperInput({ className = '', isFocused = false, onChange, value, ...props }, ref) {
     const input = ref ? ref : useRef();
 
-    const [value, setValue] = useState(props.value || 0);
+    const [inputValue, setInputValue] = useState(value || 0);
 
     useEffect(() => {
         if (isFocused) {
@@ -14,26 +14,33 @@ export default forwardRef(function StepperInput({ className = '', isFocused = fa
         }
     }, []);
 
+    useEffect(() => {
+        setInputValue(value);
+    }, [value]);
+
     const handleValueChange = (type) => {
-        setValue(prevValue => {
-            const newValue = type === '+' ? prevValue + 1 : prevValue - 1;
-            return newValue >= 0 ? newValue : 0;
+        setInputValue(prevValue => {
+            const newValue = type === '+' ? parseInt(prevValue) + 1 : parseInt(prevValue) - 1;
+            const val =  newValue >= 0 ? newValue : 0;
+            onChange({ target: { value: val }});
+            return val;
         });
     };
 
     const handleChange = (e) => {
-        setValue(parseInt(e.target.value, 10) || 0);
+        setInputValue(parseInt(e.target.value));
+        onChange(e);
     };
 
     return (
-        <div className='py-2 px-2 inline-block bg-slate-200 dark:bg-gray-900 rounded-lg'>
+        <div className='py-2 px-2 inline-block bg-gray-100 dark:bg-gray-900 rounded-lg'>
             <div className="flex items-center gap-x-0.5">
-                <Button type={'button'} className={'border border-gray-200 dark:border-gray-900 bg-white dark:bg-gray-950 text-gray-900 dark:text-white px-1 rounded-l rounded-r-none'}
+                <Button type={'button'} className={'border border-gray-200 dark:border-gray-900 bg-white dark:bg-gray-950 text-gray-900 dark:text-white px-1 rounded-2xl'}
                 onClick={() => handleValueChange('-')}>
                     <MinusIcon className='w-3'/>
                 </Button>
-                <TextInput className={'p-0 w-14 bg-transparent text-center border-transparent  ' + className} value={value} onChange={handleChange} {...props}/>
-                <Button type={'button'} className={'border border-gray-200 dark:border-gray-900 bg-white dark:bg-gray-950 text-gray-900 dark:text-white px-1 rounded-r rounded-l-none'}
+                <TextInput className={'p-0 w-14 bg-transparent text-center border-transparent  ' + className} value={inputValue} onChange={handleChange}/>
+                <Button type={'button'} className={'border border-gray-200 dark:border-gray-900 bg-white dark:bg-gray-950 text-gray-900 dark:text-white px-1 rounded-2xl'}
                 onClick={() => handleValueChange('+')}>
                     <PlusIcon className='w-3'/>
                 </Button>
