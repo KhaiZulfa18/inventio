@@ -1,6 +1,8 @@
 import Button from "@/Components/Button";
 import Card from "@/Components/Card";
 import InputError from "@/Components/InputError";
+import SelectInput from "@/Components/SelectInput";
+import StepperInput from "@/Components/StepperInput";
 import Table from "@/Components/Table";
 import TextArea from "@/Components/TextArea";
 import TextInput from "@/Components/TextInput";
@@ -9,12 +11,13 @@ import { InboxArrowDownIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/out
 import { Head, useForm } from "@inertiajs/react";
 import { useState } from "react";
 
-export default function Create({auth}) {
+export default function Create({auth, products}) {
 
     const {data, setData, post, errors} = useForm({
         name: '',
         description: '',
         category: '',
+        qty: '',
         unit: '',
         weight: '',
         code: '',
@@ -35,6 +38,24 @@ export default function Create({auth}) {
         const newRows = rows.filter((_, i) => i !== index);
 
         setRows(newRows);
+    }
+
+    const chooseProduct = (e, index) => {
+        const product_id = e.target.value;
+
+        const product = products.data.find((product) => product.id == product_id);
+
+        const updatedRows = rows.map((row, i) => 
+            i === index ? { 
+                ...row, 
+                product_id, 
+                qty: 0, 
+                product_name: product ? product.name : '', 
+                price: product ? product.price : '', 
+                weight: product ? product.weight : '' 
+            } : row
+        );
+        setRows(updatedRows);
     }
 
     return (
@@ -75,13 +96,10 @@ export default function Create({auth}) {
                                 <InputError message={errors.name} className="mt-2"></InputError>
                             </div>
                         </div>
-                        {/* <div className="w-full py-2 px-3 text-center">
-                            <span className="uppercase">Daftar Produk</span>
-                        </div> */}
                         <Table>
                             <Table.Thead>
                                 <tr>
-                                    <Table.Th colspan='8' className="text-center">Daftar Produk</Table.Th>
+                                    <Table.Th colSpan='8' className="text-center">Daftar Produk</Table.Th>
                                 </tr>
                                 <tr>
                                     <Table.Th className={'w-10'}>No</Table.Th>
@@ -98,12 +116,21 @@ export default function Create({auth}) {
                                 {rows.map((row,index) => (
                                     <tr key={index}>
                                         <Table.Td>{index + 1}</Table.Td>
-                                        <Table.Td>{row.product_id} + {index}</Table.Td>
-                                        <Table.Td>{row.product_id} + {index}</Table.Td>
-                                        <Table.Td>{row.product_id} + {index}</Table.Td>
-                                        <Table.Td>{row.product_id} + {index}</Table.Td>
-                                        <Table.Td>{row.product_id} + {index}</Table.Td>
-                                        <Table.Td>{row.product_id} + {index}</Table.Td>
+                                        <Table.Td>
+                                            <SelectInput onChange={(e) => chooseProduct(e,index)}>
+                                                <option value="">- Pilih Produk -</option>
+                                                {products.data.map((product,index) => (
+                                                    <option key={index} value={product.id}>{product.name}</option>
+                                                ))}
+                                            </SelectInput>
+                                        </Table.Td>
+                                        <Table.Td>
+                                            <StepperInput defaultValue={row.qty}/>
+                                        </Table.Td>
+                                        <Table.Td>{row.price}</Table.Td>
+                                        <Table.Td>{row.total_price}</Table.Td>
+                                        <Table.Td>{row.weight}</Table.Td>
+                                        <Table.Td>{row.total_weight}</Table.Td>
                                         <Table.Td className={'text-center'}>
                                             <Button type={'button'} style={'danger'} onClick={() => deleteRow(index)}>
                                                 <TrashIcon className="w-4"/>
@@ -112,7 +139,7 @@ export default function Create({auth}) {
                                     </tr>
                                 ))}
                                 <tr>
-                                    <Table.Td colspan='8'>
+                                    <Table.Td colSpan='8'>
                                         <Button type={'button'} style={'primary'} onClick={addRows}>
                                             <PlusIcon className="w-4"/> Tambah Produk
                                         </Button>

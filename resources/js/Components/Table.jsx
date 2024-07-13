@@ -26,17 +26,18 @@ const Tbody = ({ className, children }) => {
     );
 };
 
-const Td = ({ className, children}) => {
+const Td = ({ className, children, ...props}) => {
     return (
         <td
             className={`${className} whitespace-nowrap p-4 align-middle text-gray-700 dark:text-gray-400`}
+            {...props}
         >
             {children}
         </td>
     );
 };
 
-const Th = ({ className = '', url, name, sortable = false, queryParams = {}, children }) => {
+const Th = ({ className = '', url, name, sortable = false, queryParams = {}, children, ...props}) => {
 
     const sortChanged = (name) => {
         if(name === queryParams.sort_field) {
@@ -53,7 +54,9 @@ const Th = ({ className = '', url, name, sortable = false, queryParams = {}, chi
         <th
             scope="col"
             className={`${className} h-12 px-4 align-middle font-medium text-gray-700 dark:text-gray-400`}
-            onClick={(e) => sortChanged(name)}>
+            onClick={(e) => sortChanged(name)}
+            {...props}
+            >
             <div className="px-3 py-3 flex items-center justify-between gap-1 cursor-pointer">
                 {children}
                 {sortable && (
