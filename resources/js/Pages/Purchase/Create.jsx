@@ -25,11 +25,11 @@ export default function Create({auth, products}) {
     });
 
     const [rows, setRows] = useState([
-        {product_id: '', product_name: '', qty: 0, price: 0, weight: 0, unit: ''}
+        {product_id: '', product_name: '', qty: 0, price: 0, weight: 0, total_price: 0, total_weight: 0, unit: ''}
     ]);
 
     const addRows = () => {
-        const newRow = {product_id: '', product_name: '', qty: 0, price: 0, weight: 0, unit: ''}
+        const newRow = {product_id: '', product_name: '', qty: 0, price: 0, weight: 0, total_price: 0, total_weight: 0, unit: ''}
         
         setRows([...rows,newRow]);
     }
@@ -52,7 +52,9 @@ export default function Create({auth, products}) {
                 qty: row.qty ? row.qty : 1,
                 product_name: product ? product.name : '', 
                 price: product ? product.price : 0, 
-                weight: product ? product.weight : 0 
+                weight: product ? product.weight : 0,
+                total_price: product ? (product.price * (row.qty ? row.qty : 1)) : 0,
+                total_weight: product ? (product.weight * (row.qty ? row.qty : 1)) : 0,
             } : row
         );
         setRows(updatedRows);
@@ -65,11 +67,19 @@ export default function Create({auth, products}) {
             i === index ? {
                 ...row,
                 qty,
+                total_price: row.price ? (row.price * qty) : 0,
+                total_weight: row.weight ? (row.weight * qty) : 0,
             } : row
         );
     
         setRows(updatedRows);
     };
+
+    const getTotal = (data,key) => {
+        return data.reduce((total, row) => {
+            return total + row[key];
+        }, 0);
+    }
 
     return (
         <AppLayout>
@@ -141,9 +151,9 @@ export default function Create({auth, products}) {
                                             <StepperInput value={row.qty} onChange={(e) => setQuantity(e,index)}/>
                                         </Table.Td>
                                         <Table.Td>{row.price}</Table.Td>
-                                        <Table.Td>{(row.price * row.qty).toFixed(2)}</Table.Td>
+                                        <Table.Td>{row.total_price.toFixed(2)}</Table.Td>
                                         <Table.Td>{row.weight}</Table.Td>
-                                        <Table.Td>{(row.weight * row.qty).toFixed(2)}</Table.Td>
+                                        <Table.Td>{row.total_weight.toFixed(2)}</Table.Td>
                                         <Table.Td className={'text-center'}>
                                             <Button type={'button'} style={'danger'} onClick={() => deleteRow(index)}>
                                                 <TrashIcon className="w-4"/>
@@ -157,6 +167,15 @@ export default function Create({auth, products}) {
                                             <PlusIcon className="w-4"/> Tambah Produk
                                         </Button>
                                     </Table.Td>
+                                </tr>
+                                <tr>
+                                   <Table.Td colSpan='2'>Total {rows.length} Produk</Table.Td> 
+                                   <Table.Td >{getTotal(rows,'qty')}</Table.Td> 
+                                   <Table.Td ></Table.Td> 
+                                   <Table.Td >{(getTotal(rows,'total_price')).toFixed(2)}</Table.Td> 
+                                   <Table.Td ></Table.Td> 
+                                   <Table.Td >{(getTotal(rows,'total_weight')).toFixed(2)}</Table.Td> 
+                                   <Table.Td ></Table.Td> 
                                 </tr>
                             </Table.Tbody>
                         </Table>
