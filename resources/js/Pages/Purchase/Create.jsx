@@ -10,6 +10,7 @@ import AppLayout from "@/Layouts/AppLayout";
 import { InboxArrowDownIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Head, useForm } from "@inertiajs/react";
 import { useState } from "react";
+import Select from 'react-select';
 
 export default function Create({auth, products}) {
 
@@ -41,7 +42,7 @@ export default function Create({auth, products}) {
     }
 
     const chooseProduct = (e, index) => {
-        const product_id = e.target.value;
+        const product_id = e.value;
 
         const product = products.data.find((product) => product.id == product_id);
 
@@ -80,6 +81,11 @@ export default function Create({auth, products}) {
             return total + row[key];
         }, 0);
     }
+
+    const productOptions = products.data.map(product => ({
+        value: product.id,
+        label: product.name
+    }));
 
     return (
         <AppLayout>
@@ -125,27 +131,32 @@ export default function Create({auth, products}) {
                                     <Table.Th colSpan='8' className="text-center">Daftar Produk</Table.Th>
                                 </tr>
                                 <tr>
-                                    <Table.Th className={'w-10'}>No</Table.Th>
-                                    <Table.Th className={'w-10'}>Produk</Table.Th>
-                                    <Table.Th className={'w-10'}>Jumlah</Table.Th>
-                                    <Table.Th className={'w-10'}>Harga</Table.Th>
-                                    <Table.Th className={'w-10'}>Total Harga</Table.Th>
-                                    <Table.Th className={'w-10'}>Berat</Table.Th>
-                                    <Table.Th className={'w-10'}>Total Berat</Table.Th>
-                                    <Table.Th className={'w-10'}>Aksi</Table.Th>
+                                    <Table.Th className={'w-1/12'}>No</Table.Th>
+                                    <Table.Th className={'w-1/4'}>Produk</Table.Th>
+                                    <Table.Th className={''}>Jumlah</Table.Th>
+                                    <Table.Th>Harga</Table.Th>
+                                    <Table.Th>Total Harga</Table.Th>
+                                    <Table.Th>Berat</Table.Th>
+                                    <Table.Th>Total Berat</Table.Th>
+                                    <Table.Th>Aksi</Table.Th>
                                 </tr>
                             </Table.Thead>
                             <Table.Tbody>
                                 {rows.map((row,index) => (
                                     <tr key={index}>
-                                        <Table.Td>{index + 1}</Table.Td>
+                                        <Table.Td className="text-center">{index + 1}</Table.Td>
                                         <Table.Td>
-                                            <SelectInput onChange={(e) => chooseProduct(e,index)}>
-                                                <option value="">- Pilih Produk -</option>
-                                                {products.data.map((product,index) => (
-                                                    <option key={index} value={product.id}>{product.name}</option>
-                                                ))}
-                                            </SelectInput>
+                                            <Select 
+                                                options={productOptions}
+                                                onChange={(e) => chooseProduct(e,index)}
+                                                placeholder="- Pilih Produk -"
+                                                classNames={{
+                                                    control: (state) => (
+                                                        state.isFocused ? 'border-red-600' : 'border-grey-300',
+                                                        state.isFocused ? 'border-red-600' : 'border-grey-300'
+                                                    )
+                                                }}
+                                            />
                                         </Table.Td>
                                         <Table.Td>
                                             <StepperInput value={row.qty} onChange={(e) => setQuantity(e,index)}/>

@@ -5,20 +5,20 @@ import { Link, router } from "@inertiajs/react";
 const Table = ({ children }) => {
     return (
         <div className="w-full overflow-hidden overflow-x-auto border-collapse rounded-lg border dark:border-gray-700">
-            <table className="w-full text-sm">
+            <table className="min-w-full text-sm table-auto">
                 {children}
             </table>
         </div>
     );
 };
 
-const Thead = ({ className, children }) => {
+const Thead = ({ className = '', children }) => {
     return (
         <thead className={`${className} border-b bg-gray-50 dark:border-gray-900 dark:bg-gray-950`}>{children}</thead>
     );
 };
 
-const Tbody = ({ className, children }) => {
+const Tbody = ({ className = '', children }) => {
     return (
         <tbody className={`${className} divide-y bg-white dark:divide-gray-900 dark:bg-gray-950`}>
             {children}
@@ -26,7 +26,7 @@ const Tbody = ({ className, children }) => {
     );
 };
 
-const Td = ({ className, children, ...props}) => {
+const Td = ({ className = '', children, ...props}) => {
     return (
         <td
             className={`${className} whitespace-nowrap p-4 align-middle text-gray-700 dark:text-gray-400`}
