@@ -2,6 +2,7 @@ import Button from "@/Components/Button";
 import Card from "@/Components/Card";
 import InputError from "@/Components/InputError";
 import SelectInput from "@/Components/SelectInput";
+import SelectSearch from "@/Components/SelectSearch";
 import StepperInput from "@/Components/StepperInput";
 import Table from "@/Components/Table";
 import TextArea from "@/Components/TextArea";
@@ -146,17 +147,16 @@ export default function Create({auth, products}) {
                                     <tr key={index}>
                                         <Table.Td className="text-center">{index + 1}</Table.Td>
                                         <Table.Td>
-                                            <Select 
+                                            {/* <Select 
                                                 options={productOptions}
                                                 onChange={(e) => chooseProduct(e,index)}
                                                 placeholder="- Pilih Produk -"
-                                                classNames={{
-                                                    control: (state) => (
-                                                        state.isFocused ? 'border-red-600' : 'border-grey-300',
-                                                        state.isFocused ? 'border-red-600' : 'border-grey-300'
-                                                    )
-                                                }}
-                                            />
+                                                className="bg-gray-700" classNamePrefix="react-select" 
+                                            /> */}
+                                            <SelectSearch 
+                                            options={productOptions}
+                                            onChange={(e) => chooseProduct(e,index)}
+                                            placeholder="- Pilih Produk -"/>
                                         </Table.Td>
                                         <Table.Td>
                                             <StepperInput value={row.qty} onChange={(e) => setQuantity(e,index)}/>
