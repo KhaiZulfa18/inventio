@@ -12,18 +12,15 @@ import { InboxArrowDownIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/out
 import { Head, useForm } from "@inertiajs/react";
 import { useState } from "react";
 import Select from 'react-select';
+import Datepicker from "react-tailwindcss-datepicker";
 
 export default function Create({auth, products}) {
 
     const {data, setData, post, errors} = useForm({
-        name: '',
-        description: '',
-        category: '',
-        qty: '',
-        unit: '',
-        weight: '',
-        code: '',
-        price: '',
+        date: '',
+        supplier: '',
+        payment_method: '',
+        note: '',
     });
 
     const [rows, setRows] = useState([
@@ -101,28 +98,36 @@ export default function Create({auth, products}) {
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Tanggal Pembelian</label>
-                                <TextInput className="w-full" placeholder={"Tgl Pembelian"} autoComplete="off" 
-                                    onChange={e => setData('name', e.target.value)}
-                                    />
+                                <Datepicker placeholder={"Tgl Pembelian"} 
+                                    asSingle={true} 
+                                    useRange={false} 
+                                    showShortcuts={true} 
+                                    configs={{
+                                        shortcuts: {
+                                        today: "Hari ini", 
+                                        yesterday: "Kemarin",
+                                    }}}
+                                    value={data.date}
+                                    onChange={(value) => setData('date', value)}/>
                                 <InputError message={errors.name} className="mt-2"></InputError>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Supplier</label>
                                 <TextInput className="w-full" placeholder={"Supplier"} autoComplete="off" 
-                                    onChange={e => setData('name', e.target.value)}
+                                    onChange={e => setData('supplier', e.target.value)}
                                     />
                                 <InputError message={errors.name} className="mt-2"></InputError>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Metode Pembayaran</label>
                                 <TextInput className="w-full" placeholder={"Metode Pembayaran"} autoComplete="off" 
-                                    onChange={e => setData('name', e.target.value)}
+                                    onChange={e => setData('payment_method', e.target.value)}
                                     />
                                 <InputError message={errors.name} className="mt-2"></InputError>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Note</label>
-                                <TextArea></TextArea>
+                                <TextArea onChange={(e) => setData('note', e.target.value)}></TextArea>
                                 <InputError message={errors.name} className="mt-2"></InputError>
                             </div>
                         </div>
