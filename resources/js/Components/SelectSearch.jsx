@@ -31,7 +31,7 @@ const customStyles = {
     input: (base) => ({
         ...base,
         "input:focus": {
-        boxShadow: "none",
+            boxShadow: "none",
         },
     }),
     multiValueLabel: (base) => ({

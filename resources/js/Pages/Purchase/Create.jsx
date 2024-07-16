@@ -147,16 +147,13 @@ export default function Create({auth, products}) {
                                     <tr key={index}>
                                         <Table.Td className="text-center">{index + 1}</Table.Td>
                                         <Table.Td>
-                                            {/* <Select 
-                                                options={productOptions}
-                                                onChange={(e) => chooseProduct(e,index)}
-                                                placeholder="- Pilih Produk -"
-                                                className="bg-gray-700" classNamePrefix="react-select" 
-                                            /> */}
                                             <SelectSearch 
                                             options={productOptions}
                                             onChange={(e) => chooseProduct(e,index)}
-                                            placeholder="- Pilih Produk -"/>
+                                            placeholder="- Pilih Produk -"
+                                            menuPosition={'fixed'}
+                                            menuPlacement={'auto'}
+                                            />
                                         </Table.Td>
                                         <Table.Td>
                                             <StepperInput value={row.qty} onChange={(e) => setQuantity(e,index)}/>
