@@ -10,8 +10,8 @@ import TextInput from "@/Components/TextInput";
 import AppLayout from "@/Layouts/AppLayout";
 import { InboxArrowDownIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Head, useForm } from "@inertiajs/react";
-import { useState } from "react";
-import Select from 'react-select';
+import { useEffect, useState } from "react";
+import { NumericFormat } from "react-number-format";
 import Datepicker from "react-tailwindcss-datepicker";
 
 export default function Create({auth, products}) {
@@ -23,9 +23,21 @@ export default function Create({auth, products}) {
         note: '',
     });
 
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [discount, setDiscount] = useState(0);
+    const [total, setTotal] = useState(0);
+
+    useEffect(() => {
+        setTotal(totalPrice - discount);
+    }, [totalPrice, discount]);
+
     const [rows, setRows] = useState([
         {product_id: '', product_name: '', qty: 0, price: 0, weight: 0, total_price: 0, total_weight: 0, unit: ''}
     ]);
+
+    useEffect(() => {
+        setTotalPrice(getTotal(rows,'total_price'));
+    }, [rows])
 
     const addRows = () => {
         const newRow = {product_id: '', product_name: '', qty: 0, price: 0, weight: 0, total_price: 0, total_weight: 0, unit: ''}
@@ -95,7 +107,7 @@ export default function Create({auth, products}) {
                 </Card.Header>
                 <Card.Body>
                     <form onSubmit='' >
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 md:gap-3">
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Tanggal Pembelian</label>
                                 <Datepicker placeholder={"Tgl Pembelian"} 
@@ -113,9 +125,9 @@ export default function Create({auth, products}) {
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Supplier</label>
-                                <TextInput className="w-full" placeholder={"Supplier"} autoComplete="off" 
-                                    onChange={e => setData('supplier', e.target.value)}
-                                    />
+                                <SelectSearch creatable={true} placeholder={'- Pilih atau Buat Supplier -'}
+                                    options={productOptions}
+                                    onChange={e => setData('supplier', e.value)}/>
                                 <InputError message={errors.name} className="mt-2"></InputError>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
@@ -131,7 +143,7 @@ export default function Create({auth, products}) {
                                 <InputError message={errors.name} className="mt-2"></InputError>
                             </div>
                         </div>
-                        <Table>
+                        <Table className={'mt-3 md:mt-1'}>
                             <Table.Thead>
                                 <tr>
                                     <Table.Th colSpan='8' className="text-center">Daftar Produk</Table.Th>
@@ -163,10 +175,26 @@ export default function Create({auth, products}) {
                                         <Table.Td>
                                             <StepperInput value={row.qty} onChange={(e) => setQuantity(e,index)}/>
                                         </Table.Td>
-                                        <Table.Td>{row.price}</Table.Td>
-                                        <Table.Td>{row.total_price.toFixed(2)}</Table.Td>
-                                        <Table.Td>{row.weight}</Table.Td>
-                                        <Table.Td>{row.total_weight.toFixed(2)}</Table.Td>
+                                        <Table.Td>
+                                            <NumericFormat value={row.price} displayType={'text'} thousandSeparator={true} prefix={'Rp.'}
+                                                decimalScale={2}
+                                                fixedDecimalScale={true}/>
+                                        </Table.Td>
+                                        <Table.Td>
+                                            <NumericFormat value={row.total_price} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} 
+                                                decimalScale={2}
+                                                fixedDecimalScale={true}/>
+                                        </Table.Td>
+                                        <Table.Td>
+                                            <NumericFormat value={row.weight} displayType={'text'} thousandSeparator={true}
+                                                decimalScale={2}
+                                                fixedDecimalScale={true}/>
+                                        </Table.Td>
+                                        <Table.Td>
+                                            <NumericFormat value={row.total_weight} displayType={'text'} thousandSeparator={true}
+                                                decimalScale={2}
+                                                fixedDecimalScale={true}/>
+                                        </Table.Td>
                                         <Table.Td className={'text-center'}>
                                             <Button type={'button'} style={'danger'} onClick={() => deleteRow(index)}>
                                                 <TrashIcon className="w-4"/>
@@ -185,13 +213,52 @@ export default function Create({auth, products}) {
                                    <Table.Td colSpan='2'>Total {rows.length} Produk</Table.Td> 
                                    <Table.Td >{getTotal(rows,'qty')}</Table.Td> 
                                    <Table.Td ></Table.Td> 
-                                   <Table.Td >{(getTotal(rows,'total_price')).toFixed(2)}</Table.Td> 
+                                   <Table.Td >
+                                        <NumericFormat value={totalPrice} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} 
+                                            decimalScale={2}
+                                            fixedDecimalScale={true}/>
+                                   </Table.Td> 
                                    <Table.Td ></Table.Td> 
-                                   <Table.Td >{(getTotal(rows,'total_weight')).toFixed(2)}</Table.Td> 
+                                   <Table.Td >
+                                        <NumericFormat value={getTotal(rows,'total_weight')} displayType={'text'} thousandSeparator={true}
+                                            decimalScale={2}
+                                            fixedDecimalScale={true}/>
+                                   </Table.Td> 
                                    <Table.Td ></Table.Td> 
+                                </tr>
+                                <tr>
+                                    <Table.Td colSpan="2">Potongan / Diskon</Table.Td>
+                                    <Table.Td><TextInput type={'number'} placeholder={'Potongan Harga'} onChange={(e) => setDiscount(e.target.value)}/>
+                                    </Table.Td>
+                                    <Table.Td colSpan=""></Table.Td>
+                                    <Table.Td colSpan="">
+                                        <NumericFormat value={discount} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} 
+                                            decimalScale={2}
+                                            fixedDecimalScale={true}/>
+                                    </Table.Td>
+                                    <Table.Td colSpan="3"></Table.Td>
+                                </tr>
+                                <tr>
+                                    <Table.Td colSpan="4">Total Akhir</Table.Td>
+                                    <Table.Td colSpan="2">
+                                        <NumericFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} 
+                                            decimalScale={2}
+                                            fixedDecimalScale={true}/>
+                                    </Table.Td>
+                                    <Table.Td >
+                                        <NumericFormat value={getTotal(rows,'total_weight')} displayType={'text'} thousandSeparator={true}
+                                            decimalScale={2}
+                                            fixedDecimalScale={true}/>
+                                    </Table.Td> 
+                                    <Table.Td colSpan=""></Table.Td>
                                 </tr>
                             </Table.Tbody>
                         </Table>
+                        <div className="flex items-center justify-end mt-3">
+                            <Button type={'submit'} style={'success'}>
+                                 Simpan
+                            </Button>
+                        </div>
                     </form>
                 </Card.Body>
             </Card>

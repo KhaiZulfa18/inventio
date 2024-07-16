@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import Select from 'react-select';
+import Creatable, { useCreatable } from 'react-select/creatable';
 
 const controlStyles = {
     base: "border rounded-lg bg-white dark:bg-gray-950 border-gray-200 dark:border-gray-700 py-1 px-0.5 hover:cursor-pointer",
@@ -73,18 +74,21 @@ const customClassNames = {
     noOptionsMessage: () => noOptionsMessageStyles,
 };
   
-const SelectSearch = ({ options, placeholder, onChange, ...props}) => {
-  return (
-    <Select
-        options={options}
-        placeholder={placeholder}
-        onChange={onChange}
-        unstyled
-        styles={customStyles}
-        classNames={customClassNames}
-        {...props}
-    />
-  );
+const SelectSearch = ({ options, placeholder, onChange, creatable = false, ...props}) => {
+
+    const Component = creatable ? Creatable : Select;
+
+    return (
+        <Component
+            options={options}
+            placeholder={placeholder}
+            onChange={onChange}
+            unstyled
+            styles={customStyles}
+            classNames={customClassNames}
+            {...props}
+        />
+    );
 };
 
 export default SelectSearch;

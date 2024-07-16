@@ -46,37 +46,37 @@ export default function Button({className, style, icon, label, type, href, added
     return (
         <>
             {type === 'link' &&
-                <Link href={href} className={`${className} ${buttonStyle} px-3 py-2 flex items-center gap-2 rounded-lg text-sm font-semibold text-gray-200`}>
+                <Link href={href} className={`${buttonStyle} px-3 py-2 flex items-center gap-2 rounded-lg text-sm font-semibold text-gray-200 ${className} `}>
                     {children}
                 </Link>
             }
             {type === 'button' &&
-                <button type='button' className={`${className} ${buttonStyle} px-3 py-2 flex items-center gap-1 rounded-lg text-sm font-semibold text-gray-200`} {...props}>
+                <button type='button' className={`${buttonStyle} px-3 py-2 flex items-center gap-1 rounded-lg text-sm font-semibold text-gray-200 ${className} `} {...props}>
                     {children}
                 </button>
             }
             {type === 'submit' &&
-                <button type='submit' className={`${className} ${buttonStyle} px-3 py-2 flex items-center gap-1 rounded-lg text-sm font-semibold`} {...props}>
+                <button type='submit' className={`${buttonStyle} px-3 py-2 flex items-center gap-1 rounded-lg text-sm font-semibold ${className} `} {...props}>
                     {children}
                 </button>
             }
             {type === 'delete' &&
-                <button onClick={() => deleteData(url)} className={`${className} ${buttonStyle} px-3 py-2 flex items-center gap-1 rounded-lg text-sm font-semibold`} {...props}>
+                <button onClick={() => deleteData(url)} className={`${buttonStyle} px-3 py-2 flex items-center gap-1 rounded-lg text-sm font-semibold ${className} `} {...props}>
                     {children}
                 </button>
             }
             {type === 'modal' &&
-                <button className={`${className} ${buttonStyle} px-3 py-2 flex items-center gap-1 rounded-lg text-sm font-semibold`} {...props}>
+                <button className={`${buttonStyle} px-3 py-2 flex items-center gap-1 rounded-lg text-sm font-semibold ${className} `} {...props}>
                     {children}
                 </button>
             }
             {type === 'edit' &&
-                <Link href={href} className={`${className} ${buttonStyle} px-3 py-2 flex items-center gap-1 rounded-lg text-sm font-semibold`} {...props}>
+                <Link href={href} className={`${buttonStyle} px-3 py-2 flex items-center gap-1 rounded-lg text-sm font-semibold ${className} `} {...props}>
                     {children}
                 </Link>
             }
             {type === 'bulk' &&
-                <button {...props} className={`${className} ${buttonStyle} px-3 py-2 flex items-center gap-2 rounded-lg text-sm font-semibold text-gray-200`}>
+                <button {...props} className={`${buttonStyle} px-3 py-2 flex items-center gap-2 rounded-lg text-sm font-semibold text-gray-200 ${className} `}>
                     {children}
                 </button>
             }
