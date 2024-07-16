@@ -14,13 +14,14 @@ import { useEffect, useState } from "react";
 import { NumericFormat } from "react-number-format";
 import Datepicker from "react-tailwindcss-datepicker";
 
-export default function Create({auth, products}) {
+export default function Create({auth, products, suppliers}) {
 
     const {data, setData, post, errors} = useForm({
         date: '',
         supplier: '',
         payment_method: '',
         note: '',
+        discount: 0,
         products: []
     });
 
@@ -30,6 +31,7 @@ export default function Create({auth, products}) {
 
     useEffect(() => {
         setTotal(totalPrice - discount);
+        setData('discount',discount);
     }, [totalPrice, discount]);
 
     const [dateValue, setDateValue] = useState({
@@ -108,6 +110,11 @@ export default function Create({auth, products}) {
         label: product.name
     }));
 
+    const supplierOptions = suppliers.map(supplier => ({
+        value: supplier.id,
+        label: supplier.name
+    }));
+
     const onSubmit = async (e) => {
         e.preventDefault();
         
@@ -143,15 +150,18 @@ export default function Create({auth, products}) {
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Supplier</label>
                                 <SelectSearch creatable={true} placeholder={'- Pilih atau Buat Supplier -'}
-                                    options={productOptions}
+                                    options={supplierOptions}
                                     onChange={e => setData('supplier', e.value)}/>
                                 <InputError message={errors.supplier} className="mt-2"></InputError>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Metode Pembayaran</label>
-                                <TextInput className="w-full" placeholder={"Metode Pembayaran"} autoComplete="off" 
-                                    onChange={e => setData('payment_method', e.target.value)}
-                                    />
+                                <SelectInput onChange={e => setData('payment_method', e.target.value)}>
+                                    <option value={''}>- Metode Pembayaran -</option>
+                                    <option value={'cash'}>Cash</option>
+                                    <option value={'debit'}>Debit</option>
+                                    <option value={'qris'}>QRIS</option>
+                                </SelectInput>
                                 <InputError message={errors.payment_method} className="mt-2"></InputError>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
