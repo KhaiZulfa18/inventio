@@ -21,6 +21,7 @@ export default function Create({auth, products}) {
         supplier: '',
         payment_method: '',
         note: '',
+        products: []
     });
 
     const [totalPrice, setTotalPrice] = useState(0);
@@ -31,12 +32,22 @@ export default function Create({auth, products}) {
         setTotal(totalPrice - discount);
     }, [totalPrice, discount]);
 
+    const [dateValue, setDateValue] = useState({
+        endDate: null,
+        startDate: null,
+    });
+
+    useEffect(() => {
+        setData('date',dateValue.startDate);
+    }, [dateValue]);
+
     const [rows, setRows] = useState([
         {product_id: '', product_name: '', qty: 0, price: 0, weight: 0, total_price: 0, total_weight: 0, unit: ''}
     ]);
 
     useEffect(() => {
         setTotalPrice(getTotal(rows,'total_price'));
+        setData('products',rows);
     }, [rows])
 
     const addRows = () => {
@@ -97,6 +108,12 @@ export default function Create({auth, products}) {
         label: product.name
     }));
 
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        
+        post(route('purchase.store'));
+    }
+
     return (
         <AppLayout>
             <Head title="Pembelian"></Head>
@@ -106,7 +123,7 @@ export default function Create({auth, products}) {
                     <InboxArrowDownIcon className="w-6"/> Pembelian
                 </Card.Header>
                 <Card.Body>
-                    <form onSubmit='' >
+                    <form onSubmit={onSubmit} >
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 md:gap-3">
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Tanggal Pembelian</label>
@@ -119,34 +136,36 @@ export default function Create({auth, products}) {
                                         today: "Hari ini", 
                                         yesterday: "Kemarin",
                                     }}}
-                                    value={data.date}
-                                    onChange={(value) => setData('date', value)}/>
-                                <InputError message={errors.name} className="mt-2"></InputError>
+                                    value={dateValue}
+                                    onChange={(value) => setDateValue(value)}/>
+                                <InputError message={errors.date} className="mt-2"></InputError>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Supplier</label>
                                 <SelectSearch creatable={true} placeholder={'- Pilih atau Buat Supplier -'}
                                     options={productOptions}
                                     onChange={e => setData('supplier', e.value)}/>
-                                <InputError message={errors.name} className="mt-2"></InputError>
+                                <InputError message={errors.supplier} className="mt-2"></InputError>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Metode Pembayaran</label>
                                 <TextInput className="w-full" placeholder={"Metode Pembayaran"} autoComplete="off" 
                                     onChange={e => setData('payment_method', e.target.value)}
                                     />
-                                <InputError message={errors.name} className="mt-2"></InputError>
+                                <InputError message={errors.payment_method} className="mt-2"></InputError>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Note</label>
                                 <TextArea onChange={(e) => setData('note', e.target.value)}></TextArea>
-                                <InputError message={errors.name} className="mt-2"></InputError>
+                                <InputError message={errors.note} className="mt-2"></InputError>
                             </div>
                         </div>
                         <Table className={'mt-3 md:mt-1'}>
                             <Table.Thead>
                                 <tr>
-                                    <Table.Th colSpan='8' className="text-center">Daftar Produk</Table.Th>
+                                    <Table.Th colSpan='8' className="text-center">
+                                        Daftar Produk
+                                    </Table.Th>
                                 </tr>
                                 <tr>
                                     <Table.Th className={'w-1/12'}>No</Table.Th>
