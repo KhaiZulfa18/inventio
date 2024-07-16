@@ -45,7 +45,7 @@ const SearchSelect = ({className, url, name, queryParams = {}, children, ...prop
 
     return (
         <SelectInput {...props} className={"w-full " + className} 
-        defaultValue={queryParams.category}
+        defaultValue={queryParams[name]}
         onChange={e => searchFieldChanged(name, e.target.value)}>
             {children}
         </SelectInput>

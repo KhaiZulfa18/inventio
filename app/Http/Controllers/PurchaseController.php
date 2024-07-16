@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PurchaseRequest;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\PurchaseResource;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Supplier;
@@ -13,6 +14,34 @@ use Inertia\Inertia;
 
 class PurchaseController extends Controller
 {
+    public function index() {
+        
+        $query = Purchase::query()
+            ->select('purchases.*');
+
+        $sortFields = request('sort_field', 'created_at');
+        $sortDirection = request('sort_direction', 'desc');
+
+        if(request('code')) {
+            $query->where('code','like','%'.request('code').'%');
+        }
+        if(request('supplier')) {
+            $query->where('supplier_id','=',request('supplier'));
+        }
+        
+        $purchases = $query->orderBy($sortFields, $sortDirection)
+                        ->paginate(10)
+                        ->onEachSide(1);
+
+        $suppliers = Supplier::all();
+
+        return Inertia::render('Purchase/Index',[
+            'purchases' => PurchaseResource::collection($purchases),
+            'queryParams' => request()->query() ?: null,
+            'suppliers' => $suppliers,
+        ]);
+    }
+
     public function create() {
     
         $products = Product::with('category')->get();
