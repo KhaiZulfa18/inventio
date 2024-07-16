@@ -34,6 +34,8 @@ Route::middleware(['auth','verified'])->group(function (){
 
     Route::controller(PurchaseController::class)->group(function () {
         Route::prefix('/purchase')->group(function () {
+            Route::get('/', 'index')->name('purchase.index');
+            Route::get('/show/{code}', 'detail')->name('purchase.show');
             Route::get('/create', 'create')->name('purchase.create');
             Route::post('/store', 'store')->name('purchase.store');
         });

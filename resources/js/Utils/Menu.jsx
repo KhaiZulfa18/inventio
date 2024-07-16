@@ -90,8 +90,8 @@ export default function Menu() {
                 },
                 {
                     title : 'Riwayat Pembelian',
-                    href : '/report/purchase',
-                    active: url.startsWith('/report/purchase') ? true : false,
+                    href : '/purchase/',
+                    active: url == '/purchase/' ? true : false,
                     icon : <DocumentChartBarIcon className="w-5"/>,
                     permissions:  hasAnyPermission(['product-view']),
                 },

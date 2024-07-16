@@ -2,7 +2,7 @@ import React from 'react'
 // import { clsx } from 'clsx';
 import { Link, usePage } from '@inertiajs/react'
 
-export default function LinkItem({href, icon, link, access, title, sidebarOpen, ...props}) {
+export default function LinkItem({href, icon, link, active, access, title, sidebarOpen, ...props}) {
 
     // destruct url from usepage
     const { url } = usePage();
@@ -25,13 +25,13 @@ export default function LinkItem({href, icon, link, access, title, sidebarOpen, 
                     sidebarOpen ?
                         <Link
                             href={href}
-                            className={sideOpen + (url.startsWith(href) && sideActive)} {...props}
+                            className={sideOpen + (active && sideActive)} {...props}
                         >
                             {icon} {title}
                         </Link>
                     :
                         <Link href={href} 
-                            className={sideOpen + (url.startsWith(href) && sideActive)} {...props}
+                            className={sideOpen + (active && sideActive)} {...props}
                         >
                             {icon}
                         </Link>

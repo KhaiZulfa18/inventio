@@ -14,6 +14,8 @@ export default function Sidebar({ sidebarOpen = true }) {
     // get menu from utils
     const menuNavigation = Menu();
 
+    console.log(menuNavigation);
+
     return (
         <div
             className={`${sidebarOpen ? 'w-[260px]' : 'w-[100px]'} hidden md:block min-h-screen overflow-y-auto border-r transition-all duration-300 bg-white dark:bg-gray-950 dark:border-gray-900 pb-10`}>
@@ -63,6 +65,7 @@ export default function Sidebar({ sidebarOpen = true }) {
                                             title={detail.title}
                                             icon={detail.icon}
                                             href={detail.href}
+                                            active={detail.active}
                                             access={detail.permissions}
                                             sidebarOpen={sidebarOpen}
                                         />
@@ -97,6 +100,7 @@ export default function Sidebar({ sidebarOpen = true }) {
                                             sidebarOpen={sidebarOpen}
                                             key={x}
                                             access={detail.permissions}
+                                            active={detail.active}
                                             icon={detail.icon}
                                             href={detail.href}
                                         />
