@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CodeHelper;
 use App\Http\Requests\PurchaseRequest;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\PurchaseResource;
@@ -56,6 +57,7 @@ class PurchaseController extends Controller
     public function store(PurchaseRequest $request) {
 
         $supplier = Supplier::find($request->supplier);
+        $code = CodeHelper::generateCode('purchase',$request->date);
 
         if(!$supplier){
             $supplier = Supplier::create([
@@ -68,9 +70,9 @@ class PurchaseController extends Controller
 
         $purchase = Purchase::create([
             'date' => $request->date,
-            'code' => '',
+            'code' => $code,
             'supplier' => $supplier->name,
-            'supplier_id' => $supplier->id, // to do create supplier table
+            'supplier_id' => $supplier->id,
             'payment_method' => $request->payment_method,
             'note' => $request->note,
             'status' => 1,
