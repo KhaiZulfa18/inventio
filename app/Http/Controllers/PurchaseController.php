@@ -96,6 +96,6 @@ class PurchaseController extends Controller
             ]);
         }
 
-        return back();
+        return back()->with('success', 'Pembelian berhasil dibuat, Kode Pembelian ' . $code);
     }
 }

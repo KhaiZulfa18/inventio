@@ -7,14 +7,28 @@ import StepperInput from "@/Components/StepperInput";
 import Table from "@/Components/Table";
 import TextArea from "@/Components/TextArea";
 import TextInput from "@/Components/TextInput";
+import useToast from "@/Hooks/useToast";
 import AppLayout from "@/Layouts/AppLayout";
 import { InboxArrowDownIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { NumericFormat } from "react-number-format";
 import Datepicker from "react-tailwindcss-datepicker";
 
 export default function Create({auth, products, suppliers}) {
+
+    const { props } = usePage();
+    const { showToast } = useToast();
+
+    useEffect(() => {
+        if (props.flash && props.flash.success) {
+            showToast(props.flash.success, 'success');
+        }
+        if (props.flash && props.flash.error) {
+            showToast(props.flash.error, 'error');
+        }
+    }, [props.flash]);
 
     const {data, setData, post, errors} = useForm({
         date: '',
