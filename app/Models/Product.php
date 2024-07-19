@@ -31,4 +31,9 @@ class Product extends Model
         return $this->hasOne(Price::class,'product_id')
                 ->where('status','1');
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

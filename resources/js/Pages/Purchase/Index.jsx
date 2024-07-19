@@ -3,16 +3,28 @@ import Card from "@/Components/Card";
 import Pagination from "@/Components/Pagination";
 import Search from "@/Components/SearchInput";
 import Table from "@/Components/Table";
+import useToast from "@/Hooks/useToast";
 import AppLayout from "@/Layouts/AppLayout";
-import { EyeIcon, InboxArrowDownIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
-import { Head, Link, router } from "@inertiajs/react";
+import { Bars3Icon, InboxArrowDownIcon, PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { Head, usePage } from "@inertiajs/react";
+import { useEffect } from "react";
 import { NumericFormat } from "react-number-format";
 
 export default function Index({auth, purchases, suppliers, queryParams = null}) {
 
     queryParams = queryParams || {}
 
-    console.log(queryParams);
+    const { props } = usePage();
+    const { showToast } = useToast();
+
+    useEffect(() => {
+        if (props.flash && props.flash.success) {
+            showToast(props.flash.success, 'success');
+        }
+        if (props.flash && props.flash.error) {
+            showToast(props.flash.error, 'error');
+        }
+    }, [props.flash]);
 
     return (
         <AppLayout>
@@ -46,13 +58,13 @@ export default function Index({auth, purchases, suppliers, queryParams = null}) 
                         <Table.Thead>
                             <tr>
                                 <Table.Th className={'w-10'}>No</Table.Th>
-                                <Table.Th name={'name'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Kode Pembelian</Table.Th>
-                                <Table.Th name={'description'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Supplier</Table.Th>
-                                <Table.Th name={'category_id'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Jumlah</Table.Th>
-                                <Table.Th name={'weight'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Total Harga</Table.Th>
-                                <Table.Th name={'weight'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Diskon</Table.Th>
-                                <Table.Th name={'weight'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Total Akhir</Table.Th>
-                                <Table.Th name={'price'} sortable={false} url={route('purchase.index')} queryParams={queryParams}>Status</Table.Th>
+                                <Table.Th name={'code'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Kode Pembelian</Table.Th>
+                                <Table.Th name={'supplier'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Supplier</Table.Th>
+                                <Table.Th name={'quantity'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Jumlah</Table.Th>
+                                <Table.Th name={'total_price'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Total Harga</Table.Th>
+                                <Table.Th name={'discount'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Diskon</Table.Th>
+                                <Table.Th name={'total'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Total Akhir</Table.Th>
+                                <Table.Th name={'status'} sortable={false} url={route('purchase.index')} queryParams={queryParams}>Status</Table.Th>
                                 <Table.Th>Aksi</Table.Th>
                             </tr>
                         </Table.Thead>
@@ -79,9 +91,14 @@ export default function Index({auth, purchases, suppliers, queryParams = null}) 
                                                 fixedDecimalScale={true}/>
                                     </Table.Td>
                                     <Table.Td className={'text-center'}>{purchase.status}</Table.Td>
-                                    <Table.Td className={'flex gap-1'}>
-                                        <Button type={'link'} style={'info'} href={route('purchase.show', purchase.id)}>
-                                            <EyeIcon className="w-4"/>
+                                    <Table.Td className={'flex gap-1 justify-end'}>
+                                        {purchase.code && (
+                                        <Button type={'link'} style={'secondary'} href={route('purchase.show', encodeURIComponent(purchase.code))}>
+                                            <Bars3Icon className="w-4"/>
+                                        </Button>
+                                        )}
+                                        <Button type={'delete'} style={'danger'} url={route('purchase.destroy', purchase.id)}>
+                                            <TrashIcon className="w-4"/>
                                         </Button>
                                     </Table.Td>
                                 </tr>

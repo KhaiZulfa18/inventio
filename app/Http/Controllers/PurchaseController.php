@@ -96,6 +96,24 @@ class PurchaseController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Pembelian berhasil dibuat, Kode Pembelian ' . $code);
+        return back()->with('success', 'Pembelian berhasil disimpan, Kode Pembelian ' . $code);
+    }
+
+    public function show($code)
+    {
+        $purchase = Purchase::with(['transactions','transactions.product'])
+                                ->where('code',$code)->first();
+        
+        return Inertia::render('Purchase/Show',[
+            'purchases' => (new PurchaseResource($purchase)),
+        ]);
+    }
+
+    public function destroy(Purchase $purchase) {
+
+        $purchase->transactions()->delete();
+        $purchase->delete();
+
+        return back()->with('success', 'Data berhasil dihapus.');
     }
 }

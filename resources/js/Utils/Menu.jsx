@@ -91,7 +91,7 @@ export default function Menu() {
                 {
                     title : 'Riwayat Pembelian',
                     href : '/purchase/',
-                    active: url == '/purchase' ? true : false,
+                    active: url == '/purchase' || url.startsWith('/purchase/show/') ? true : false,
                     icon : <DocumentChartBarIcon className="w-5"/>,
                     permissions:  hasAnyPermission(['product-view']),
                 },

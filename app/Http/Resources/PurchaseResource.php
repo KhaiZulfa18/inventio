@@ -19,6 +19,7 @@ class PurchaseResource extends JsonResource
 
         return [
             'id' => $this->id,
+            'date' => $this->date,
             'code' => $this->code,
             'note' => $this->note,
             'supplier' => $this->supplier,
@@ -27,9 +28,11 @@ class PurchaseResource extends JsonResource
             'total_price' => $this->total_price,
             'discount' => $this->discount,
             'total' => ($this->total_price - $this->discount),
+            'payment_method' => ucfirst($this->payment_method),
             'status' => $status[$this->status],
             'created_at' => (new Carbon($this->created_at))->format('Y-m-d'), 
             'created_by' => new UserResource($this->createdBy),
+            'transactions' => $this->transactions,
         ];
     }
 }
