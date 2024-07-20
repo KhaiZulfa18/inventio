@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -32,15 +33,11 @@ Route::middleware(['auth','verified'])->group(function (){
     Route::resource('category',CategoryController::class);
     Route::resource('product',ProductController::class);
 
-    Route::controller(PurchaseController::class)->group(function () {
-        Route::prefix('/purchase')->group(function () {
-            Route::get('/', 'index')->name('purchase.index');
-            Route::get('/show/{code}', 'show')->name('purchase.show')->where('code', '.*');
-            Route::get('/create', 'create')->name('purchase.create');
-            Route::post('/store', 'store')->name('purchase.store');
-            Route::delete('/purchase/{purchase}', 'destroy')->name('purchase.destroy');
-        });
-    });
+    Route::resource('purchase',PurchaseController::class)->except(['show','edit','update']);
+    Route::get('purchase/show/{code}', [PurchaseController::class,'show'])->name('purchase.show')->where('code', '.*');
+
+    Route::resource('sale',SaleController::class)->except(['show','edit','update']);
+    Route::get('sale/show/{code}', [SaleController::class,'show'])->name('sale.show')->where('code', '.*');
 });
 
 require __DIR__.'/auth.php';

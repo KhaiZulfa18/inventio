@@ -39,7 +39,7 @@ export default forwardRef(function StepperInput({ className = '', isFocused = fa
                 onClick={() => handleValueChange('-')}>
                     <MinusIcon className='w-3'/>
                 </Button>
-                <TextInput className={'p-0 w-14 bg-transparent text-center border-transparent  ' + className} value={inputValue} onChange={handleChange}/>
+                <TextInput className={'p-0 w-6 md:w-14 bg-transparent text-center border-transparent  ' + className} value={inputValue} onChange={handleChange}/>
                 <Button type={'button'} className={'border border-gray-200 dark:border-gray-900 bg-white dark:bg-gray-950 text-gray-900 dark:text-white px-1 rounded-2xl'}
                 onClick={() => handleValueChange('+')}>
                     <PlusIcon className='w-3'/>
