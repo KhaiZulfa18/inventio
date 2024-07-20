@@ -110,8 +110,8 @@ export default function Menu() {
                 },
                 {
                     title : 'Riwayat Penjualan',
-                    href : '/report/sale',
-                    active: url.startsWith('/report/sale') ? true : false,
+                    href : '/sale/',
+                    active: url == '/sale' || url.startsWith('/sale/show/')  ? true : false,
                     icon : <DocumentChartBarIcon className="w-5"/>,
                     permissions:  hasAnyPermission(['product-view']),
                 },
