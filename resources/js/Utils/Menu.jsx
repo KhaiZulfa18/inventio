@@ -1,5 +1,5 @@
 import { usePage } from '@inertiajs/react';
-import { PlusCircleIcon, TableCellsIcon, UserPlusIcon, ShieldExclamationIcon, UsersIcon, TagIcon, CubeIcon, FingerPrintIcon, UserGroupIcon, InboxArrowDownIcon, DocumentChartBarIcon } from '@heroicons/react/24/outline';
+import { PlusCircleIcon, TableCellsIcon, UserPlusIcon, ShieldExclamationIcon, UsersIcon, TagIcon, CubeIcon, FingerPrintIcon, UserGroupIcon, InboxArrowDownIcon, DocumentChartBarIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
 import hasAnyPermission from './Permissions';
 import React from 'react'
 
@@ -105,7 +105,7 @@ export default function Menu() {
                     title : 'Penjualan',
                     href : '/sale/create',
                     active: url.startsWith('/sale/create') ? true : false,
-                    icon : <InboxArrowDownIcon className="w-5"/>,
+                    icon : <ShoppingCartIcon className="w-5"/>,
                     permissions: hasAnyPermission(['category-view']),
                 },
                 {

@@ -5,12 +5,12 @@ import Search from "@/Components/SearchInput";
 import Table from "@/Components/Table";
 import useToast from "@/Hooks/useToast";
 import AppLayout from "@/Layouts/AppLayout";
-import { Bars3Icon, InboxArrowDownIcon, PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, InboxArrowDownIcon, PlusCircleIcon, ShoppingCartIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Head, usePage } from "@inertiajs/react";
 import { useEffect } from "react";
 import { NumericFormat } from "react-number-format";
 
-export default function Index({auth, sales, suppliers, queryParams = null}) {
+export default function Index({auth, sales, customers, queryParams = null}) {
 
     queryParams = queryParams || {}
 
@@ -33,7 +33,7 @@ export default function Index({auth, sales, suppliers, queryParams = null}) {
             <Card>
                 <Card.Header className="flex items-center justify-between gap-1">
                     <div className="flex justify-normal gap-2">
-                        <InboxArrowDownIcon className="w-6"/> Riwayat Penjualan
+                        <ShoppingCartIcon className="w-6"/> Riwayat Penjualan
                     </div>
                     <Button type={'link'} href={route('sale.create')} style={'success'}>
                         <PlusCircleIcon className="w-5"/><span className="hidden lg:block">Tambah</span>
@@ -46,11 +46,11 @@ export default function Index({auth, sales, suppliers, queryParams = null}) {
                             url={route('sale.index')}
                             placeholder="Cari Kode"/>
                         <Search.Select queryParams={queryParams}
-                            name={'supplier'}
+                            name={'customer'}
                             url={route('sale.index')}>
                             <option value="">- Pilih Pelanggan -</option>
-                            {suppliers.map((supplier) => (
-                                <option key={supplier.id} value={supplier.id}>{supplier.name}</option>
+                            {customers.map((customer) => (
+                                <option key={customer.id} value={customer.id}>{customer.name}</option>
                             ))}
                         </Search.Select>
                     </div>

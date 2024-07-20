@@ -9,14 +9,14 @@ import TextArea from "@/Components/TextArea";
 import TextInput from "@/Components/TextInput";
 import useToast from "@/Hooks/useToast";
 import AppLayout from "@/Layouts/AppLayout";
-import { InboxArrowDownIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { InboxArrowDownIcon, PlusIcon, ShoppingCartIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Head, useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { NumericFormat } from "react-number-format";
 import Datepicker from "react-tailwindcss-datepicker";
 
-export default function Create({auth, products, suppliers}) {
+export default function Create({auth, products, customers}) {
 
     const { props } = usePage();
     const { showToast } = useToast();
@@ -124,9 +124,9 @@ export default function Create({auth, products, suppliers}) {
         label: product.name
     }));
 
-    const supplierOptions = suppliers.map(supplier => ({
-        value: supplier.id,
-        label: supplier.name
+    const customerOptions = customers.map(customer => ({
+        value: customer.id,
+        label: customer.name
     }));
 
     const onSubmit = async (e) => {
@@ -141,7 +141,7 @@ export default function Create({auth, products, suppliers}) {
 
             <Card>
                 <Card.Header>
-                    <InboxArrowDownIcon className="w-6"/> Penjualan
+                    <ShoppingCartIcon className="w-6"/> Penjualan
                 </Card.Header>
                 <Card.Body>
                     <form onSubmit={onSubmit} >
@@ -164,7 +164,7 @@ export default function Create({auth, products, suppliers}) {
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Pelanggan</label>
                                 <SelectSearch creatable={true} placeholder={'- Pilih atau Buat Pelanggan -'}
-                                    options={supplierOptions}
+                                    options={customerOptions}
                                     onChange={e => setData('customer', e.value)}/>
                                 <InputError message={errors.customer} className="mt-2"></InputError>
                             </div>

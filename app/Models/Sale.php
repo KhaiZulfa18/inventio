@@ -18,6 +18,6 @@ class Sale extends Model
 
     public function getCustomer()
     {
-        return $this->belongsTo(Supplier::class);
+        return $this->belongsTo(Customer::class);
     }
 }

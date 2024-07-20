@@ -6,7 +6,7 @@ use App\Helpers\CodeHelper;
 use App\Http\Requests\SaleRequest;
 use App\Models\Product;
 use App\Models\Sale;
-use App\Models\Supplier;
+use App\Models\Customer;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\PurchaseResource;
 use App\Http\Resources\SaleResource;
@@ -35,33 +35,33 @@ class SaleController extends Controller
                         ->paginate(10)
                         ->onEachSide(1);
 
-        $suppliers = Supplier::all();
+        $customers = Customer::all();
 
         return Inertia::render('Sale/Index',[
             'sales' => SaleResource::collection($sales),
             'queryParams' => request()->query() ?: null,
-            'suppliers' => $suppliers,
+            'customers' => $customers,
         ]);
     }
 
     public function create() {
     
         $products = Product::with('category')->get();
-        $suppliers = Supplier::all();
+        $customers = Customer::all();
 
         return Inertia::render('Sale/Create',[
             'products' => ProductResource::collection($products),
-            'suppliers' => $suppliers,
+            'customers' => $customers,
         ]);
     }
 
     public function store(SaleRequest $request) {
 
-        $supplier = Supplier::find($request->supplier);
+        $customer = Customer::find($request->customer);
         $code = CodeHelper::generateCode('sale',$request->date);
 
-        if(!$supplier){
-            $supplier = Supplier::create([
+        if(!$customer){
+            $customer = Customer::create([
                 'name' => $request->customer,
                 'address' => '',
                 'phone_number' => '',
@@ -72,8 +72,8 @@ class SaleController extends Controller
         $sale = Sale::create([
             'date' => $request->date,
             'code' => $code,
-            'customer' => $supplier->name,
-            'customer_id' => $supplier->id,
+            'customer' => $customer->name,
+            'customer_id' => $customer->id,
             'payment_method' => $request->payment_method,
             'note' => $request->note,
             'status' => 1,
@@ -97,6 +97,24 @@ class SaleController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Penjualan berhasil disimpan, Kode Penjualan ' . $code);
+        return to_route('sale.index')->with('success', 'Penjualan berhasil disimpan, Kode Penjualan ' . $code);
+    }
+
+    public function show($code)
+    {
+        $sale = Sale::with(['transactions','transactions.product'])
+                                ->where('code',$code)->first();
+        
+        return Inertia::render('Sale/Show',[
+            'sales' => (new SaleResource($sale)),
+        ]);
+    }
+
+    public function destroy(Sale $sale) {
+
+        $sale->transactions()->delete();
+        $sale->delete();
+
+        return back()->with('success', 'Data berhasil dihapus.');
     }
 }

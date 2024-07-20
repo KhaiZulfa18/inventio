@@ -96,7 +96,7 @@ class PurchaseController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Pembelian berhasil disimpan, Kode Pembelian ' . $code);
+        return to_route('purchase.index')->with('success', 'Pembelian berhasil disimpan, Kode Pembelian ' . $code);
     }
 
     public function show($code)
