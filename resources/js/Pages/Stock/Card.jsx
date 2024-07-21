@@ -11,41 +11,35 @@ import { useEffect, useState } from "react";
 import { NumericFormat } from "react-number-format";
 import Datepicker from "react-tailwindcss-datepicker";
 
-export default function Report({categories}) {
+export default function Report({products}) {
 
-   const [date, setDate] = useState();
-   const [category, setCategory] = useState([]);
+   const [product, setProduct] = useState();
    const [data, setData] = useState();
    const [loading, setLoading] = useState(false);
 
    const { showToast } = useToast();
 
-   const [dateValue, setDateValue] = useState({
+   const [date, setDate] = useState({
         endDate: null,
         startDate: null,
     });
 
-    useEffect(() => {
-        setDate(dateValue.startDate);
-    }, [dateValue]);
-
-    const categoryOptions = categories.data.map(category => ({
-        value: category.id,
-        label: category.name
+    const productOptions = products.data.map(product => ({
+        value: product.id,
+        label: product.name
     }));
 
     const searchData = async () => {
-        if (!date.startDate) {
-            showToast('Silahkan pilih Tanggal terlebih dahulu','error');
+        if (!date.startDate || !product) {
+            showToast('Silahkan pilih Produk & Tanggal terlebih dahulu','error');
             return;
         }
 
         setLoading(true);
         try {
-            const response = await axios.get(route('stock.report.data'), {
+            const response = await axios.get(route('stock.card.data', product), {
                 params: {
                     date: date,
-                    category_id: category
                 },
                 paramsSerializer: {
                     indexes: true,
@@ -68,35 +62,32 @@ export default function Report({categories}) {
 
     return (
         <AppLayout>
-            <Head title="Sisa Stok"></Head>
+            <Head title="Kartu Stok"></Head>
 
             <Card>
                 <Card.Header>
-                    <Square3Stack3DIcon className="w-6"/> Sisa Stok
+                    <Square3Stack3DIcon className="w-6"/> Kartu Stok
                 </Card.Header>
                 <Card.Body>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-1 md:gap-3">
                         <div className="py-3 px-4 flex flex-col gap-2">
-                            <label className="text-sm">Kategori</label>
-                            <SelectSearch placeholder={'- Pilih Kategori -'}
-                                options={categoryOptions}
-                                isMulti
-                                onChange={(selected) => setCategory(selected.map(selected => selected.value))}
+                            <label className="text-sm">Produk</label>
+                            <SelectSearch placeholder={'- Pilih Produk -'}
+                                options={productOptions}
+                                onChange={(selected) => setProduct(selected.value)}
                                 />
                         </div>
                         <div className="py-3 px-4 flex flex-col gap-2">
                             <label className="text-sm">Stok per tanggal :</label>
-                            <Datepicker placeholder={"Tanggal"} 
-                                asSingle={true} 
-                                useRange={false} 
+                            <Datepicker placeholder={"Tanggal Awal dan Tanggal Akhir"} 
                                 showShortcuts={true} 
                                 configs={{
                                     shortcuts: {
                                     today: "Hari ini", 
                                     yesterday: "Kemarin",
                                 }}}
-                                value={dateValue}
-                                onChange={(value) => setDateValue(value)}
+                                value={date}
+                                onChange={(value) => setDate(value)}
                             />
                         </div>
                         <div className="py-3 px-4 flex flex-col gap-2">
@@ -114,7 +105,7 @@ export default function Report({categories}) {
                     </div>
                     {!data && 
                         <div className="flex items-center justify-center px-4 py-5 md:px-6 md:py-10 rounded-lg border border-dotted border-gray-500/40">
-                            <span className="text-md md:text-2xl text-gray-500 tracking-wider">Silahkan Pilih Tanggal Stok dan Kategori (Opsional)</span>
+                            <span className="text-md md:text-2xl text-gray-500 tracking-wider">Silahkan Pilih Periode Tanggal Stok dan Produk</span>
                         </div>
                     }
                     {data && (

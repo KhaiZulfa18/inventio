@@ -47,6 +47,7 @@ Route::middleware(['auth','verified'])->group(function (){
             Route::get('/movement', 'movement')->name('stock.movement');
             Route::get('/movement/data', 'movement_data')->name('stock.movement.data');
             Route::get('/card', 'card')->name('stock.card');
+            Route::get('/card/{product}', 'card_data')->name('stock.card.data');
         });
     });
 });

@@ -30,7 +30,7 @@ export default function Report({categories}) {
     }));
 
     const searchData = async () => {
-        if (!date) {
+        if (!date.startDate) {
             showToast('Silahkan pilih Tanggal terlebih dahulu','error');
             return;
         }

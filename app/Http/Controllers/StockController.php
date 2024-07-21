@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Transaction;
@@ -137,5 +138,37 @@ class StockController extends Controller
             'message' => 'Movement Stock data retrieved successfully',
             'data' => $reportData
         ], 200);
+    }
+
+    public function card() 
+    {
+        $products = Product::all();
+
+        return Inertia::render('Stock/Card',[
+            'products' => ProductResource::collection($products),
+        ]);
+    }
+
+    public function card_data(Request $request, Product $product)
+    {
+        $date = $request->query('date');
+
+        $startDate = $date['startDate'];
+        $endDate = $date['endDate'];
+        
+        $startStock = Transaction::select(
+            'product_id',
+            DB::raw('SUM(CASE WHEN `type` = "+" THEN quantity ELSE -quantity END) as in_start')
+        )
+        ->whereNull('deleted_at')
+        ->where('date', '<', $startDate)
+        ->where('product_id', $product->id)
+        ->groupBy('product_id');
+
+        $transaction = Transaction::where('product_id',$product->id)
+                ->whereBetween('date', [$startDate,$endDate])
+                ->get();
+        
+        return $product;
     }
 }
