@@ -57,7 +57,7 @@ const Th = ({ className = '', url, name, sortable = false, queryParams = {}, chi
             onClick={sortable ? (e) => sortChanged(name) : null}
             {...props}
             >
-            <div className="px-3 py-3 flex items-center justify-between gap-1 cursor-pointer">
+            <div className={'px-3 py-3 flex items-center gap-1 cursor-pointer ' + (sortable ? 'justify-between' : 'justify-center' )}>
                 {children}
                 {sortable && (
                     <div>

@@ -130,8 +130,8 @@ export default function Menu() {
                 },
                 {
                     title : 'Mutasi Stok',
-                    href : '/stock/mutation',
-                    active: url.startsWith('/stock/mutation') ? true : false,
+                    href : '/stock/movement',
+                    active: url.startsWith('/stock/movement') ? true : false,
                     icon : <RectangleStackIcon className="w-5"/>,
                     permissions:  hasAnyPermission(['product-view']),
                 },

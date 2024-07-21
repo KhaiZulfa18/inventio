@@ -34,18 +34,12 @@ export default function Report({categories}) {
         label: category.name
     }));
 
-    categoryOptions.unshift({
-        value: '',
-        label: '- Semua -'
-    });
-
     const searchData = async () => {
         if (!date) {
             showToast('Silahkan pilih Tanggal terlebih dahulu','error');
             return;
         }
 
-        console.log(category);
         setLoading(true);
         try {
             const response = await axios.get(route('stock.report.data'), {
@@ -143,12 +137,12 @@ export default function Report({categories}) {
                                             <Table.Td>{ stock.product_name }</Table.Td>
                                             <Table.Td>{ stock.category_name }</Table.Td>
                                             <Table.Td>{ stock.unit }</Table.Td>
-                                            <Table.Td>
+                                            <Table.Td className="text-right">
                                                 <NumericFormat value={ stock.remaining_stock} displayType={'text'} thousandSeparator={true}
                                                     decimalScale={0}
                                                     fixedDecimalScale={true}/>
                                             </Table.Td>
-                                            <Table.Td>
+                                            <Table.Td className="text-right">
                                                 <NumericFormat value={ stock.remaining_stock_weight} displayType={'text'} thousandSeparator={true}
                                                     decimalScale={2}
                                                     fixedDecimalScale={true}/>
@@ -162,13 +156,13 @@ export default function Report({categories}) {
                                 )}
                                 {data.length > 0 && (
                                     <tr>
-                                        <Table.Td colSpan='4'>Total</Table.Td>
-                                        <Table.Td>
+                                        <Table.Td colSpan='4'>Total {data.length} Data</Table.Td>
+                                        <Table.Td className="text-right">
                                             <NumericFormat value={ getTotal(data, 'remaining_stock')} displayType={'text'} thousandSeparator={true}
                                                     decimalScale={0}
                                                     fixedDecimalScale={true}/>
                                         </Table.Td>
-                                        <Table.Td>
+                                        <Table.Td className="text-right">
                                             <NumericFormat value={ getTotal(data, 'remaining_stock_weight')} displayType={'text'} thousandSeparator={true}
                                                     decimalScale={2}
                                                     fixedDecimalScale={true}/>
