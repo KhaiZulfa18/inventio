@@ -54,7 +54,7 @@ const Th = ({ className = '', url, name, sortable = false, queryParams = {}, chi
         <th
             scope="col"
             className={`${className} py-1 px-1 h-12 align-middle font-medium text-gray-700 dark:text-gray-400`}
-            onClick={(e) => sortChanged(name)}
+            onClick={sortable ? (e) => sortChanged(name) : null}
             {...props}
             >
             <div className="px-3 py-3 flex items-center justify-between gap-1 cursor-pointer">
@@ -70,14 +70,14 @@ const Th = ({ className = '', url, name, sortable = false, queryParams = {}, chi
     );
 };
 
-const Empty = ({colSpan, message, children}) => {
+const Empty = ({className = '', colSpan, message, children}) => {
     return (
         <tr>
             <td colSpan={colSpan}>
-                <div className="flex items-center justify-center h-96">
+                <div className="flex items-center justify-center h-52">
                     <div className="text-center">
                         {children}
-                        <div className="mt-5">
+                        <div className={'mt-3 ' + className}>
                             {message}
                         </div>
                     </div>

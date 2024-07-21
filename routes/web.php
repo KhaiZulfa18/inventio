@@ -8,6 +8,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,15 @@ Route::middleware(['auth','verified'])->group(function (){
 
     Route::resource('sale',SaleController::class)->except(['show','edit','update']);
     Route::get('sale/show/{code}', [SaleController::class,'show'])->name('sale.show')->where('code', '.*');
+
+    Route::controller(StockController::class)->group(function () {
+        Route::prefix('/stock')->group(function () {
+            Route::get('/report', 'report')->name('stock.report');
+            Route::get('/report/data', 'report_data')->name('stock.report.data');
+            Route::get('/movement', 'movement')->name('stock.movement');
+            Route::get('/card', 'card')->name('stock.card');
+        });
+    });
 });
 
 require __DIR__.'/auth.php';

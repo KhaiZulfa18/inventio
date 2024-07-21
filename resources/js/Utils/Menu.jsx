@@ -1,5 +1,5 @@
 import { usePage } from '@inertiajs/react';
-import { PlusCircleIcon, TableCellsIcon, UserPlusIcon, ShieldExclamationIcon, UsersIcon, TagIcon, CubeIcon, FingerPrintIcon, UserGroupIcon, InboxArrowDownIcon, DocumentChartBarIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
+import { PlusCircleIcon, TableCellsIcon, UserPlusIcon, ShieldExclamationIcon, UsersIcon, TagIcon, CubeIcon, FingerPrintIcon, UserGroupIcon, InboxArrowDownIcon, DocumentChartBarIcon, ShoppingCartIcon, SwatchIcon, RectangleStackIcon, Square3Stack3DIcon, ClipboardDocumentIcon, BanknotesIcon } from '@heroicons/react/24/outline';
 import hasAnyPermission from './Permissions';
 import React from 'react'
 
@@ -123,23 +123,23 @@ export default function Menu() {
             details : [
                 {
                     title : 'Sisa Stok',
-                    href : '/stock',
-                    active: url.startsWith('/stock') ? true : false,
-                    icon : <InboxArrowDownIcon className="w-5"/>,
+                    href : '/stock/report',
+                    active: url.startsWith('/stock/report') ? true : false,
+                    icon : <Square3Stack3DIcon className="w-5"/>,
                     permissions: hasAnyPermission(['category-view']),
                 },
                 {
                     title : 'Mutasi Stok',
                     href : '/stock/mutation',
                     active: url.startsWith('/stock/mutation') ? true : false,
-                    icon : <DocumentChartBarIcon className="w-5"/>,
+                    icon : <RectangleStackIcon className="w-5"/>,
                     permissions:  hasAnyPermission(['product-view']),
                 },
                 {
                     title : 'Kartu Stok',
                     href : '/stock/card',
                     active: url.startsWith('/stock/card') ? true : false,
-                    icon : <DocumentChartBarIcon className="w-5"/>,
+                    icon : <ClipboardDocumentIcon className="w-5"/>,
                     permissions:  hasAnyPermission(['product-view']),
                 },
             ]
@@ -152,7 +152,7 @@ export default function Menu() {
                     title : 'Laporan Keuangan',
                     href : '/finance',
                     active: url.startsWith('/finance') ? true : false,
-                    icon : <InboxArrowDownIcon className="w-5"/>,
+                    icon : <BanknotesIcon className="w-5"/>,
                     permissions: hasAnyPermission(['category-view']),
                 },
             ]

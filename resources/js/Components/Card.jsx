@@ -11,7 +11,7 @@ const Card = ({className, children}) => {
 
 const CardHeader = ({className = '', children}) => {
     return (
-        <div className={`px-4 py-2 border-b border-gray-300 dark:border-gray-700 flex items-center gap-2 font-semibold text-gray-700 dark:text-gray-200 `+ className}>
+        <div className={`px-1 py-2 md:px-4 border-b border-gray-300 dark:border-gray-700 flex items-center gap-2 font-semibold text-gray-700 dark:text-gray-200 `+ className}>
             {children}
         </div>
     );
@@ -19,7 +19,7 @@ const CardHeader = ({className = '', children}) => {
 
 const CardBody = ({ className = '', children }) => {
     return (
-        <div className={`p-4 text-gray-700 dark:text-gray-200` + className}>
+        <div className={`px-1 py-4 md:px-4 text-gray-700 dark:text-gray-200` + className}>
             {children}
         </div>
     );
@@ -27,7 +27,7 @@ const CardBody = ({ className = '', children }) => {
 
 const CardFooter = ({ className = '', children }) => {
     return (
-        <div className={`px-4 py-2 text-gray-700 dark:text-gray-200 border-t border-gray-300 dark:border-gray-700 rounded-b-lg ` + className}>
+        <div className={`px-1 py-2 md:px-4 text-gray-700 dark:text-gray-200 border-t border-gray-300 dark:border-gray-700 rounded-b-lg ` + className}>
             {children}
         </div>
     );
