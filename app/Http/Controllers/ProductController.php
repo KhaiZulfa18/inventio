@@ -12,6 +12,7 @@ use App\Models\Product;
 use Carbon\Carbon;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -151,5 +152,53 @@ class ProductController extends Controller
         Product::findOrFail($product_id)->delete();
         
         return back();
+    }
+
+    public function store_price(Request $request)
+    {
+        $product_id = $request->product_id;
+        $price_purchase = $request->price_purchase;
+        $price_sale = $request->price_sale;
+
+
+        if($price_purchase > 0) {
+            
+            $last_price = Price::where('product_id',$product_id)->where('price_type',1)->where('status',1)
+                                ->update([
+                                    'status' => 0,
+                                    'end_date' => Carbon::now()->format('Y-m-d'),
+                                    'updated_by' => Auth::id(),
+                                ]);
+            
+            $price = Price::create([
+                'product_id' => $product_id,
+                'price' => $price_purchase,
+                'price_type' => 1,
+                'start_date' => Carbon::now()->format('Y-m-d'),
+                'status' => 1,
+                'created_by' => Auth::id(),
+            ]);
+        }
+
+        if($price_sale > 0) {
+            
+            $last_price = Price::where('product_id',$product_id)->where('price_type',2)->where('status',1)
+                                ->update([
+                                    'status' => 0,
+                                    'end_date' => Carbon::now()->format('Y-m-d'),
+                                    'updated_by' => Auth::id(),
+                                ]);
+            
+            $price = Price::create([
+                'product_id' => $product_id,
+                'price' => $price_sale,
+                'price_type' => 2,
+                'start_date' => Carbon::now()->format('Y-m-d'),
+                'status' => 1,
+                'created_by' => Auth::id(),
+            ]);
+        }
+
+        return back()->with('success', 'Harga berhasil diubah!');
     }
 }

@@ -33,6 +33,7 @@ Route::middleware(['auth','verified'])->group(function (){
    
     Route::resource('category',CategoryController::class);
     Route::resource('product',ProductController::class);
+    Route::post('/price', [ProductController::class,'store_price'])->name('price.store');
 
     Route::resource('purchase',PurchaseController::class)->except(['show','edit','update']);
     Route::get('purchase/show/{code}', [PurchaseController::class,'show'])->name('purchase.show')->where('code', '.*');

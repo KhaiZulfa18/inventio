@@ -1,20 +1,59 @@
 import Button from "@/Components/Button";
 import Card from "@/Components/Card";
+import Modal from "@/Components/Modal";
 import Pagination from "@/Components/Pagination";
-import PrimaryButton from "@/Components/PrimaryButton";
 import Search from "@/Components/SearchInput";
 import Table from "@/Components/Table";
 import TextInput from "@/Components/TextInput";
+import useToast from "@/Hooks/useToast";
 import AppLayout from "@/Layouts/AppLayout";
-import { CubeIcon, PencilIcon, TrashIcon, UserGroupIcon, UserPlusIcon } from "@heroicons/react/24/outline";
-import { Head, Link, router } from "@inertiajs/react";
+import { BanknotesIcon, CubeIcon, PencilIcon, TrashIcon, UserPlusIcon } from "@heroicons/react/24/outline";
+import { Head, Link, router, useForm, usePage } from "@inertiajs/react";
+import { useEffect } from "react";
 import { NumericFormat } from "react-number-format";
 
 export default function Index({auth, products, categories, queryParams = null}) {
 
     queryParams = queryParams || {}
 
-    console.log(products);
+    const { props } = usePage();
+    const { showToast } = useToast();
+
+    useEffect(() => {
+        if (props.flash && props.flash.success) {
+            showToast(props.flash.success, 'success');
+        }
+        if (props.flash && props.flash.error) {
+            showToast(props.flash.error, 'error');
+        }
+    }, [props.flash]);
+
+    const { data, setData, transform, post, errors} = useForm({
+        product_id: '',
+        product_name: '',
+        start_date: '',
+        price_purchase : 0,
+        price_sale : 0,
+        isOpen: false,
+    });
+
+    const savePrice = async (e) => {
+        e.preventDefault();
+
+        post(route('price.store'), {
+            onSuccess : () => {
+                setData({
+                    product_id: '',
+                    product_name: '',
+                    start_date: '',
+                    price_purchase : 0,
+                    price_sale : 0,
+                    isOpen: false,
+                });
+            }
+        })
+    }
+
     return (
         <AppLayout>
             <Head title="Produk"></Head>
@@ -83,6 +122,19 @@ export default function Index({auth, products, categories, queryParams = null}) 
                                                 fixedDecimalScale={true}/>
                                     </Table.Td>
                                     <Table.Td className={'flex gap-1'}>
+                                        <Button type={'modal'} style={'primary'} title="Ubah Harga"
+                                            onClick={() =>
+                                                setData({
+                                                    product_id: product.id,
+                                                    product_name: product.name,
+                                                    price_purchase : product.price,
+                                                    price_sale : product.price_sale,
+                                                    isOpen : !data.isOpen,
+                                                })
+                                            }
+                                            >
+                                            <BanknotesIcon className="w-4"/>
+                                        </Button>
                                         <Button type={'link'} style={'info'} href={route('product.edit', product.id)}>
                                             <PencilIcon className="w-4"/>
                                         </Button>
@@ -97,6 +149,33 @@ export default function Index({auth, products, categories, queryParams = null}) 
                     <Pagination links={products.meta.links}  align="c"/>
                 </Card.Body>
             </Card>
+            <Modal show={data.isOpen}
+                onClose={() => setData({
+                    product_id: '',
+                    product_name: '',
+                    start_date: '',
+                    price_purchase : 0,
+                    price_sale : 0,
+                    isOpen: false,})
+                }
+                verticalAlign={'start'}
+                title={'Ubah Harga Produk - ' + data.product_name}>
+                <form onSubmit={savePrice}>
+                    <div className='mb-4'>
+                        <label className="text-sm">Harga Beli (Rp)</label>
+                        <TextInput placeholder='Harga Beli (Rp)' className="w-full" value={data.price_purchase} onChange={e => setData('price_purchase', e.target.value)} errors={errors.price_purchase}  />
+                    </div>
+                    <div className='mb-4'>
+                        <label className="text-sm">Harga Jual (Rp)</label>
+                        <TextInput placeholder='Harga Jual (Rp)' className="w-full" value={data.price_sale} onChange={e => setData('price_sale', e.target.value)} errors={errors.price_sale}  />
+                    </div>
+                    <Button
+                        type={'submit'}
+                        className={'border bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-950 dark:border-gray-800 dark:text-gray-200'}>
+                            Simpan
+                    </Button>
+                </form>
+            </Modal>
         </AppLayout>
     );
 }
