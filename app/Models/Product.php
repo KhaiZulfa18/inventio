@@ -26,10 +26,18 @@ class Product extends Model
         return $this->hasMany(Price::class,'product_id');
     }
 
-    public function activePrice()
+    public function activePurchasePrice()
     {
         return $this->hasOne(Price::class,'product_id')
-                ->where('status','1');
+                ->where('status','1')
+                ->where('price_type','1');
+    }
+
+    public function activeSalePrice()
+    {
+        return $this->hasOne(Price::class,'product_id')
+                ->where('status','1')
+                ->where('price_type','2');
     }
 
     public function transactions()

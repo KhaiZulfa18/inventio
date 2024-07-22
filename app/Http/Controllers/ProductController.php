@@ -83,6 +83,16 @@ class ProductController extends Controller
             $price = Price::create([
                 'product_id' => $product->id,
                 'price' => $request->price,
+                'price_type' => 1,
+                'start_date' => Carbon::now()->format('Y-m-d'),
+                'status' => 1,
+                'created_by' => Auth::id(),
+            ]);
+
+            $price_sale = Price::create([
+                'product_id' => $product->id,
+                'price' => $request->price_sale,
+                'price_type' => 2,
                 'start_date' => Carbon::now()->format('Y-m-d'),
                 'status' => 1,
                 'created_by' => Auth::id(),

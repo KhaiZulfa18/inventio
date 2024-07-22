@@ -19,6 +19,7 @@ class PriceFactory extends Factory
     {
         return [
             'price' => fake()->numberBetween(5, 100) * 1000,
+            'price_type' => fake()->randomElement([1, 2]),
             'status' => 1,
             'start_date' => Carbon::yesterday(),
             'created_by' => 1,

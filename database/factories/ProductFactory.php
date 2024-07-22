@@ -20,6 +20,7 @@ class ProductFactory extends Factory
             'name' => fake()->word(),
             'description' => fake()->sentence(),
             'weight' => fake()->randomFloat(2, 0.5, 30),
+            'unit' => fake()->randomElement(['dus', 'karung', 'sak', 'pcs']),
             'created_by' => 1,
             'created_at' => time(),
         ];

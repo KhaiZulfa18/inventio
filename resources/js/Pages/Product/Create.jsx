@@ -7,6 +7,7 @@ import TextInput from "@/Components/TextInput";
 import AppLayout from "@/Layouts/AppLayout";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { Head, useForm } from '@inertiajs/react'
+import { NumberFormatBase, NumericFormat } from "react-number-format";
 
 export default function Create({auth, categories, success}) {
 
@@ -18,6 +19,7 @@ export default function Create({auth, categories, success}) {
         weight: '',
         code: '',
         price: '',
+        price_sale: '',
     });
 
     const onSubmit = async (e) => {
@@ -75,11 +77,18 @@ export default function Create({auth, categories, success}) {
                                 <InputError message={errors.weight} className="mt-2"></InputError>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
-                                <label>Harga Produk (Rp)</label>
-                                <TextInput type={'number'} className="w-full" placeholder={"Harga Produk"} autoComplete="off" 
+                                <label>Harga Beli Produk (Rp)</label>
+                                <TextInput type={'number'} className="w-full" placeholder={"Harga Beli Produk"} autoComplete="off" 
                                     onChange={e => setData('price', e.target.value)} step="0.01"
                                     />
                                 <InputError message={errors.price} className="mt-2"></InputError>
+                            </div>
+                            <div className="py-3 px-4 flex flex-col gap-2">
+                                <label>Harga Jual Produk (Rp)</label>
+                                <TextInput type={'number'} className="w-full" placeholder={"Harga Jual Produk"} autoComplete="off" 
+                                    onChange={e => setData('price_sale', e.target.value)} step="0.01"
+                                    />
+                                <InputError message={errors.price_sale} className="mt-2"></InputError>
                             </div>
                             <div className="py-3 px-4 flex flex-col gap-2">
                                 <label>Code Produk</label>

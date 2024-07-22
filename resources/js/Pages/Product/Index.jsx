@@ -8,6 +8,7 @@ import TextInput from "@/Components/TextInput";
 import AppLayout from "@/Layouts/AppLayout";
 import { CubeIcon, PencilIcon, TrashIcon, UserGroupIcon, UserPlusIcon } from "@heroicons/react/24/outline";
 import { Head, Link, router } from "@inertiajs/react";
+import { NumericFormat } from "react-number-format";
 
 export default function Index({auth, products, categories, queryParams = null}) {
 
@@ -52,7 +53,8 @@ export default function Index({auth, products, categories, queryParams = null}) 
                                 <Table.Th name={'unit'} sortable={true} url={route('product.index')} queryParams={queryParams}>Satuan</Table.Th>
                                 <Table.Th name={'weight'} sortable={true} url={route('product.index')} queryParams={queryParams}>Berat (Kg)</Table.Th>
                                 <Table.Th name={'code'} sortable={true} url={route('product.index')} queryParams={queryParams}>Code</Table.Th>
-                                <Table.Th name={'price'} sortable={false} url={route('product.index')} queryParams={queryParams}>Harga</Table.Th>
+                                <Table.Th name={'price'} sortable={false} url={route('product.index')} queryParams={queryParams}>Harga Beli</Table.Th>
+                                <Table.Th name={'price'} sortable={false} url={route('product.index')} queryParams={queryParams}>Harga Jual</Table.Th>
                                 <Table.Th>Aksi</Table.Th>
                             </tr>
                         </Table.Thead>
@@ -70,7 +72,16 @@ export default function Index({auth, products, categories, queryParams = null}) 
                                     <Table.Td className={'text-center'}>{product.unit}</Table.Td>
                                     <Table.Td className={'text-right'}>{product.weight}</Table.Td>
                                     <Table.Td>{product.code}</Table.Td>
-                                    <Table.Td>Rp.{product.price}</Table.Td>
+                                    <Table.Td>
+                                        <NumericFormat value={product.price} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} 
+                                                decimalScale={2}
+                                                fixedDecimalScale={true}/>
+                                    </Table.Td>
+                                    <Table.Td>
+                                        <NumericFormat value={product.price_sale} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} 
+                                                decimalScale={2}
+                                                fixedDecimalScale={true}/>
+                                    </Table.Td>
                                     <Table.Td className={'flex gap-1'}>
                                         <Button type={'link'} style={'info'} href={route('product.edit', product.id)}>
                                             <PencilIcon className="w-4"/>

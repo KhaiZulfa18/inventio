@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Price;
 use App\Models\Supplier;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -29,8 +30,17 @@ class DatabaseSeeder extends Seeder
 
         Category::factory()
                 ->count(6)
-                // ->hasProducts(7)
-                ->has(Product::factory()->count(7)->hasPrices(1))
+                ->has(Product::factory()->
+                    count(7)->has(Price::factory()
+                        ->count(1)->state([
+                            'price_type' => 1,
+                        ])
+                    )->has(Price::factory()
+                        ->count(1)->state([
+                            'price_type' => 2,
+                        ])
+                    )
+                )
                 ->create();
 
         Supplier::factory()
