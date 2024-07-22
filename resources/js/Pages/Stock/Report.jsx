@@ -35,7 +35,7 @@ export default function Report({categories}) {
     }));
 
     const searchData = async () => {
-        if (!date.startDate) {
+        if (!date) {
             showToast('Silahkan pilih Tanggal terlebih dahulu','error');
             return;
         }
@@ -52,7 +52,6 @@ export default function Report({categories}) {
                 }
             });
             setData(response.data.data);
-            console.log(response.data.data);
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {

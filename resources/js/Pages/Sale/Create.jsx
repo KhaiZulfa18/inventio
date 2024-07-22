@@ -89,9 +89,9 @@ export default function Create({auth, products, customers}) {
                 product_id, 
                 qty: row.qty ? row.qty : 1,
                 product_name: product ? product.name : '', 
-                price: product ? product.price : 0, 
+                price: product ? product.price_sale : 0, 
                 weight: product ? product.weight : 0,
-                total_price: product ? (product.price * (row.qty ? row.qty : 1)) : 0,
+                total_price: product ? (product.price_sale * (row.qty ? row.qty : 1)) : 0,
                 total_weight: product ? (product.weight * (row.qty ? row.qty : 1)) : 0,
             } : row
         );
