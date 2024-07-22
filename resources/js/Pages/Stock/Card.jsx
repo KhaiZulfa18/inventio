@@ -109,59 +109,92 @@ export default function Report({products}) {
                         </div>
                     }
                     {data && (
+                        <>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 md:gap-3">
+                            <div className="py-3 px-4 flex flex-col gap-2">
+                                <label className="text-sm">Kategori</label>
+                                <span className="rounded-lg px-0.5 py-0.5 text-lg tracking-wide font-bold">{data.product.category.name}</span>
+                            </div>
+                            <div className="py-3 px-4 flex flex-col gap-2">
+                                <label className="text-sm">Harga</label>
+                                <span className="rounded-lg px-0.5 py-0.5 text-lg tracking-wide font-bold">
+                                    <NumericFormat value={ data.product.price} displayType={'text'} thousandSeparator={true} prefix="Rp."
+                                            decimalScale={2}
+                                            fixedDecimalScale={true}/>
+                                </span>
+                            </div>
+                            <div className="py-3 px-4 flex flex-col gap-2">
+                                <label className="text-sm">Berat / {data.product.unit}</label>
+                                <span className="rounded-lg px-0.5 py-0.5 text-lg tracking-wide font-bold">
+                                    <NumericFormat value={ data.product.weight} displayType={'text'} thousandSeparator={true}
+                                            decimalScale={2}
+                                            fixedDecimalScale={true}/> Kg
+                                </span>
+                            </div>
+                            <div className="py-3 px-4 flex flex-col gap-2">
+                                <label className="text-sm">Deskripsi</label>
+                                <span className="rounded-lg px-0.5 py-0.5 text-lg tracking-wide font-bold">{data.product.description}</span>
+                            </div>
+                        </div>
                         <Table>
                             <Table.Thead>
                                 <tr>
-                                    <Table.Th>No.</Table.Th>
-                                    <Table.Th>Produk</Table.Th>
-                                    <Table.Th>Kategori</Table.Th>
-                                    <Table.Th>Satuan</Table.Th>
-                                    <Table.Th>Sisa Stok</Table.Th>
-                                    <Table.Th>Sisa Stok (Kg)</Table.Th>
+                                    <Table.Th colSpan='4' className="bg-gray-50 dark:bg-gray-900">Sisa Awal</Table.Th>
+                                    <Table.Th className="text-right bg-gray-50 dark:bg-gray-900">
+                                            <NumericFormat value={ data.start_stock} displayType={'text'} thousandSeparator={true}
+                                                decimalScale={0}
+                                                fixedDecimalScale={true}/>
+                                    </Table.Th>
+                                </tr>
+                                <tr>
+                                    <Table.Th>Tanggal</Table.Th>
+                                    <Table.Th>Code</Table.Th>
+                                    <Table.Th>Masuk</Table.Th>
+                                    <Table.Th>Keluar</Table.Th>
+                                    <Table.Th>Sisa</Table.Th>
                                 </tr>
                             </Table.Thead>
                             <Table.Tbody>
-                                {data.length > 0 ? (
-                                    data.map((stock, index) => (
+                                {data.transactions.length > 0 ? (
+                                    data.transactions.map((stock, index) => (
                                         <tr key={index}>
-                                            <Table.Td>{ index + 1 }</Table.Td>
-                                            <Table.Td>{ stock.product_name }</Table.Td>
-                                            <Table.Td>{ stock.category_name }</Table.Td>
-                                            <Table.Td>{ stock.unit }</Table.Td>
+                                            <Table.Td>{ stock.date }</Table.Td>
+                                            <Table.Td>{ stock.code }</Table.Td>
                                             <Table.Td className="text-right">
-                                                <NumericFormat value={ stock.remaining_stock} displayType={'text'} thousandSeparator={true}
+                                                <NumericFormat value={ stock.in_stock} displayType={'text'} thousandSeparator={true}
                                                     decimalScale={0}
                                                     fixedDecimalScale={true}/>
                                             </Table.Td>
                                             <Table.Td className="text-right">
-                                                <NumericFormat value={ stock.remaining_stock_weight} displayType={'text'} thousandSeparator={true}
-                                                    decimalScale={2}
+                                                <NumericFormat value={ stock.out_stock} displayType={'text'} thousandSeparator={true}
+                                                    decimalScale={0}
+                                                    fixedDecimalScale={true}/>
+                                            </Table.Td>
+                                            <Table.Td className="text-right">
+                                                <NumericFormat value={ stock.remain_stock} displayType={'text'} thousandSeparator={true}
+                                                    decimalScale={0}
                                                     fixedDecimalScale={true}/>
                                             </Table.Td>
                                         </tr>
                                     ))
                                 ) : (
-                                    <Table.Empty colSpan={6} message={'Data tidak ditemukan'} className="text-gray-500 text-lg">
+                                    <Table.Empty colSpan={5} message={'Data tidak ditemukan'} className="text-gray-500 text-lg">
                                         <FaceFrownIcon className="w-auto text-gray-500"></FaceFrownIcon>
                                     </Table.Empty>
                                 )}
-                                {data.length > 0 && (
+                                {data.transactions.length > 0 && (
                                     <tr>
-                                        <Table.Td colSpan='4'>Total {data.length} Data</Table.Td>
+                                        <Table.Td colSpan='4'>Total {data.transactions.length} Data</Table.Td>
                                         <Table.Td className="text-right">
-                                            <NumericFormat value={ getTotal(data, 'remaining_stock')} displayType={'text'} thousandSeparator={true}
+                                            <NumericFormat value={ getTotal(data.transactions, 'remaining_stock')} displayType={'text'} thousandSeparator={true}
                                                     decimalScale={0}
-                                                    fixedDecimalScale={true}/>
-                                        </Table.Td>
-                                        <Table.Td className="text-right">
-                                            <NumericFormat value={ getTotal(data, 'remaining_stock_weight')} displayType={'text'} thousandSeparator={true}
-                                                    decimalScale={2}
                                                     fixedDecimalScale={true}/>
                                         </Table.Td>
                                     </tr>
                                 )}
                             </Table.Tbody>
                         </Table>
+                        </>
                     )}
                 </Card.Body>
             </Card>

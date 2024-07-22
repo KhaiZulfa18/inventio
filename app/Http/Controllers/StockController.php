@@ -163,12 +163,48 @@ class StockController extends Controller
         ->whereNull('deleted_at')
         ->where('date', '<', $startDate)
         ->where('product_id', $product->id)
-        ->groupBy('product_id');
+        ->groupBy('product_id')
+        ->first();
 
-        $transaction = Transaction::where('product_id',$product->id)
+        $remain_stock = $startStock->in_start ?? 0;
+
+        $transaction = Transaction::with(['sale','purchase'])
+                ->where('product_id',$product->id)
                 ->whereBetween('date', [$startDate,$endDate])
+                ->orderByRaw('`date` asc, `type` desc')
                 ->get();
+
+        $transactions = $transaction->map(function ($item) use (&$remain_stock) {
+
+            $in_stock = ($item->type == '+') ? $item->quantity : 0;
+            $out_stock = ($item->type == '-') ? $item->quantity : 0;
+
+            $remain_stock += ($in_stock - $out_stock);
+            
+            return [
+                'date' => $item->date,
+                'product_id' => $item->product_id,
+                'type' => $item->type,
+                'quantity' => $item->quantity,
+                'total_weight' => $item->total_weight,
+                'note' => $item->note,
+                'code' => ($item->type == '+') ? $item->purchase->code : $item->sale->code,
+                'in_stock' => ($item->type == '+') ? $item->quantity : null,
+                'out_stock' => ($item->type == '-') ? $item->quantity : null,
+                'remain_stock' => $remain_stock,
+            ];
+        });
         
-        return $product;
+        $data = [
+            'product' => (new ProductResource($product)),
+            'start_stock' => $startStock->in_start ?? 0,
+            'transactions' => $transactions,
+        ];
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Movement Stock data retrieved successfully',
+            'data' => $data,
+        ],200);
     }
 }
