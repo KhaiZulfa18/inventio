@@ -58,6 +58,7 @@ export default function Index({auth, purchases, suppliers, queryParams = null}) 
                         <Table.Thead>
                             <tr>
                                 <Table.Th className={'w-10'}>No</Table.Th>
+                                <Table.Th name={'date'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Tgl Pembelian</Table.Th>
                                 <Table.Th name={'code'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Kode Pembelian</Table.Th>
                                 <Table.Th name={'supplier'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Supplier</Table.Th>
                                 <Table.Th name={'quantity'} sortable={true} url={route('purchase.index')} queryParams={queryParams}>Jumlah</Table.Th>
@@ -72,6 +73,7 @@ export default function Index({auth, purchases, suppliers, queryParams = null}) 
                             {purchases.data.map((purchase, i) => (
                                 <tr className="hover:bg-gray-100 dark:hover:bg-gray-900" key={i}>
                                     <Table.Td>{++i + (purchases.meta.current_page-1) * purchases.meta.per_page}</Table.Td>
+                                    <Table.Td>{purchase.date}</Table.Td>
                                     <Table.Td>{purchase.code}</Table.Td>
                                     <Table.Td>{purchase.supplier}</Table.Td>
                                     <Table.Td className={'text-right'}>{purchase.total_quantity}</Table.Td>

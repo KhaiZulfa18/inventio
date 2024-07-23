@@ -150,8 +150,8 @@ export default function Menu() {
             details : [
                 {
                     title : 'Laporan Keuangan',
-                    href : '/finance',
-                    active: url.startsWith('/finance') ? true : false,
+                    href : '/finance/report',
+                    active: url.startsWith('/finance/report') ? true : false,
                     icon : <BanknotesIcon className="w-5"/>,
                     permissions: hasAnyPermission(['category-view']),
                 },

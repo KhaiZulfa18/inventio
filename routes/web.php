@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
@@ -49,6 +50,12 @@ Route::middleware(['auth','verified'])->group(function (){
             Route::get('/movement/data', 'movement_data')->name('stock.movement.data');
             Route::get('/card', 'card')->name('stock.card');
             Route::get('/card/{product}', 'card_data')->name('stock.card.data');
+        });
+    });
+
+    Route::controller(FinanceController::class)->group(function () {
+        Route::prefix('/finance')->group(function () {
+            Route::get('/report', 'index')->name('finance.report');
         });
     });
 });
