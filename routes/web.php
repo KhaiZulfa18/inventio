@@ -56,6 +56,7 @@ Route::middleware(['auth','verified'])->group(function (){
     Route::controller(FinanceController::class)->group(function () {
         Route::prefix('/finance')->group(function () {
             Route::get('/report', 'index')->name('finance.report');
+            Route::get('/report/data', 'data')->name('finance.data');
         });
     });
 });
